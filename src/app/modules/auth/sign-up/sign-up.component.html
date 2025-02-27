@@ -1,13 +1,13 @@
-<div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0">
-    <div class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
-        <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
+<div class="flex flex-col items-center flex-auto min-w-0 sm:flex-row md:items-start sm:justify-center md:justify-start">
+    <div class="w-full px-4 py-8 md:flex md:items-center md:justify-end sm:w-auto md:h-full md:w-1/2 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
+        <div class="w-full mx-auto max-w-80 sm:w-80 sm:mx-0">
             <!-- Logo -->
             <div class="w-12">
                 <img src="assets/images/logo/logo.svg">
             </div>
 
             <!-- Title -->
-            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sign up</div>
+            <div class="mt-8 text-4xl font-extrabold leading-tight tracking-tight">Sign up</div>
             <div class="flex items-baseline mt-0.5 font-medium">
                 <div>Already have an account?</div>
                 <a
@@ -35,15 +35,28 @@
 
                 <!-- Name field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Full name</mat-label>
+                    <mat-label>Nom</mat-label>
                     <input
                         id="name"
                         matInput
-                        [formControlName]="'name'">
-                    <mat-error *ngIf="signUpForm.get('name').hasError('required')">
+                        [formControlName]="'Nom'">
+                    <mat-error *ngIf="signUpForm.get('Nom').hasError('required')">
                         Full name is required
                     </mat-error>
                 </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Prenom</mat-label>
+                    <input
+                        id="name"
+                        matInput
+                        [formControlName]="'Prenom'">
+                    <mat-error *ngIf="signUpForm.get('Prenom').hasError('required')">
+                        Full name is required
+                    </mat-error>
+                </mat-form-field>
+
+
 
                 <!-- Email field -->
                 <mat-form-field class="w-full">
@@ -62,7 +75,7 @@
 
                 <!-- Password field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Password</mat-label>
+                    <mat-label>Mot de passe </mat-label>
                     <input
                         id="password"
                         matInput
@@ -90,11 +103,30 @@
 
                 <!-- Company field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Company</mat-label>
+                    <mat-label>Répéter le mot de passe</mat-label>
                     <input
-                        id="company-confirm"
+                        id="password"
                         matInput
-                        [formControlName]="'company'">
+                        type="password"
+                        [formControlName]="'password'"
+                        #passwordField>
+                    <button
+                        mat-icon-button
+                        type="button"
+                        (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+                        matSuffix>
+                        <mat-icon
+                            class="icon-size-5"
+                            *ngIf="passwordField.type === 'password'"
+                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                        <mat-icon
+                            class="icon-size-5"
+                            *ngIf="passwordField.type === 'text'"
+                            [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+                    </button>
+                    <mat-error>
+                        Password is required
+                    </mat-error>
                 </mat-form-field>
 
                 <!-- ToS and PP -->
@@ -103,22 +135,14 @@
                         class="-ml-2"
                         [color]="'primary'"
                         [formControlName]="'agreements'">
-                        <span>I agree with</span>
-                        <a
-                            class="ml-1 text-primary-500 hover:underline"
-                            [routerLink]="['./']">Terms
-                        </a>
-                        <span>and</span>
-                        <a
-                            class="ml-1 text-primary-500 hover:underline"
-                            [routerLink]="['./']">Privacy Policy
-                        </a>
+                        <span>Vous êtes un prof ?</span>
+
                     </mat-checkbox>
                 </div>
 
                 <!-- Submit button -->
                 <button
-                    class="fuse-mat-button-large w-full mt-6"
+                    class="w-full mt-6 fuse-mat-button-large"
                     mat-flat-button
                     [color]="'primary'"
                     [disabled]="signUpForm.disabled"
@@ -135,7 +159,7 @@
             </form>
         </div>
     </div>
-    <div class="relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-l">
+    <div class="relative items-center justify-center flex-auto hidden w-1/2 h-full p-16 overflow-hidden bg-gray-800 md:flex lg:px-28 dark:border-l">
         <!-- Background - @formatter:off -->
         <!-- Rings -->
         <svg class="absolute inset-0 pointer-events-none"
@@ -146,7 +170,7 @@
             </g>
         </svg>
         <!-- Dots -->
-        <svg class="absolute -top-16 -right-16 text-gray-700"
+        <svg class="absolute text-gray-700 -top-16 -right-16"
              viewBox="0 0 220 192" width="220" height="192" fill="none">
             <defs>
                 <pattern id="837c3e70-6c3a-44e6-8854-cc48c737b659" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -157,28 +181,28 @@
         </svg>
         <!-- @formatter:on -->
         <!-- Content -->
-        <div class="z-10 relative w-full max-w-2xl">
-            <div class="text-7xl font-bold leading-none text-gray-100">
+        <div class="relative z-10 w-full max-w-2xl">
+            <div class="font-bold leading-none text-gray-100 text-7xl">
                 <div>Welcome to</div>
                 <div>our community</div>
             </div>
-            <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
+            <div class="mt-6 text-lg leading-6 tracking-tight text-gray-400">
                 Fuse helps developers to build organized and well coded dashboards full of beautiful and rich modules.
                 Join us and start building your application today.
             </div>
             <div class="flex items-center mt-8">
                 <div class="flex flex-0 items-center -space-x-1.5">
                     <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
+                        class="object-cover w-10 h-10 rounded-full flex-0 ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800"
                         src="assets/images/avatars/female-18.jpg">
                     <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
+                        class="object-cover w-10 h-10 rounded-full flex-0 ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800"
                         src="assets/images/avatars/female-11.jpg">
                     <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
+                        class="object-cover w-10 h-10 rounded-full flex-0 ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800"
                         src="assets/images/avatars/male-09.jpg">
                     <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
+                        class="object-cover w-10 h-10 rounded-full flex-0 ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800"
                         src="assets/images/avatars/male-16.jpg">
                 </div>
                 <div class="ml-4 font-medium tracking-tight text-gray-400">More than 17k people joined us, it's your turn</div>

@@ -3,6 +3,8 @@ import { initialDataResolver } from 'app/app.resolvers';
 import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
+import { AppComponent } from './app.component';
+import { LandingHomeComponent } from './modules/landing/home/home.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -10,7 +12,8 @@ import { LayoutComponent } from 'app/layout/layout.component';
 export const appRoutes: Route[] = [
 
     // Redirect empty path to '/example'
-    {path: '', pathMatch : 'full', redirectTo: 'example'},
+    {path:'',component:LandingHomeComponent},
+    // {path: '', pathMatch : 'full', redirectTo: 'example'},
 
     // Redirect signed-in user to the '/example'
     //
@@ -29,6 +32,7 @@ export const appRoutes: Route[] = [
             layout: 'empty'
         },
         children: [
+
             {path: 'confirmation-required', loadChildren: () => import('app/modules/auth/confirmation-required/confirmation-required.routes')},
             {path: 'forgot-password', loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.routes')},
             {path: 'reset-password', loadChildren: () => import('app/modules/auth/reset-password/reset-password.routes')},
