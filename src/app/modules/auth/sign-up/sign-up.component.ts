@@ -54,11 +54,10 @@ passwordHidden: any;
         // Create the form
         this.signUpForm = this._formBuilder.group({
 
-            nom: ['',[Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
-            prenom: ['',[Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
-            email: ['',[Validators.required, Validators.email]],
-            address: ['',[Validators.required, Validators.minLength(3)]],
-            password: ['', [Validators.minLength(7),Validators.required]],
+            nom: ['bdfhbgf',[Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
+            prenom: ['bdfhbgf',[Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
+            email: ['bdfhbgf@vdf',[Validators.required, Validators.email]],
+            password: ['dsfds', [Validators.minLength(7),Validators.required]],
             idRole: 2
         },
         );
@@ -73,6 +72,7 @@ passwordHidden: any;
      */
     signUp(): void
     {
+        console.log('hello')
         // Do nothing if the form is invalid
         if ( this.signUpForm.invalid )
         {
