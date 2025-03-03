@@ -30,6 +30,7 @@ export class AuthSignUpComponent implements OnInit
     };
     signUpForm: UntypedFormGroup;
     showAlert: boolean = false;
+passwordHidden: any;
 
     /**
      * Constructor
@@ -49,17 +50,17 @@ export class AuthSignUpComponent implements OnInit
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Create the form
         this.signUpForm = this._formBuilder.group({
-            Nom      : ['', Validators.required],
-            Prenom      : ['', Validators.required],
-                email     : ['', [Validators.required, Validators.email]],
-                password  : ['', Validators.required],
 
-                agreements: ['', Validators.requiredTrue],
-            },
+            nom: ['',[Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
+            prenom: ['',[Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
+            email: ['',[Validators.required, Validators.email]],
+            address: ['',[Validators.required, Validators.minLength(3)]],
+            password: ['', [Validators.minLength(7),Validators.required]],
+            idRole: 2
+        },
         );
     }
 

@@ -5,6 +5,7 @@ import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { AppComponent } from './app.component';
 import { LandingHomeComponent } from './modules/landing/home/home.component';
+import { LandingComponent } from './modules/landing/landing.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -12,7 +13,7 @@ import { LandingHomeComponent } from './modules/landing/home/home.component';
 export const appRoutes: Route[] = [
 
     // Redirect empty path to '/example'
-    {path:'',component:LandingHomeComponent},
+    {path:'',component:LandingComponent},
     // {path: '', pathMatch : 'full', redirectTo: 'example'},
 
     // Redirect signed-in user to the '/example'

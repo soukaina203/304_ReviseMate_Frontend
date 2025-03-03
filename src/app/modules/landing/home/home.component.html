@@ -1,11 +1,39 @@
-<div>
 
+<div class="w-full h-fit">
 
-    <button [routerLink]="'sign-up'" class="w-full mt-2 bg-[#5271FF] text-white fuse-mat-button-large" mat-flat-button [color]="'primary'">
-        s'inscrire
-    </button>
+    <section class="bg-[#FCF8F1] bg-opacity-30 py-10 sm:py-16 lg:py-22">
+        <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="grid items-center grid-cols-1 lg:gap-[15rem] md:grid-cols-2">
+                <div class="">
+                    <h1 class=" w-[40rem] mb-4 text-4xl  text-[#5271FF] font-bold leading-none tracking-tight md:text-[3.5rem]  lg:text-[2.7rem] dark:text-white">
+                        Optimisez votre apprentissage avec ReviseMate
+                    </h1>
+                    <p class="mt-4 text-base text-gray-400 lg:mt-2 sm:text-xl">
+                        Transformez vos cours en fiches synthétiques, créez des cartes mémoire et testez vos connaissances avec des quiz personnalisés. Révisions intelligentes, résultats garantis !                    </p>
+                    <button class="px-6 mt-2 py-3 w-fit lg:w-fit text-center flex justify-center items-center font-semibold
+                     text-white bg-[#5271FF] uppercase hover:bg-opacity-80">
+                     Commencer
+                    </button>
 
-    <button [routerLink]="'sign-in'" class="w-full mt-2 bg-[#5271FF] text-white fuse-mat-button-large" mat-flat-button [color]="'primary'">
-        Se connecter
-    </button>
+                </div>
+                <div>
+                    <img class="w-[35rem] h-auto" src="assets/images/ui/sections/heroSection.png" alt="Cooking Image">
+                </div>
+            </div>
+        </div>
+
+        <section class="flex items-center justify-center w-full h-full py-8">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <div *ngFor="let prop of props" class="flex hover-y-1n hover:shadow-xl transition-all hover:scale-110 cursor-pointer duration-300 p-6 transform bg-[#FEFEFE] shadow-lg">
+                    <div class="flex-shrink-0 p-4">
+                        <img [src]="'assets/images/icons/' + prop.img + '.png'" alt="{{prop.title}}" class="w-16 h-16" />
+                    </div>
+                    <div class="flex flex-col justify-center ml-4">
+                        <h2 class="text-2xl text-[#376F00] font-bold">{{prop.title}}</h2>
+                        <p class="mt-2 text-gray-600">{{prop.desc}}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
 </div>

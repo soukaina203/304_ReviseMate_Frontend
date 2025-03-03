@@ -1,0 +1,66 @@
+
+<header>
+    <nav class="z-50 w-full bg-white ">
+      <div class="container flex items-center justify-between m-auto">
+        <div class="flex-shrink-0">
+            <a href="#" title="" class="flex">
+                <img class="w-[6.4rem] h-[4rem] max-w-full" src="assets/logos/logo.png" alt="Dish Logo" />
+            </a>
+        </div>
+        <!-- Main Menu for Large Screens -->
+        <ul class="items-center hidden pr-10 text-base text-black cursor-pointer lg:flex">
+            <li class="px-6 py-4 duration-500 underlineHover hover:pointer-auto">
+                <a >Home  </a>
+              </li>
+              <li class="px-6 py-4 duration-500 underlineHover hover:pointer-auto">
+                <a  >About  </a>
+              </li>
+              <li class="px-6 py-4 duration-500 underlineHover">
+                <a >projects  </a>
+              </li>
+              <li class="px-6 py-4 duration-500 underlineHover">
+                <a  >contact  </a>
+              </li>
+
+        </ul>
+
+<!-- <a href="#" title="" class="hidden ml-2 lg:inline-flex items-center
+  justify-center px-5 py-2.5 text-base transition-all duration-200
+   hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-full" role="button">Join Now</a> -->
+
+<div class="flex gap-2">
+
+    <button [routerLink]="'sign-up'" class=" px-5 py-2.5 border-2  border-[#5271FF] text-[#5271FF] rounded-[0.3rem]   mr-2">
+        s'inscrire
+    </button>
+
+    <button [routerLink]="'sign-in'" class=" px-5 py-2.5   bg-[#5271FF] rounded-[0.3rem] text-white mr-2">
+        Se connecter
+    </button>
+</div>
+
+
+        <!-- Mobile Menu Button -->
+        <button class="lg:hidden group">
+          <mat-icon class="mr-2">menu</mat-icon>
+          <!-- Mobile Menu -->
+          <div class="absolute top-0 z-40 flex items-center w-8/12 h-screen ml-auto transition-all duration-500 bg-gray-900 md:w-5/12 right-full group-focus:right-0">
+            <ul class="flex flex-col items-center w-full text-base font-semibold text-white cursor-pointer">
+                <li class="px-6 py-4 duration-500 underlineHover hover:pointer-auto">
+                    <a  >{{"home"  }}</a>
+                  </li>
+                  <li class="px-6 py-4 duration-500 underlineHover hover:pointer-auto">
+                    <a  (click)="('about')">{{"about"  }}</a>
+                  </li>
+                  <li class="px-6 py-4 duration-500 underlineHover">
+                    <a  (click)="('projects')">{{"projects"  }}</a>
+                  </li>
+                  <li class="px-6 py-4 duration-500 underlineHover">
+                    <a  (click)="('contacts')">{{"contact1"  }}</a>
+                  </li>
+            </ul>
+          </div>
+        </button>
+      </div>
+    </nav>
+  </header>
