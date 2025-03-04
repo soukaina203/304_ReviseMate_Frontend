@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component'; 
 
@@ -7,7 +7,8 @@ import { HeaderComponent } from '../header/header.component';
   standalone: true,
   imports: [CommonModule, HeaderComponent], 
   templateUrl: './tableau-bord.component.html',
-  styleUrls: ['./tableau-bord.component.scss']
+  styleUrls: ['./tableau-bord.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TableauBordComponent {
 }
