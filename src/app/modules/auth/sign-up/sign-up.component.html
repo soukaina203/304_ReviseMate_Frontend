@@ -117,7 +117,18 @@
                 <mat-progress-spinner *ngIf="signUpForm.disabled" [diameter]="24"
                     [mode]="'indeterminate'"></mat-progress-spinner>
             </button>
+            <div
+            class="mt-1.5 inline-flex w-full items-center justify-between"
+        >
+            <mat-checkbox
+                class="-ml-2"
+                [color]="'primary'"
+                [formControlName]="'rememberMe'"
+            >
+            Vous êtes prof?
+            </mat-checkbox>
 
+        </div>
         </form>
 
         <!-- Sign-in link -->
