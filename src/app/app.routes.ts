@@ -23,6 +23,8 @@ export const appRoutes: Route[] = [
     // location. This is a small convenience to keep all main routes together here on this file.
     {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'example'},
 
+
+
     // Auth routes for guests
     {
         path: '',
@@ -72,14 +74,10 @@ export const appRoutes: Route[] = [
     // Admin routes
     {
         path: '',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
-        component: LayoutComponent,
-        resolve: {
-            initialData: initialDataResolver
-        },
+
+
         children: [
-            {path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes')},
+            {path: 'user', loadChildren: () => import('app/modules/user/user.routes')},
         ]
     }
 ];
