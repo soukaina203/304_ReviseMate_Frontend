@@ -16,13 +16,13 @@
             <!-- Name field -->
             <mat-form-field class="w-full">
                 <mat-label>Nom</mat-label>
-                <input id="nom" matInput [formControlName]="'nom'">
-                <mat-error *ngIf="signUpForm.controls['nom'].errors?.['required']" class="text-red-500">Ce champ est
+                <input id="nom" matInput [formControlName]="'lastName'">
+                <mat-error *ngIf="signUpForm.controls['lastName'].errors?.['required']" class="text-red-500">Ce champ est
                     obligatoire</mat-error>
-                <mat-error *ngIf="signUpForm.controls['nom'].errors?.['minlength']" class="text-red-500">Le nom doit
+                <mat-error *ngIf="signUpForm.controls['lastName'].errors?.['minlength']" class="text-red-500">Le lastName doit
                     contenir plus de 2 lettres</mat-error>
 
-                <mat-error *ngIf="signUpForm.controls['nom'].errors?.['pattern']" class="text-red-500">
+                <mat-error *ngIf="signUpForm.controls['lastName'].errors?.['pattern']" class="text-red-500">
                     Le nom doit contenir uniquement des caractères alphabétiques</mat-error>
 
 
@@ -30,13 +30,13 @@
 
             <mat-form-field class="w-full">
                 <mat-label>Prenom</mat-label>
-                <input id="prenom" matInput [formControlName]="'prenom'">
+                <input id="prenom" matInput [formControlName]="'firstName'">
 
-                <mat-error *ngIf="signUpForm.controls['prenom'].errors?.['required']" class="text-red-500">Ce champ
+                <mat-error *ngIf="signUpForm.controls['firstName'].errors?.['required']" class="text-red-500">Ce champ
                     est obligatoire</mat-error>
-                <mat-error *ngIf="signUpForm.controls['prenom'].errors?.['minlength']" class="text-red-500">Le
+                <mat-error *ngIf="signUpForm.controls['firstName'].errors?.['minlength']" class="text-red-500">Le
                     prénom doit contenir plus de 2 lettres</mat-error>
-                <mat-error *ngIf="signUpForm.controls['prenom'].errors?.['pattern']" class="text-red-500">
+                <mat-error *ngIf="signUpForm.controls['firstName'].errors?.['pattern']" class="text-red-500">
                     Le prénom doit contenir uniquement des caractères alphabétiques</mat-error>
 
             </mat-form-field>

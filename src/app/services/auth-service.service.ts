@@ -16,21 +16,12 @@ export class AuthServiceService {
 
 
   signUp(user:User): Observable<any> {
-    return this.http.post(`${this.urlApi}/AuthController/register`, user);
+    return this.http.post(`${this.url}/auth/register`, user);
 
   }
 
   login(user: User): Observable<any> {
-    return this.http.post<any>(`${this.urlApi}/AuthController/login`, user);
-    //   .pipe(
-    //     tap(response => {
-    //         console.log("from api")
-    //       console.log('Response:', response);
-    //       if(response.code===1){
-    //         this._authenticated=true
-    //       }
-    //       // Perform actions based on the response
-    //     })
-    //   );
+    return this.http.post<any>(`${this.url}/auth/login`, user);
+
   }
 }

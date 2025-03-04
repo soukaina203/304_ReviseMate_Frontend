@@ -11,6 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { AuthServiceService } from 'app/services/auth-service.service';
 
 @Component({
     selector     : 'auth-sign-up',
@@ -30,13 +31,13 @@ export class AuthSignUpComponent implements OnInit
     };
     signUpForm: UntypedFormGroup;
     showAlert: boolean = false;
-passwordHidden: any;
+    passwordHidden: any;
 
-    /**
+    /**AuthServiceService
      * Constructor
      */
     constructor(
-        private _authService: AuthService,
+        private _authService: AuthServiceService,
         private _formBuilder: UntypedFormBuilder,
         private _router: Router,
     )
@@ -54,10 +55,10 @@ passwordHidden: any;
         // Create the form
         this.signUpForm = this._formBuilder.group({
 
-            nom: ['bdfhbgf',[Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
-            prenom: ['bdfhbgf',[Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
+            lastName: ['bdfhbgf',[Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
+            firstName: ['bdfhbgf',[Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
             email: ['bdfhbgf@vdf',[Validators.required, Validators.email]],
-            password: ['dsfds', [Validators.minLength(7),Validators.required]],
+            password: ['bdfhbgf@vdf', [Validators.minLength(7),Validators.required]],
             idRole: 2
         },
         );
@@ -91,7 +92,7 @@ passwordHidden: any;
                 (response) =>
                 {
                     // Navigate to the confirmation required page
-                    this._router.navigateByUrl('/confirmation-required');
+                    this._router.navigateByUrl('/sign-in');
                 },
                 (response) =>
                 {

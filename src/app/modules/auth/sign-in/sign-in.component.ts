@@ -11,6 +11,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { AuthServiceService } from 'app/services/auth-service.service';
 
 @Component({
     selector     : 'auth-sign-in',
@@ -36,7 +37,7 @@ export class AuthSignInComponent implements OnInit
      */
     constructor(
         private _activatedRoute: ActivatedRoute,
-        private _authService: AuthService,
+        private _authService: AuthServiceService,
         private _formBuilder: UntypedFormBuilder,
         private _router: Router,
     )
@@ -82,7 +83,7 @@ export class AuthSignInComponent implements OnInit
         this.showAlert = false;
 
         // Sign in
-        this._authService.signIn(this.signInForm.value)
+        this._authService.login(this.signInForm.value)
             .subscribe(
                 () =>
                 {

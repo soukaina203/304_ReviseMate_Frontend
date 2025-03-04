@@ -1,4 +1,4 @@
-const URL_DEV = `http://localhost:5122`;
+const URL_DEV = `http://localhost:3000`;
 
 export const environment = {
     production: false,
