@@ -1,6 +1,5 @@
-
-
-<img class=" absolute  ml-0 mt-0  w-[6.4rem] h-[4rem] max-w-full bg-white" src="assets/logos/logo.png" alt="Dish Logo" />
+<img class=" absolute  ml-0 mt-0  w-[6.4rem] h-[4rem] max-w-full bg-white" src="assets/logos/logo.png"
+    alt="Dish Logo" />
 <div class="flex flex-col items-center justify-center w-full min-h-screen
  text-[#5271FF] bg-white ">
     <div class="w-full max-w-lg p-8 rounded-lg shadow-md">
@@ -17,9 +16,11 @@
             <mat-form-field class="w-full">
                 <mat-label>Nom</mat-label>
                 <input id="nom" matInput [formControlName]="'lastName'">
-                <mat-error *ngIf="signUpForm.controls['lastName'].errors?.['required']" class="text-red-500">Ce champ est
+                <mat-error *ngIf="signUpForm.controls['lastName'].errors?.['required']" class="text-red-500">Ce champ
+                    est
                     obligatoire</mat-error>
-                <mat-error *ngIf="signUpForm.controls['lastName'].errors?.['minlength']" class="text-red-500">Le lastName doit
+                <mat-error *ngIf="signUpForm.controls['lastName'].errors?.['minlength']" class="text-red-500">Le
+                    lastName doit
                     contenir plus de 2 lettres</mat-error>
 
                 <mat-error *ngIf="signUpForm.controls['lastName'].errors?.['pattern']" class="text-red-500">
@@ -117,18 +118,12 @@
                 <mat-progress-spinner *ngIf="signUpForm.disabled" [diameter]="24"
                     [mode]="'indeterminate'"></mat-progress-spinner>
             </button>
-            <div
-            class="mt-1.5 inline-flex w-full items-center justify-between"
-        >
-            <mat-checkbox
-                class="-ml-2"
-                [color]="'primary'"
-                [formControlName]="'rememberMe'"
-            >
-            Vous êtes prof?
-            </mat-checkbox>
+            <div class="mt-1.5 inline-flex w-full items-center justify-between">
+                <mat-checkbox (click)="isProf()" class="-ml-2" [color]="'primary'" >
+                    Vous êtes prof?
+                </mat-checkbox>
 
-        </div>
+            </div>
         </form>
 
         <!-- Sign-in link -->
@@ -138,3 +133,59 @@
         </div>
     </div>
 </div>
+
+
+<ng-container *ngIf="!isChecked">
+    <ng-template #securityPoppup let-dialogRef>
+        <button mat-icon-button style="float:right; margin: 5px;" matDialogClose>
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-dialog-content>
+            <div class="flex flex-col items-center justify-center h-full p-5 ">
+                <h1 class="text-xl font-semibold text-center ">
+
+                    Veuillez entrer le code de sécurité fourni par l'université ?
+                </h1>
+
+                <div class="w-full mb-5">
+                    <mat-form-field class="w-full">
+                        <mat-label> code de sécurité</mat-label>
+                        <input id="password" matInput type="password" #passwordField>
+
+                        <button mat-icon-button type="button"
+                            (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+                            matSuffix>
+                            <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"
+                                [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                            <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
+                                [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+                        </button>
+
+
+                        <mat-error *ngIf="signUpForm.controls['password'].errors?.['required']" class="text-red-500">Ce
+                            champ
+                            est obligatoire</mat-error>
+
+                        <mat-error *ngIf="signUpForm.controls['password'].errors?.['minlength']" class="text-red-500">Le mot
+                            de passe doit contenir au moins 8
+                            caractères</mat-error>
+                    </mat-form-field>
+
+                    <!-- <input type="email" id="email" [(ngModel)]="titleOfHour"
+                        class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required /> -->
+
+
+                </div>
+
+
+                <div class="flex justify-end">
+                    <!-- <button mat-button matTooltip="Cancel" (click)="toggleEditMode()">Annuler</button> -->
+                    <button class="px-6 py-2 bg-[#5271FF] text-white" (click)="submit()">Enregistrer</button>
+
+                </div>
+            </div>
+        </mat-dialog-content>
+    </ng-template>
+</ng-container>

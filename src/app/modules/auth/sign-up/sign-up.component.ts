@@ -1,8 +1,9 @@
 import { NgIf } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -14,24 +15,25 @@ import { AuthService } from 'app/core/auth/auth.service';
 import { AuthServiceService } from 'app/services/auth-service.service';
 
 @Component({
-    selector     : 'auth-sign-up',
-    templateUrl  : './sign-up.component.html',
+    selector: 'auth-sign-up',
+    templateUrl: './sign-up.component.html',
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations,
-    standalone   : true,
-    imports      : [RouterLink, NgIf, FuseAlertComponent, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule],
+    animations: fuseAnimations,
+    standalone: true,
+    imports: [RouterLink, NgIf, FuseAlertComponent, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule],
 })
-export class AuthSignUpComponent implements OnInit
-{
+export class AuthSignUpComponent implements OnInit {
     @ViewChild('signUpNgForm') signUpNgForm: NgForm;
 
     alert: { type: FuseAlertType; message: string } = {
-        type   : 'success',
+        type: 'success',
         message: '',
     };
+    isChecked:boolean=false
     signUpForm: UntypedFormGroup;
     showAlert: boolean = false;
     passwordHidden: any;
+    @ViewChild('securityPoppup') securityPoppup!: TemplateRef<any>;
 
     /**AuthServiceService
      * Constructor
@@ -40,8 +42,9 @@ export class AuthSignUpComponent implements OnInit
         private _authService: AuthServiceService,
         private _formBuilder: UntypedFormBuilder,
         private _router: Router,
-    )
-    {
+        private dialog: MatDialog
+
+    ) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -55,10 +58,10 @@ export class AuthSignUpComponent implements OnInit
         // Create the form
         this.signUpForm = this._formBuilder.group({
 
-            lastName: ['bdfhbgf',[Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
-            firstName: ['bdfhbgf',[Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
-            email: ['bdfhbgf@vdf',[Validators.required, Validators.email]],
-            password: ['bdfhbgf@vdf', [Validators.minLength(7),Validators.required]],
+            lastName: ['bdfhbgf', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
+            firstName: ['bdfhbgf', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
+            email: ['bdfhbgf@vdf', [Validators.required, Validators.email]],
+            password: ['bdfhbgf@vdf', [Validators.minLength(7), Validators.required]],
             idRole: 2
         },
         );
@@ -71,12 +74,31 @@ export class AuthSignUpComponent implements OnInit
     /**
      * Sign up
      */
-    signUp(): void
-    {
+    openSecurityPoppup(): void {
+        const dialogRef = this.dialog.open(this.securityPoppup, {
+            height: '350px',
+            width: '500px',
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+
+        });
+
+
+    }
+    isProf() {
+        if (!this.isChecked) {
+            this.openSecurityPoppup()
+            this.isChecked=true
+        }else{
+            this.isChecked=false
+
+        }
+    }
+    signUp(): void {
         console.log('hello')
         // Do nothing if the form is invalid
-        if ( this.signUpForm.invalid )
-        {
+        if (this.signUpForm.invalid) {
             return;
         }
 
@@ -89,13 +111,11 @@ export class AuthSignUpComponent implements OnInit
         // Sign up
         this._authService.signUp(this.signUpForm.value)
             .subscribe(
-                (response) =>
-                {
+                (response) => {
                     // Navigate to the confirmation required page
                     this._router.navigateByUrl('/sign-in');
                 },
-                (response) =>
-                {
+                (response) => {
                     // Re-enable the form
                     this.signUpForm.enable();
 
@@ -104,7 +124,7 @@ export class AuthSignUpComponent implements OnInit
 
                     // Set the alert
                     this.alert = {
-                        type   : 'error',
+                        type: 'error',
                         message: 'Something went wrong, please try again.',
                     };
 
