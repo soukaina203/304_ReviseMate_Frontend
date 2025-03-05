@@ -29,10 +29,11 @@ export class AuthSignUpComponent implements OnInit {
         type: 'success',
         message: '',
     };
-    isChecked:boolean=false
+    isChecked: boolean = false
     signUpForm: UntypedFormGroup;
     showAlert: boolean = false;
     passwordHidden: any;
+    codeProf: number;
     @ViewChild('securityPoppup') securityPoppup!: TemplateRef<any>;
 
     /**AuthServiceService
@@ -76,7 +77,7 @@ export class AuthSignUpComponent implements OnInit {
      */
     openSecurityPoppup(): void {
         const dialogRef = this.dialog.open(this.securityPoppup, {
-            height: '350px',
+            height: '380px',
             width: '500px',
         });
 
@@ -86,12 +87,27 @@ export class AuthSignUpComponent implements OnInit {
 
 
     }
+    submitCodeProf() {
+        this._authService.VerifyCodeProf(this.codeProf).subscribe((res) => {
+            console.log(res)
+            if (!res) {
+                     // Set the alert
+                     this.alert = {
+                        type: 'error',
+                        message: 'Le code est incorrect',
+                    };
+
+                    // Show the alert
+                    this.showAlert = true;
+            }
+        })
+    }
     isProf() {
         if (!this.isChecked) {
             this.openSecurityPoppup()
-            this.isChecked=true
-        }else{
-            this.isChecked=false
+            this.isChecked = true
+        } else {
+            this.isChecked = false
 
         }
     }
