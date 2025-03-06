@@ -11,8 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
-import { AuthService } from 'app/core/auth/auth.service';
-import { AuthServiceService } from 'app/services/auth-service.service';
+import { AuthService } from 'app/services/auth.service';
 
 @Component({
     selector: 'auth-sign-in',
@@ -37,7 +36,7 @@ export class AuthSignInComponent implements OnInit {
      */
     constructor(
         private _activatedRoute: ActivatedRoute,
-        private _authService: AuthServiceService,
+        private _authService: AuthService,
         private _formBuilder: UntypedFormBuilder,
         private _router: Router,
     ) {

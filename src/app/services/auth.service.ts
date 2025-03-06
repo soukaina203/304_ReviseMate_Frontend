@@ -7,11 +7,10 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthServiceService {
+export class AuthService {
 
   constructor() { }
   protected http = inject(HttpClient);
-  protected urlApi: string = environment.apiUrl;// InjectService.injector.get('API_URL');
   protected url: string = environment.url;
 
 
