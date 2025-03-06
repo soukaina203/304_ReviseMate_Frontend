@@ -1,0 +1,38 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { environment } from 'environments/environment';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SuperService <T>  {
+    protected http = inject(HttpClient);
+    protected urlApi: string = environment.apiUrl;
+    protected url: string = environment.url;
+
+    constructor(public controller: string) { }
+
+
+
+
+    getAll = () => this.http.get<T>(`${this.url}/${this.controller}/getAll`);
+
+    put = (id: number | string, o: T) => this.http.put<any>(`${this.url}/${this.controller}/put/${id}`, o);
+
+    get = () => this.http.get<T[]>(`${this.url}/${this.controller}/get`);
+
+    count = () => this.http.get<number>(`${this.url}/${this.controller}/count`);
+
+    getOne = (id: any) => this.http.get<T>(`${this.url}/${this.controller}/getById/${id}`);
+
+    post = (o: T) => this.http.post<T>(`${this.url}/${this.controller}/post`, o);
+
+
+    patch(id: number, model: { op: string, path: string, value: any }[]) {
+      return this.http.patch<T>(`${this.url}/${this.controller}/patch/${id}`, model);
+    }
+
+    delete = (id: any) => this.http.delete<any>(`${this.url}/${this.controller}/delete/${id}`);
+
+}

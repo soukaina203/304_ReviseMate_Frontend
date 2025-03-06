@@ -4,6 +4,7 @@ import { FichesComponent } from "./fiches/fiches.component";
 import { CartesComponent } from "./cartes/cartes.component";
 import { TableauBordComponent } from "./tableau-bord/tableau-bord.component";
 import { HomeComponent } from "./home/home.component";
+import { ProfileComponent } from "./profile/profile.component";
 // import { ProfileComponent } from "./profile/profile.component";
 
 export default [
@@ -15,6 +16,7 @@ export default [
             { path: 'quiz', component: QuizComponent },
             { path: 'fiches', component: FichesComponent },
             { path: 'cartes', component: CartesComponent },
+            { path: 'profile', component: ProfileComponent },
         ]
     }
 ] as Routes;
