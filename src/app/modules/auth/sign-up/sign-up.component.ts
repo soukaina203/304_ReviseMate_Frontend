@@ -29,9 +29,11 @@ export class AuthSignUpComponent implements OnInit {
         type: 'success',
         message: '',
     };
+
     isChecked: boolean = false
     signUpForm: UntypedFormGroup;
     showAlert: boolean = false;
+    showAlertCode: boolean = false;
     passwordHidden: any;
     codeProf: number;
     @ViewChild('securityPoppup') securityPoppup!: TemplateRef<any>;
@@ -63,7 +65,7 @@ export class AuthSignUpComponent implements OnInit {
             firstName: ['Soukaina', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
             email: ['soukaina@gmail.com', [Validators.required, Validators.email]],
             password: ['bdfhbgf@vdf', [Validators.minLength(7), Validators.required]],
-            idClasse:null, // on precise les classes pendant l'inscription
+            idClasse:null, // on precise paa les classes pendant l'inscription
             idRole: 2 // par defaut le role d'utilisateur est 2 => celui d'etudiant
         },
         );
@@ -88,18 +90,21 @@ export class AuthSignUpComponent implements OnInit {
 
 
     }
+    closePoppup(){
+        this.dialog.closeAll()
+    }
     submitCodeProf() {
         this._authService.VerifyCodeProf(this.codeProf).subscribe((res) => {
             console.log(res)
-            if (!res) {
+            if (res.message==='Le code est incorrect.') {
                      // Set the alert
                      this.alert = {
                         type: 'error',
-                        message: 'Le code est incorrect',
+                        message: res.message,
                     };
 
                     // Show the alert
-                    this.showAlert = true;
+                    this.showAlertCode = true;
             }
         })
     }
@@ -146,25 +151,3 @@ export class AuthSignUpComponent implements OnInit {
 
     }
 }
-// .subscribe(
-//     (response) => {
-//         // Navigate to the confirmation required page
-//         this._router.navigateByUrl('/sign-in');
-//     },
-//     (response) => {
-//         // Re-enable the form
-//         this.signUpForm.enable();
-
-//         // Reset the form
-//         this.signUpNgForm.resetForm();
-
-//         // Set the alert
-//         this.alert = {
-//             type: 'error',
-//             message: "Une erreur s'est produite, veuillez réessaye",
-//         };
-
-//         // Show the alert
-//         this.showAlert = true;
-//     },
-// );

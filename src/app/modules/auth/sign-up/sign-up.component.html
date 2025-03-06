@@ -4,12 +4,12 @@
  text-[#5271FF] bg-white ">
     <div class="w-full max-w-lg p-8 rounded-lg shadow-md">
 
-        <h2 class="text-2xl font-bold text-center">Inscription</h2>
 
                 <fuse-alert class="mt-8" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type"
                 [@shake]="alert.type === 'error'">
                 {{alert.message}}
             </fuse-alert>
+        <h2 class="text-2xl font-bold text-center">Inscription</h2>
 
         <form class="mt-6" [formGroup]="signUpForm" #signUpNgForm="ngForm">
 
@@ -138,13 +138,13 @@
 
 <ng-container *ngIf="!isChecked">
     <ng-template #securityPoppup let-dialogRef>
-        <button mat-icon-button style="float:right; margin: 5px;" matDialogClose>
+        <button (click)="closePoppup()" mat-icon-button style="float:right; margin: 5px;" matdialogclose>
             <mat-icon>close</mat-icon>
         </button>
 
         <mat-dialog-content>
             <div class="flex flex-col items-center justify-center h-full p-5 ">
-                    <fuse-alert class="w-full mb-2 " *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
+                    <fuse-alert class="w-full mb-2 " *ngIf="showAlertCode" [appearance]="'outline'" [showIcon]="false"
                         [type]="alert.type" [@shake]="alert.type === 'error'">
                         {{alert.message}}
                     </fuse-alert>
