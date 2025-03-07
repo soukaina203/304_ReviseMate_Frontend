@@ -29,6 +29,8 @@ export class AuthSignUpComponent implements OnInit {
         type: 'success',
         message: '',
     };
+    isShow: boolean = false
+
 
     isChecked: boolean = false
     signUpForm: UntypedFormGroup;
@@ -65,19 +67,21 @@ export class AuthSignUpComponent implements OnInit {
             firstName: ['Soukaina', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
             email: ['soukaina@gmail.com', [Validators.required, Validators.email]],
             password: ['bdfhbgf@vdf', [Validators.minLength(7), Validators.required]],
+            confirmPassword: ['', [Validators.required]],
+
             idClasse:null, // on precise paa les classes pendant l'inscription
             idRole: 2 // par defaut le role d'utilisateur est 2 => celui d'etudiant
         },
         );
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Sign up
-     */
+
+    verify() {
+        const user = this.signUpForm.getRawValue();
+        user.password !== user.confirmPassword ? this.isShow = true : this.isShow = false
+
+    }
     openSecurityPoppup(): void {
         const dialogRef = this.dialog.open(this.securityPoppup, {
             height: '380px',
