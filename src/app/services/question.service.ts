@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { SuperService } from './super.service';
-import { Quiz } from 'app/models/Quiz';
+import { Question } from 'app/models/Question';
 
 @Injectable({
   providedIn: 'root'
 })
-export class QuizService  extends SuperService<Quiz>{
+export class QuestionService extends SuperService<Question>{
 
   constructor() {
-    super('quiz');
+    super('question');
 
    }
 }

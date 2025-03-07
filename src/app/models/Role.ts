@@ -1,5 +1,6 @@
 export class Role{
-    id: number = 0;
+    id: string
     nom:string='';
+    id_role:number
 
 }
