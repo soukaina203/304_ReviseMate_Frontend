@@ -29,7 +29,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class ClassyLayoutComponent implements OnInit, OnDestroy
 {
-    isScreenSmall: boolean;
+    isScreenSmall: boolean=false;
     navigation: Navigation;
     user: User;
     private _unsubscribeAll: Subject<any> = new Subject<any>();

@@ -24,7 +24,8 @@ export class AuthService {
 
   }
   VerifyCodeProf(code:number){
-    return this.http.post<any>(`${this.url}/auth/verifyCode`, code);
+
+    return this.http.post<any>(`${this.url}/auth/verifyCode`, {code});
 
   }
 }

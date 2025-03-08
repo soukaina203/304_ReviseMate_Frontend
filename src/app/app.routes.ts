@@ -71,13 +71,22 @@ export const appRoutes: Route[] = [
         ]
     },
 
-    // Admin routes
+    // users routes
     {
         path: '',
-
 
         children: [
             {path: 'user', loadChildren: () => import('app/modules/user/user.routes')},
         ]
-    }
+    },
+
+        // admin routes
+        {
+            path: '',
+        component: LayoutComponent,
+
+            children: [
+                {path: 'admin', loadChildren: () => import('app/modules/admin/admin.routes')},
+            ]
+        }
 ];

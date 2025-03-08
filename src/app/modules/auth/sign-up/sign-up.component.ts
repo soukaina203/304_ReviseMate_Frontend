@@ -30,7 +30,7 @@ export class AuthSignUpComponent implements OnInit {
         message: '',
     };
     isShow: boolean = false
-
+    idProfRole:boolean = false
 
     isChecked: boolean = false
     signUpForm: UntypedFormGroup;
@@ -109,6 +109,14 @@ export class AuthSignUpComponent implements OnInit {
 
                     // Show the alert
                     this.showAlertCode = true;
+            }else{
+                this.alert = {
+                    type: 'info',
+                    message: res.message,
+                };
+                this.showAlertCode = true;
+                this.idProfRole=true
+
             }
         })
     }
@@ -129,7 +137,7 @@ export class AuthSignUpComponent implements OnInit {
         this.signUpForm.disable();
 
         this.showAlert = false;
-
+        this.idProfRole?  this.signUpForm.patchValue({ idRole: 1 }):console.log("object")
         this._authService.signUp(this.signUpForm.value).subscribe((res)=>{
             console.log(res)
             this.signUpForm.enable();
