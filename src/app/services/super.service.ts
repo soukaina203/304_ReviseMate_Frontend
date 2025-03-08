@@ -16,7 +16,7 @@ export class SuperService <T>  {
 
 
 
-    getAll = () => this.http.get<T>(`${this.url}/${this.controller}/getAll`);
+    getAll = () => this.http.get<T>(`${this.url}/${this.controller}`);
 
     put = (id: number | string, o: T) => this.http.put<any>(`${this.url}/${this.controller}/put/${id}`, o);
 
@@ -24,7 +24,7 @@ export class SuperService <T>  {
 
     count = () => this.http.get<number>(`${this.url}/${this.controller}/count`);
 
-    getOne = (id: any) => this.http.get<T>(`${this.url}/${this.controller}/getById/${id}`);
+    getOne = (id: any) => this.http.get<T>(`${this.url}/${this.controller}/${id}`);
 
     post = (o: T) => this.http.post<T>(`${this.url}/${this.controller}/post`, o);
 
