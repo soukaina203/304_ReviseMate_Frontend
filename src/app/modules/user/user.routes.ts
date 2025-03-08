@@ -21,6 +21,8 @@ export default [
             { path: 'profile', component: ProfileComponent },
 
 
+
+
         ]
     }
 ] as Routes;

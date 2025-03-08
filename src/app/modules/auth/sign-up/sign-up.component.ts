@@ -68,9 +68,8 @@ export class AuthSignUpComponent implements OnInit {
             email: ['soukaina@gmail.com', [Validators.required, Validators.email]],
             password: ['bdfhbgf@vdf', [Validators.minLength(7), Validators.required]],
             confirmPassword: ['', [Validators.required]],
-
-            idClasse:null, // on precise paa les classes pendant l'inscription
-            idRole: 2 // par defaut le role d'utilisateur est 2 => celui d'etudiant
+            id_classe:null,
+            id_role: 2
         },
         );
     }
@@ -98,6 +97,7 @@ export class AuthSignUpComponent implements OnInit {
         this.dialog.closeAll()
     }
     submitCodeProf() {
+
         this._authService.VerifyCodeProf(this.codeProf).subscribe((res) => {
             console.log(res)
             if (res.message==='Le code est incorrect.') {
@@ -131,6 +131,7 @@ export class AuthSignUpComponent implements OnInit {
     }
 
     signUp(): void {
+
         if (this.signUpForm.invalid) {
             return;
         }
@@ -138,28 +139,31 @@ export class AuthSignUpComponent implements OnInit {
 
         this.showAlert = false;
         this.idProfRole?  this.signUpForm.patchValue({ idRole: 1 }):console.log("object")
-        this._authService.signUp(this.signUpForm.value).subscribe((res)=>{
-            console.log(res)
-            this.signUpForm.enable();
-            if (res.message==="Inscription réussie") {
-            this.showAlert = true;
+        console.log(this.signUpForm.value)
+        const { confirmPassword, ...formData } = this.signUpForm.value;
 
-                this.alert = {
-                    type: 'info',
-                    message: res.message,
-                };
-        this._router.navigateByUrl('/sign-in');
-            }else{
-            this.showAlert = true;
+         this._authService.signUp(formData).subscribe((res)=>{
+             console.log(res)
+             this.signUpForm.enable();
+             if (res.message==="Inscription réussie") {
+             this.showAlert = true;
 
-                this.alert = {
-                    type: 'error',
-                    message: res.message,
-                };
-            }
-            this.showAlert = true;
+                 this.alert = {
+                     type: 'info',
+                     message: res.message,
+                 };
+         this._router.navigateByUrl('/sign-in');
+             }else{
+             this.showAlert = true;
 
-        })
+                 this.alert = {
+                     type: 'error',
+                     message: res.message,
+                 };
+             }
+             this.showAlert = true;
+
+         })
 
     }
 }

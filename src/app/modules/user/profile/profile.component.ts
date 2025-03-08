@@ -1,26 +1,23 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Role } from 'app/models/Role';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import {  Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FuseAlertComponent } from '@fuse/components/alert';
+
 import { UowService } from 'app/services/uow.service';
 import { User } from 'app/models/User';
 import { Classe } from 'app/models/Classe';
 import { MatModule } from 'app/mat.modules';
+import { MatSelectModule } from '@angular/material/select';
 @Component({
     selector: 'app-profile',
     standalone: true,
-    imports: [RouterLink, FuseAlertComponent,CommonModule,
+    imports: [RouterLink,CommonModule,MatSelectModule,
         FormsModule, ReactiveFormsModule,
-         MatModule
+         MatModule,
+
+
         ],
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
@@ -55,38 +52,44 @@ export class ProfileComponent {
             this.id = userStorage.id
         }
 
-        this.uow.classes.getAll().subscribe((res: any) => {
-            if (res !== null) {
-                this.classes = res
-            }else{
-                console.log("a problem occur while fetching data")
-            }
-        })
+
 
         this.uow.users.getOne(this.id).subscribe((res: any) => {
             console.log(res)
             if (res?.code !== 404) {
                 this.user = res;
                 this.commingPwd = res.password
+                this.user.id_role === 3 ? this.isProf = true : this.isProf = false;
                 this.createForm();
-                this.user.idRole === 3 ? this.isProf = true : this.isProf = false;
 
             } else {
                 this.DeletedUserPoppup()
             }
+            this.uow.classes.getAll().subscribe((res: any) => {
+                if (res !== null) {
+                    this.classes = res
+                }else{
+                    console.log("a problem occur while fetching data")
+                }
+            })
         });
 
     }
+    idClassValue(e) {
+        console.log("===========")
+        this.myForm.get('id_classe').setValue(e);
+        console.log(e)
 
+    }
     createForm() {
         this.myForm = this.fb.group({
-            id: [this.user.id],
+            id: [this.id],
             lastName: [this.user.lastName, [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z ]+$')]],
             firstName: [this.user.firstName, [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z ]+$')]],
             email: [this.user.email, [Validators.required, Validators.email]],
-            password: ['', [Validators.minLength(7),]],
-            idRole: [this.user.idRole],
-            idClasse: [this.user.idClasse],
+            password: ['', [Validators.minLength(7)]],
+            id_role: [this.user.id_role],
+            id_classe: [this.user.id_classe],
         });
     }
 
@@ -100,22 +103,24 @@ export class ProfileComponent {
     }
 
     update(user) {
+
         if (user.password === '') {
             user.password = this.commingPwd
         }
 
         this.uow.users.put(this.id, user).subscribe((res) => {
-            if (res.m === "success") {
-                this.ProfilePoppup()
-                this.poppupMessage = 'Profil mis à jour'
-                this.isSuccess = true
-            } else {
+            console.log(res)
+            // if (res.m === "success") {
+            //     this.ProfilePoppup()
+            //     this.poppupMessage = 'Profil mis à jour'
+            //     this.isSuccess = true
+            // } else {
 
-                this.ProfilePoppup()
-                this.poppupMessage = "L'email existe déjà"
-                this.isSuccess = false
+            //     this.ProfilePoppup()
+            //     this.poppupMessage = "L'email existe déjà"
+            //     this.isSuccess = false
 
-            }
+            // }
         })
     }
 

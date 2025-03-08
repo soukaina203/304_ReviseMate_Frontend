@@ -1,4 +1,4 @@
-<div class="flex flex-col w-full">
+<div class="flex flex-col w-full mt-[3rem]">
     <ng-container>
         <!-- Contact form -->
         <div class="relative flex flex-col items-center flex-auto px-6 sm:px-12">
@@ -6,7 +6,7 @@
                 <form [formGroup]="myForm" *ngIf="myForm">
 
                     <h1 class="mt-6 mb-10 ml-1 text-[#5271FF] text-3xl font-semibold">
-                        Profil {{user.lastName}} {{user.firstName}}
+                        Bonjour {{user.lastName}} {{user.firstName}}
                     </h1>
 
                     <div class="flex items-center justify-center ">
@@ -84,19 +84,26 @@
                     </mat-form-field>
 
 
-                    <mat-form-field class="z-50 w-full">
-                        <mat-label>Classes</mat-label>
-                        <mat-select multiple formControlName='idClasse' panelClass="custom-dropdown">
-                            <ng-container *ngFor="let class of classes">
-                                <mat-option [value]="class.id">{{ class.nom }}</mat-option>
-                            </ng-container>
-                        </mat-select>
-                    </mat-form-field>
+
+
+                    <label for="id_classe" class="block  font-semibold text-gray-700 text-[0.9rem]">Classes</label>
+                    <select
+                      id="id_classe"
+                      formControlName="id_classe"
+                      (change)="idClassValue($event.target.value)"
+                      class="block w-full p-4 mt-1 mb-5 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    >
+
+                      <option class="p-4 " *ngFor="let class of classes" [value]="class._id">Class {{ class.nom }}</option>
+                    </select>
+
+                    <p *ngIf="myForm.controls['id_classe'].hasError('required')" class="mt-1 text-sm text-red-500">
+                      Ce champ est obligatoire
+                    </p>
 
 
 
-
-                        <button (click)="update()" [disabled]="myForm.disabled"
+                        <button (click)="update(myForm.value)" [disabled]="myForm.disabled"
                             class=" font-medium hover:before:bg-[#5271FF]
                         relative h-[45px] w-[7rem] overflow-hidden border-black px-3 border-2
                          text-black shadow-2xl transition-all before:absolute before:bottom-0
