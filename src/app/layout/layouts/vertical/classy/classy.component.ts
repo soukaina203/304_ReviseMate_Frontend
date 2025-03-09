@@ -75,6 +75,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
             .subscribe((navigation: Navigation) =>
             {
                 this.navigation = navigation;
+                console.warn(navigation.default)
             });
 
         // Subscribe to the user service

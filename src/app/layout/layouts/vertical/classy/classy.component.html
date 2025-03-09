@@ -4,10 +4,11 @@
 <!-- Navigation -->
 <fuse-vertical-navigation
     class="bg-gray-900 dark print:hidden"
-    mode="side"
+    [mode]="isScreenSmall ? 'over' : 'side'"
     [name]="'mainNavigation'"
-    [navigation]="navigation?.default"
-    opened="true">
+    [navigation]="navigation.default"
+    [opened]="!isScreenSmall"
+>
     <!-- Navigation header hook -->
     <ng-container fuseVerticalNavigationContentHeader>
         <div class="flex items-center w-full p-4 pl-6">
@@ -18,21 +19,13 @@
                     src="assets/images/logo/logo.svg">
             </div>
             <!-- Components -->
-            <div class="flex items-center ml-auto">
-                <notifications></notifications>
-            </div>
+
         </div>
         <!-- User -->
 
     </ng-container>
     <!-- Navigation footer hook -->
-    <ng-container fuseVerticalNavigationContentFooter>
-        <div class="flex items-center justify-center h-16 pl-2 pr-6 mt-2 mb-4 flex-0 opacity-12">
-            <img
-                class="max-w-36"
-                src="assets/images/logo/logo-text-on-dark.svg">
-        </div>
-    </ng-container>
+
 </fuse-vertical-navigation>
 
 <!-- Wrapper -->
@@ -47,19 +40,7 @@
             <mat-icon [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
         </button>
         <!-- Components -->
-        <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
-            <languages></languages>
-            <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
-            <search [appearance]="'bar'"></search>
-            <shortcuts></shortcuts>
-            <messages></messages>
-            <button
-                class="lg:hidden"
-                mat-icon-button
-                (click)="quickChat.toggle()">
-                <mat-icon [svgIcon]="'heroicons_outline:chat-bubble-left-right'"></mat-icon>
-            </button>
-        </div>
+
     </div>
 
     <!-- Content -->
@@ -77,4 +58,3 @@
 </div>
 
 <!-- Quick chat -->
-<quick-chat #quickChat="quickChat"></quick-chat>
