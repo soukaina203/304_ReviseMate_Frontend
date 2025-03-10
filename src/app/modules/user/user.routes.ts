@@ -15,7 +15,7 @@ export default [
         children: [
             { path: '', component: TableauBordComponent },
             { path: 'import', component: ImportationFilesComponent },
-            { path: 'quiz', component: QuizComponent },
+            { path: 'quiz', children: [ { path: '', loadChildren: () => import('app/modules/user/quiz/quiz.routes') } ] },
             { path: 'fiches', component: FichesComponent },
             { path: 'cartes', component: CartesComponent },
             { path: 'profile', component: ProfileComponent },
