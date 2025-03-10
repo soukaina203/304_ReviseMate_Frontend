@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -6,8 +6,16 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './create-quiz.component.html',
-  styleUrl: './create-quiz.component.scss'
+  styleUrls: ['./create-quiz.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CreateQuizComponent {
 
+  // Liste des questions/réponses
+  questionAnswers = [{ question: '', answer: '' }];
+
+  // Fonction pour ajouter une nouvelle section de question/réponse
+  addQuestionAnswer() {
+    this.questionAnswers.push({ question: '', answer: '' });
+  }
 }
