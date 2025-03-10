@@ -8,7 +8,7 @@ import { CarteMemoire } from 'app/models/Carte';
 export class CarteService  extends SuperService<CarteMemoire>{
 
   constructor() {
-    super('carteMemoire');
+    super('super/CarteMemoire');
 
    }
 }

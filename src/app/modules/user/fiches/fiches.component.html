@@ -1,1 +1,24 @@
-<p>fiches works!</p>
+<div class="flex items-center justify-center p-6 mt-5">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 ">
+        <div *ngFor="let fiche of fiches" class="service-card  w-[300px] border-2 border-[#5271FF]
+        shadow-2xl cursor-pointer snap-start shrink-0 py-15 px-6 bg-white flex flex-col gap-4 rounded-2xl transition-all duration-300 group">
+
+            <!-- Icône en haut à gauche -->
+            <div class="flex items-center gap-2">
+          <img src="assets/icons/fiche.png" alt="clipboard" class="w-13 h-13">
+                <h2 class="text-lg font-bold text-black/80">{{ fiche.titre }}</h2>
+            </div>
+
+            <p class="text-sm text-gray-600">
+                {{ fiche.contenu | slice:0:100 }}{{ fiche.contenu.length > 100 ? '...' : '' }}
+            </p>
+
+
+            <p class="text-xs text-gray-500">
+                📅 {{ fiche.date_creation | date:'dd/MM/yyyy HH:mm' }}
+            </p>
+
+
+        </div>
+    </div>
+</div>

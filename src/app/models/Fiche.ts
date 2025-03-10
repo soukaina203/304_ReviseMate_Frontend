@@ -4,4 +4,6 @@ export class Fiche {
     date_creation: Date;
     id_cours: string;
     titre: string;
+    id_utilisateur:string;
+
 }

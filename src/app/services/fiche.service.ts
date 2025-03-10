@@ -8,7 +8,7 @@ import { Fiche } from 'app/models/Fiche';
 export class FicheService extends SuperService<Fiche>{
 
   constructor() {
-    super('fiche');
+    super('super/fiche');
 
    }
 }

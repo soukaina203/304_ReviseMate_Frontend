@@ -3,4 +3,6 @@ export class CarteMemoire {
     id_fiche: string;
     question: string;
     reponse: string;
+    id_utilisateur:string;
+    titre: string;
   }
