@@ -15,9 +15,11 @@ export default [
         children: [
             { path: '', component: TableauBordComponent },
             { path: 'import', component: ImportationFilesComponent },
+
             { path: 'quiz', children: [ { path: '', loadChildren: () => import('app/modules/user/quiz/quiz.routes') } ] },
-            { path: 'fiches', component: FichesComponent },
-            { path: 'cartes', component: CartesComponent },
+            { path: 'fiches', children: [ { path: '', loadChildren: () => import('app/modules/user/fiches/fiches.routes') } ] },
+            { path: 'cartes', children: [ { path: '', loadChildren: () => import('app/modules/user/cartes/cartes.routes') } ] },
+
             { path: 'profile', component: ProfileComponent },
 
 
