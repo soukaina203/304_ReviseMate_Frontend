@@ -1,0 +1,27 @@
+body {
+    background-color: #EEEEEE !important;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+.p-22 {
+    padding: 5.5rem !important;
+  }
+
+  .custom-placeholder::placeholder {
+    color: gray !important;
+    opacity: 1;
+  }
+
+  .bg-blue-custom {
+    background-color: #5271FF;
+  }
+  
+  .text-blue-custom {
+    color: #5271FF;
+  }
+  .mt-4 {
+    margin-top: 0.5rem !important;
+}
+  
