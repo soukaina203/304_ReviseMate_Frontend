@@ -1,5 +1,5 @@
 import { html2pdf } from 'html2pdf.js';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +12,8 @@ import { Fiche } from 'app/models/Fiche';
   standalone: true,
   imports: [CommonModule, QuillModule, FormsModule],
   templateUrl: './edit-fiche.component.html',
-  styleUrl: './edit-fiche.component.scss'
+  styleUrls: ['./edit-fiche.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class EditFicheComponent {
   content: string = '';  // Variable pour stocker le contenu de l'éditeur

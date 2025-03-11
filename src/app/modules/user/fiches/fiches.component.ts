@@ -1,5 +1,5 @@
 import { filter } from 'rxjs';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewEncapsulation }  from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatModule } from 'app/mat.modules';
 import { User } from 'app/models/User';
@@ -12,7 +12,8 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [CommonModule,MatModule,RouterLink],
   templateUrl: './fiches.component.html',
-  styleUrl: './fiches.component.scss'
+  styleUrls: ['./fiches.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class FichesComponent {
 
