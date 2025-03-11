@@ -24,10 +24,9 @@ export class FichesComponent {
     ngOnInit(): void {
         let user = JSON.parse(localStorage.getItem("user"))
         this.uow.fiches.getAll().subscribe((data:any) => {
-            console.log(user.id)
             console.log(data)
             if (data !== null ) {
-                this.fiches=data.filter((fiche:Fiche)=>fiche.id_utilisateur==user.id)
+                this.fiches=data
             }
             else {
                 console.log(
