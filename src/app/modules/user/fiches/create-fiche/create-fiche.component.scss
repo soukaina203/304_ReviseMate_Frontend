@@ -1,0 +1,63 @@
+/* create-fiche.component.scss */
+body {
+    background-color: #EEEEEE !important;
+}
+
+/* Cibler la barre d'outils de Quill */
+.ql-toolbar {
+    width: 100%;               
+    background-color: rgba(82, 113, 255, 0.47);
+    border: none !important;
+    box-shadow: none !important;
+    margin-bottom: 15px;
+}
+
+/* Cibler la zone de contenu de l'éditeur */
+.ql-container {
+    width: 794px;              
+    height: 1123px !important;  
+    margin: 0 auto;             
+    background-color: #fff;    
+    border-radius: 8px;         
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    padding: 20px;              
+    border: 1px solid #ddd;   
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;           
+    box-sizing: border-box;     
+    
+    /* Ajouter les règles provenant de quill.scss */
+    min-height: 100% !important;
+    max-height: none !important;
+    height: 100% !important;
+    overflow: visible !important;
+}
+
+/* Ajuster l'éditeur de texte pour qu'il prenne toute la hauteur de la page */
+.ql-editor {
+    padding: 10px;              
+    height: 100%;               
+    overflow-y: auto;           
+}
+.ql-toolbar .ql-picker {
+    background-color: white!important; 
+    color: black; 
+  }
+  
+  .ql-toolbar .ql-picker-options {
+    background-color: white!important; 
+    border: 1px solid #ccc; 
+  }
+  
+  .ql-toolbar .ql-picker-item {
+    color: black !important; 
+  }
+
+.bg-blue-custom {
+    background-color: rgba(82, 113, 255, 0.80);
+  }
+  
+  .text-blue-custom {
+    background-color: rgba(82, 113, 255, 0.80);
+  }

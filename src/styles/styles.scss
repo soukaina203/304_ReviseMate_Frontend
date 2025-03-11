@@ -2,6 +2,10 @@
 /*  @ Import/write your custom styles here.
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
+@import '~quill/dist/quill.snow.css';
+
+
+
 .custom-dropdown {
     z-index: 1000 !important;
 }
