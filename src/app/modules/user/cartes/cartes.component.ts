@@ -20,8 +20,6 @@ export class CartesComponent {
     ngOnInit(): void {
         let user = JSON.parse(localStorage.getItem("user"))
         this.uow.cartes.getAll().subscribe((data:any) => {
-            console.log(user.id)
-            console.log(data)
             if (data !== null ) {
                 this.cartes=data.filter((carte:CarteMemoire)=>carte.id_utilisateur==user.id)
             }

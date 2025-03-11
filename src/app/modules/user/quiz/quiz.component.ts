@@ -22,8 +22,7 @@ export class QuizComponent {
        ngOnInit(): void {
            let user = JSON.parse(localStorage.getItem("user"))
            this.uow.quiz.getAll().subscribe((data:any) => {
-               console.log(user.id)
-               console.log(data)
+
                if (data !== null ) {
 
               this.quizs=data.filter((quiz:Quiz)=>quiz.id_utilisateur==user.id)
