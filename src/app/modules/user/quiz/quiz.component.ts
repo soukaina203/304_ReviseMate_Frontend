@@ -13,19 +13,20 @@ import { Quiz } from 'app/models/Quiz';
   styleUrl: './quiz.component.scss'
 })
 export class QuizComponent {
-    quizs
+
      private uow = inject(UowService)
        user: User = JSON.parse(localStorage.getItem("user"));
 
-       cartes:Quiz[]=[]
+       quizs:Quiz[]=[]
 
        ngOnInit(): void {
            let user = JSON.parse(localStorage.getItem("user"))
-           this.uow.fiches.getAll().subscribe((data:any) => {
+           this.uow.quiz.getAll().subscribe((data:any) => {
                console.log(user.id)
                console.log(data)
                if (data !== null ) {
-                   this.cartes=data.filter((quiz:Quiz)=>quiz.id_utilisateur==user.id)
+
+              this.quizs=data.filter((quiz:Quiz)=>quiz.id_utilisateur==user.id)
                }
                else {
                    console.log(

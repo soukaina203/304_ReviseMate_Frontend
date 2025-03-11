@@ -23,7 +23,7 @@ export class CartesComponent {
             console.log(user.id)
             console.log(data)
             if (data !== null ) {
-                this.cartes=data
+                this.cartes=data.filter((carte:CarteMemoire)=>carte.id_utilisateur==user.id)
             }
             else {
                 console.log(

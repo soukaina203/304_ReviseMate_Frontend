@@ -1,24 +1,33 @@
-
-hello
 <div class="flex items-center justify-center p-6 mt-5">
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 ">
-        <div *ngFor="let carte of cartes" class="service-card  w-[300px] border-2 border-[#5271FF]
-        shadow-2xl cursor-pointer snap-start shrink-0 py-15 px-6 bg-white flex flex-col gap-4 rounded-2xl transition-all duration-300 group">
+        <div *ngFor="let carte of cartes"
+            class="service-card  w-[300px] border-2 border-[#5271FF]
+        shadow-2xl cursor-pointer snap-start transition-all duration-300 group hover:scale-105 hover:shadow-2xl shrink-0 py-12 px-6 bg-white flex flex-col gap-4 rounded-2xl transition-all duration-300 group">
 
             <!-- Icône en haut à gauche -->
-            <div class="flex items-center gap-2">
-          <img src="assets/icons/fiche.png" alt="clipboard" class="w-13 h-13">
-                <h2 class="text-lg font-bold text-black/80">{{ carte.titre }}</h2>
+            <div class="flex items-start gap-2 ">
+                <svg height="50px" width="50px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_iconCarrier">
+                        <path d="M22 9.96997H2" stroke="#5271FF" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                        <path d="M5 18.9199H11" stroke="#5271FF" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                        <path
+                            d="M18 3.91992H6C3.79086 3.91992 2 5.71078 2 7.91992V17.9199C2 20.1291 3.79086 21.9199 6 21.9199H18C20.2091 21.9199 22 20.1291 22 17.9199V7.91992C22 5.71078 20.2091 3.91992 18 3.91992Z"
+                            stroke="#5271FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </g>
+                </svg>
+
+                <div class="flex flex-col gap-2">
+
+                    <h2 class="text-lg font-bold text-black/80">{{ carte.question }}</h2>
+                    <p class="text-sm text-gray-600">
+                        Réponse: {{ carte['réponse'] }}
+                    </p>
+                </div>
             </div>
 
-            <p class="text-sm text-gray-600">
-                {{ carte.contenu | slice:0:100 }}{{ carte.contenu.length > 100 ? '...' : '' }}
-            </p>
 
-
-            <p class="text-xs text-gray-500">
-                📅 {{ carte.date_creation | date:'dd/MM/yyyy HH:mm' }}
-            </p>
 
 
         </div>
