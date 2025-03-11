@@ -3,8 +3,9 @@
         <div *ngFor="let fiche of fiches" class="service-card w-[300px] border-2 border-[#5271FF]
         shadow-2xl cursor-pointer snap-start shrink-0 py-12 px-6 bg-white
          transition-all duration-300 group hover:scale-105 hover:shadow-2xl flex
-         flex-col gap-4 rounded-2xl transition-all duration-300 group">
-
+         flex-col gap-4 rounded-2xl transition-all duration-300 group"
+         [routerLink]="['/user/fiches', fiche._id]"
+      >
             <!-- Icône en haut à gauche -->
             <div class="flex items-center gap-2">
           <img src="assets/icons/fiche.png" alt="clipboard" class="w-13 h-13">

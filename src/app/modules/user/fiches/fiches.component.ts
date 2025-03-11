@@ -5,11 +5,12 @@ import { MatModule } from 'app/mat.modules';
 import { User } from 'app/models/User';
 import { UowService } from 'app/services/uow.service';
 import { Fiche } from 'app/models/Fiche';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-fiches',
   standalone: true,
-  imports: [CommonModule,MatModule],
+  imports: [CommonModule,MatModule,RouterLink],
   templateUrl: './fiches.component.html',
   styleUrl: './fiches.component.scss'
 })
