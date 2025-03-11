@@ -23,6 +23,11 @@ export class AuthService {
     return this.http.post<any>(`${this.url}/auth/login`, user);
 
   }
+
+  logout(): Observable<any> {
+    return this.http.post<any>(`${this.url}/auth/logout`, {});
+
+  }
   VerifyCodeProf(code:number){
 
     return this.http.post<any>(`${this.url}/auth/verifyCode`, {code});
