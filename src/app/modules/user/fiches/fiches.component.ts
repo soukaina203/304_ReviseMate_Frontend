@@ -29,7 +29,6 @@ export class FichesComponent {
         let user = JSON.parse(localStorage.getItem("user"));
         this.uow.fiches.getAll().subscribe((res: any) => {
             if (res.success) {
-                // Sanitize and convert SafeHtml back to string
                 if (res.data.length == 0) {
                     this.message = "Aucune fiche trouvée";
                 } else {
