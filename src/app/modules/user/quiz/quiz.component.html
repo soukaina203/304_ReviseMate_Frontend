@@ -5,7 +5,7 @@
         Créer un Quiz
     </button>
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div *ngFor="let quiz of quizs"
+        <div *ngFor="let quiz of quizs"   routerLink="/user/quiz/{{ quiz._id }}"
             class="relative service-card w-[300px] border-2 border-[#5271FF] shadow-xl
             cursor-pointer snap-start shrink-0 py-6 px-6 bg-white flex flex-col
             gap-4 rounded-2xl transition-all duration-300 group hover:scale-105 hover:shadow-2xl">
