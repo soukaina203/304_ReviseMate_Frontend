@@ -4,40 +4,47 @@ import { UowService } from 'app/services/uow.service';
 import { User } from 'app/models/User';
 import { CarteMemoire } from 'app/models/Carte';
 import { Quiz } from 'app/models/Quiz';
+import { RouterLink } from '@angular/router';
+import { MatModule } from 'app/mat.modules';
 
 @Component({
-  selector: 'app-quiz',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './quiz.component.html',
-  styleUrl: './quiz.component.scss'
+    selector: 'app-quiz',
+    standalone: true,
+    imports: [CommonModule,MatModule, RouterLink],
+    templateUrl: './quiz.component.html',
+    styleUrl: './quiz.component.scss'
 })
 export class QuizComponent {
 
-     private uow = inject(UowService)
-       user: User = JSON.parse(localStorage.getItem("user"));
+    private uow = inject(UowService)
+    user: User = JSON.parse(localStorage.getItem("user"));
+    message: string = '';
 
-       quizs:Quiz[]=[]
+    quizs:Quiz[]=[]
 
-       ngOnInit(): void {
-           let user = JSON.parse(localStorage.getItem("user"))
-           this.uow.quiz.getAll().subscribe((data:any) => {
+    ngOnInit(): void {
+        let user = JSON.parse(localStorage.getItem("user"))
+        this.uow.quiz.getAll().subscribe((res:any) => {
 
-               if (data !== null ) {
-
-              this.quizs=data.filter((quiz:Quiz)=>quiz.id_utilisateur==user.id)
-               }
-               else {
-                   console.log(
-                       "No data fetched"
-                   )
-               }
-           });
-       }
-       deleteQuiz(id: number) {
-           this.uow.quiz.delete(id).subscribe((res) => {
-               console.log(res)
-               this.ngOnInit();
-           });
-       }
+            if (res.success) {
+                if (res.data.length == 0) {
+                    this.message = "Aucune fiche trouvée";
+                } else {
+                    this.quizs = res.data.filter((quiz: Quiz) => quiz.id_utilisateur == user?.id)
+                }
+            } else {
+                console.log("No data fetched");
+            }
+        },
+        (error: any) => {
+            console.error("Error fetching data", error);
+        }
+    );
+}
+deleteQuiz(id: number) {
+    this.uow.quiz.delete(id).subscribe((res) => {
+        console.log(res)
+        this.ngOnInit();
+    });
+}
 }
