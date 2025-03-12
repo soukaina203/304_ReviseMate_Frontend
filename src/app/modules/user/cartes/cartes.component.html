@@ -1,11 +1,17 @@
 <div class="flex items-center justify-center p-6 mt-5">
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 ">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         <div *ngFor="let carte of cartes"
-            class="service-card  w-[300px] border-2 border-[#5271FF]
-        shadow-2xl cursor-pointer snap-start transition-all duration-300 group hover:scale-105 hover:shadow-2xl shrink-0 py-12 px-6 bg-white flex flex-col gap-4 rounded-2xl transition-all duration-300 group">
+            class="relative service-card w-[300px] border-2 border-[#5271FF]
+        shadow-2xl cursor-pointer snap-start transition-all duration-300 group hover:scale-105 hover:shadow-2xl shrink-0 py-12 px-6 bg-white flex flex-col gap-4 rounded-2xl">
 
-            <!-- Icône en haut à gauche -->
-            <div class="flex items-start gap-2 ">
+            <!-- Delete Icon in the top-right corner -->
+            <button (click)="deleteCarte(carte._id)"
+                class="absolute top-2 right-2 text-[#5271FF] hover:text-[#5271FF]">
+                <span class="material-icons">delete</span>
+            </button>
+
+            <!-- Icon on the top-left -->
+            <div class="flex items-start gap-2">
                 <svg height="50px" width="50px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g id="SVGRepo_iconCarrier">
                         <path d="M22 9.96997H2" stroke="#5271FF" stroke-width="2" stroke-linecap="round"
@@ -19,17 +25,12 @@
                 </svg>
 
                 <div class="flex flex-col gap-2">
-
                     <h2 class="text-lg font-bold text-black/80">{{ carte.question }}</h2>
                     <p class="text-sm text-gray-600">
                         Réponse: {{ carte['réponse'] }}
                     </p>
                 </div>
             </div>
-
-
-
-
         </div>
     </div>
 </div>

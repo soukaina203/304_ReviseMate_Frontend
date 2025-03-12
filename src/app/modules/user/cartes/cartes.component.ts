@@ -30,4 +30,10 @@ export class CartesComponent {
             }
         });
     }
+    deleteCarte(id: number) {
+        this.uow.cartes.delete(id).subscribe((res) => {
+            console.log(res)
+            this.ngOnInit();
+        });
+    }
 }
