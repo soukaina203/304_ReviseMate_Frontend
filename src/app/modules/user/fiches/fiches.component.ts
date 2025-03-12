@@ -1,4 +1,3 @@
-import { filter } from 'rxjs';
 import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatModule } from 'app/mat.modules';
@@ -6,6 +5,7 @@ import { User } from 'app/models/User';
 import { UowService } from 'app/services/uow.service';
 import { Fiche } from 'app/models/Fiche';
 import { RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-fiches',
@@ -17,32 +17,51 @@ import { RouterLink } from '@angular/router';
 })
 export class FichesComponent {
 
-    private uow = inject(UowService)
+    private uow = inject(UowService);
+    private sanitizer = inject(DomSanitizer);
     user: User = JSON.parse(localStorage.getItem("user"));
 
-    fiches: Fiche[] = []
+    fiches: Fiche[] = [];
 
     ngOnInit(): void {
-        let user = JSON.parse(localStorage.getItem("user"))
+        let user = JSON.parse(localStorage.getItem("user"));
         this.uow.fiches.getAll().subscribe((data: any) => {
-            console.log(data)
+            console.log(data);
             if (data !== null) {
-                this.fiches = data
-            }
-            else {
-                console.log(
-                    "No data fetched"
-                )
+                // Sanitize and convert SafeHtml back to string
+                this.fiches = data.map((fiche: Fiche) => {
+                    fiche.contenu = this.sanitizeHtml(fiche.contenu).toString(); // Convert SafeHtml to string
+                    return fiche;
+                });
+            } else {
+                console.log("No data fetched");
             }
         });
+    }
+
+    sanitizeHtml(content: any): SafeHtml {
+        return this.sanitizer.bypassSecurityTrustHtml(content.toString());
+    }
+
+    truncateText(text: string, limit: number): SafeHtml {
+        console.log("===========");
+        console.log(text);
+
+        // Suppression de la partie "SafeValue must use [property]=binding:"
+        text = text.replace(/^SafeValue must use \[property\]=binding:/, '').trim();
+
+        const div = document.createElement("div");
+        div.innerHTML = text;
+        const plainText = div.innerText;  // Extraction du texte brut
+        const truncatedText = plainText.length > limit ? plainText.substring(0, limit) + "..." : plainText;
+
+        return this.sanitizer.bypassSecurityTrustHtml(truncatedText);
     }
 
     deleteFiche(id: number) {
         this.uow.fiches.delete(id).subscribe((res) => {
-            console.log(res)
+            console.log(res);
             this.ngOnInit();
         });
     }
-
-
 }
