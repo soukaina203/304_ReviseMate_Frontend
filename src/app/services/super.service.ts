@@ -33,6 +33,6 @@ export class SuperService <T>  {
       return this.http.patch<T>(`${this.url}/${this.controller}/patch/${id}`, model);
     }
 
-    delete = (id: any) => this.http.delete<any>(`${this.url}/${this.controller}/delete/${id}`);
+    delete = (id: any) => this.http.delete<any>(`${this.url}/${this.controller}/${id}`);
 
 }

@@ -1,26 +1,29 @@
 <div class="flex items-center justify-center p-6 mt-5">
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 ">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         <div *ngFor="let fiche of fiches" class="service-card w-[300px] border-2 border-[#5271FF]
-        shadow-2xl cursor-pointer snap-start shrink-0 py-12 px-6 bg-white
+        shadow-2xl cursor-pointer snap-start shrink-0 py-10 px-6 bg-white
          transition-all duration-300 group hover:scale-105 hover:shadow-2xl flex
-         flex-col gap-4 rounded-2xl transition-all duration-300 group"
-         [routerLink]="['/user/fiches', fiche._id]"
-      >
+         flex-col gap-4 rounded-2xl">
+
             <!-- Icône en haut à gauche -->
             <div class="flex items-center gap-2">
-          <img src="assets/icons/fiche.png" alt="clipboard" class="w-13 h-13">
+                <img src="assets/icons/fiche.png" alt="clipboard" class="w-13 h-13">
                 <h2 class="text-lg font-bold text-black/80">{{ fiche.titre }}</h2>
             </div>
 
             <p class="text-sm text-gray-600">
-                {{ fiche.contenu | slice:0:100 }}{{ fiche.contenu.length > 100 ? '...' : '' }}
+                {{ fiche.contenu | slice:0:80 }}{{ fiche.contenu.length > 80 ? '...' : '' }}
             </p>
 
-
-            <p class="text-xs text-gray-500">
-                📅 {{ fiche.date_creation | date:'dd/MM/yyyy HH:mm' }}
-            </p>
-
+            <!-- Date + Icône de suppression -->
+            <div class="flex items-center justify-between mt-4">
+                <p class="text-xs text-gray-500">
+                    📅 {{ fiche.date_creation | date:'dd/MM/yyyy HH:mm' }}
+                </p>
+                <button (click)="deleteFiche(fiche._id)" class="text-red-500 hover:text-red-700">
+                    <span class="material-icons">delete</span>
+                </button>
+            </div>
 
         </div>
     </div>
