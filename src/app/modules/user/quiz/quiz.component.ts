@@ -34,4 +34,10 @@ export class QuizComponent {
                }
            });
        }
+       deleteQuiz(id: number) {
+           this.uow.quiz.delete(id).subscribe((res) => {
+               console.log(res)
+               this.ngOnInit();
+           });
+       }
 }

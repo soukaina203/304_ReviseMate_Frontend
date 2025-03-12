@@ -1,13 +1,21 @@
 <div class="flex items-center justify-center p-6 mt-5">
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         <div *ngFor="let quiz of quizs"
-            class="service-card w-[300px] border-2 border-[#5271FF] shadow-xl
+            class="relative service-card w-[300px] border-2 border-[#5271FF] shadow-xl
             cursor-pointer snap-start shrink-0 py-6 px-6 bg-white flex flex-col
             gap-4 rounded-2xl transition-all duration-300 group hover:scale-105 hover:shadow-2xl">
 
-            <!-- En-tête -->
+            <!-- Delete Icon in the top-right corner -->
+            <button (click)="deleteQuiz(quiz._id)"
+                class="absolute top-2 right-2 text-[#5271FF] hover:text-[#5271FF]">
+                <span class="material-icons">delete</span>
+            </button>
+
+            <!-- Header -->
             <div class="flex items-center gap-3">
-                <svg fill="#5271FF" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 31.646 31.646" xml:space="preserve" height="20px" width="20px">
+                <svg fill="#5271FF" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 31.646 31.646" xml:space="preserve"
+                    height="20px" width="20px">
                     <g id="SVGRepo_iconCarrier">
                         <g>
                             <g>
@@ -30,12 +38,12 @@
                 <h2 class="text-xl font-extrabold text-black/90">{{ quiz.titre }}</h2>
             </div>
 
-            <!-- Contenu du quiz -->
+            <!-- Quiz Content -->
             <div class="flex flex-col gap-3 text-black/70">
                 <p class="text-base"><strong>Score :</strong> {{ quiz.score }}%</p>
                 <p class="text-base"><strong>Date :</strong> {{ quiz.date_score | date: 'dd/MM/yyyy HH:mm' }}</p>
 
-                <!-- Nouveau style pour le type de quiz -->
+                <!-- Quiz Type Badge -->
                 <div class="flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-full w-fit"
                     [ngClass]="{
                         'bg-blue-100 text-blue-700 border border-blue-400': quiz.type === 'multiple-choice',
