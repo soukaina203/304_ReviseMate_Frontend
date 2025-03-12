@@ -25,11 +25,10 @@ export class FichesComponent {
 
     ngOnInit(): void {
         let user = JSON.parse(localStorage.getItem("user"));
-        this.uow.fiches.getAll().subscribe((data: any) => {
-            console.log(data);
-            if (data !== null) {
+        this.uow.fiches.getAll().subscribe((res: any) => {
+            if (res.success ) {
                 // Sanitize and convert SafeHtml back to string
-                this.fiches = data.map((fiche: Fiche) => {
+                this.fiches = res.data.map((fiche: Fiche) => {
                     fiche.contenu = this.sanitizeHtml(fiche.contenu).toString(); // Convert SafeHtml to string
                     return fiche;
                 });
@@ -44,8 +43,7 @@ export class FichesComponent {
     }
 
     truncateText(text: string, limit: number): SafeHtml {
-        console.log("===========");
-        console.log(text);
+
 
         // Suppression de la partie "SafeValue must use [property]=binding:"
         text = text.replace(/^SafeValue must use \[property\]=binding:/, '').trim();

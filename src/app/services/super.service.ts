@@ -26,7 +26,7 @@ export class SuperService <T>  {
 
     getOne = (id: any) => this.http.get<T>(`${this.url}/${this.controller}/${id}`);
 
-    post = (o: T) => this.http.post<T>(`${this.url}/${this.controller}/post`, o);
+    post = (o: T) => this.http.post<T>(`${this.url}/${this.controller}`, o);
 
 
     patch(id: number, model: { op: string, path: string, value: any }[]) {
