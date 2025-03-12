@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxFileDropModule } from 'ngx-file-drop';  // Importer NgxFileDropModule ici
+import { IA } from 'app/models/IA';
 
 @Component({
   selector: 'app-importation-files',
@@ -11,8 +12,14 @@ import { NgxFileDropModule } from 'ngx-file-drop';  // Importer NgxFileDropModul
   encapsulation: ViewEncapsulation.None
 })
 export class ImportationFilesComponent {
-  onFileDrop(event: { files: any[] }) {
-    console.log(event.files);
-  }
+    iaObject : IA = new IA();
+    onFileChange(event: Event): void {
+        const input = event.target as HTMLInputElement;
+        if (input.files && input.files.length > 0) {
+          const file = input.files[0];
+
+            this.iaObject.file = file;
+        }
+      }
 }
 

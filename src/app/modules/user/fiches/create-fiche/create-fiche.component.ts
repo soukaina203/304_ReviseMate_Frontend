@@ -32,13 +32,12 @@ export class CreateFicheComponent {
     saveFiche() {
         let user = JSON.parse(localStorage.getItem("user"));
 
-        console.log('Fiche sauvegardée avec le contenu : ', this.content);
         this.fiche.contenu = this.content
         this.fiche.titre = this.ficheName
         this.fiche.date_creation= new Date();
         this.fiche.id_utilisateur=user?.id;
         this.fiche.id_cours='67bde52bd528fe1ec83f031d';
-        console.log(this.fiche)
+
          this.uow.fiches.post(this.fiche).subscribe((res: any) => {
              if (res.success) {
                  this.InfoPoppup();

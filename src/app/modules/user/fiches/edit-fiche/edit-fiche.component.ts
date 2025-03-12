@@ -35,9 +35,9 @@ export class EditFicheComponent {
         this.id = this.route.snapshot.paramMap.get('id') || '';
         console.log('ID de la fiche : ', this.id);
         this.uow.fiches.getOne(this.id).subscribe((e: any) => {
-            this.fiche = e
-            this.content = e.contenu
-            this.ficheName = e.titre
+            this.fiche = e.data
+            this.content = e.data.contenu
+            this.ficheName = e.data.titre
         })
     }
 
