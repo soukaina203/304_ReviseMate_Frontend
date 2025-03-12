@@ -10,12 +10,19 @@ import { CommonModule } from '@angular/common';
   encapsulation: ViewEncapsulation.None
 })
 export class CreateQuizComponent {
+  // Tableau de questions
+  questions = [];
 
-  // Liste des questions/réponses
-  questionAnswers = [{ question: '', answer: '' }];
-
-  // Fonction pour ajouter une nouvelle section de question/réponse
-  addQuestionAnswer() {
-    this.questionAnswers.push({ question: '', answer: '' });
+  ngOnInit() {
+    // Initialiser avec une question par défaut
+    this.addQuestion();
+  }
+  // Ajouter une question
+  addQuestion() {
+    this.questions.push({
+      text: '',
+      answers: [{ text: '' }, { text: '' }, { text: '' }, { text: '' }],
+      correctAnswer: null
+    });
   }
 }
