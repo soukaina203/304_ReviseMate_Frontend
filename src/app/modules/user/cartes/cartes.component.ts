@@ -27,7 +27,7 @@ export class CartesComponent {
 
 
                 if (res.data.length == 0) {
-                    this.message = "Aucune fiche trouvée";
+                    this.message = "Aucune carte mémoire trouvée";
                 } else {
                     this.cartes = res.data.filter((carte: CarteMemoire) => carte.id_utilisateur == user?.id)
                 }
