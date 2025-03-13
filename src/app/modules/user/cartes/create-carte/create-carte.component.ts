@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UowService } from 'app/services/uow.service';
@@ -15,13 +15,13 @@ import { CarteMemoire } from 'app/models/Carte';
 })
 export class CreateCarteComponent implements OnInit {
   carteMemoireForm: FormGroup;
+    private uow = inject(UowService)
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
     this.carteMemoireForm = this.fb.group({
       titre: ['', Validators.required],
-      id_fiche: [''], // Facultatif
       id_utilisateur: [''], // Facultatif
       questions_reponses: this.fb.array([
         this.createQuestionReponseGroup()
@@ -45,12 +45,32 @@ export class CreateCarteComponent implements OnInit {
 
   // Fonction pour soumettre le formulaire
   onSubmit() {
-    if (this.carteMemoireForm.valid) {
-      console.log('Formulaire soumis', this.carteMemoireForm.value);
-      // Ajoutez ici la logique pour envoyer les données à votre backend
-    } else {
-      console.log('Formulaire invalide');
-    }
+  let  user = JSON.parse(localStorage.getItem("user"));
+
+    this.carteMemoireForm.patchValue({ id_utilisateur: user.id });
+
+
+    // if (this.carteMemoireForm.valid) {
+    //   console.log('Formulaire soumis', this.carteMemoireForm.value);
+    //   // Ajoutez ici la logique pour envoyer les données à votre backend
+    // } else {
+    //   console.log('Formulaire invalide');
+    // }
+    console.log(this.carteMemoireForm.value)
+   this.uow.cartes.post(this.carteMemoireForm.value).subscribe((res: any) => {
+    //  console.log(res)
+    // if (res.success) {
+    //     this.InfoPoppup();
+    // } else {
+    //     console.log('Erreur lors de l\'enregistrement de la fiche');
+    //     this.PoppupContent = 'Erreur lors de l\'enregistrement de la fiche';
+    //     this.InfoPoppup();
+
+    // }
+   });
+
+
+
   }
 
   // Accesseur pour obtenir les contrôles de question/réponse
