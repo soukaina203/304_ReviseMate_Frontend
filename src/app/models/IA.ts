@@ -1,5 +1,5 @@
 export class IA{
-    file: File | null;
+    file: File | FormData;
     promt: string | null;
   type : string;
 }

@@ -14,7 +14,7 @@ export class IaGenerationService {
 
   getIAanswer(formData: FormData) {
 
-    return this.http.post(`${this.url}/revision/pdf`, {formData});
+    return this.http.post(`${this.url}/revision/pdf`, formData);
 
   }
 

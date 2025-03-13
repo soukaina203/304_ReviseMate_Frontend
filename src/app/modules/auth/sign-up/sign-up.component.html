@@ -16,7 +16,11 @@
 
             <mat-form-field class="w-full">
                 <mat-label>Nom</mat-label>
+
                 <input id="nom" matInput [formControlName]="'lastName'">
+
+
+
                 <mat-error *ngIf="signUpForm.controls['lastName'].errors?.['required']" class="text-red-500">Ce champ
                     est
                     obligatoire</mat-error>
@@ -101,6 +105,10 @@
             <button class="w-full mt-2 text-white bg-[#5271FF]
              fuse-mat-button-large" mat-flat-button [color]="'primary'" [disabled]="signUpForm.disabled"
                 (click)="signUp()">
+
+
+
+
                 <span *ngIf="!signUpForm.disabled">
                     S’inscrire
 

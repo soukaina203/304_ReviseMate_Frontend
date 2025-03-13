@@ -23,6 +23,7 @@ import { AuthService } from 'app/services/auth.service';
     imports: [RouterLink, NgIf, FuseAlertComponent, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule],
 })
 export class AuthSignUpComponent implements OnInit {
+
     @ViewChild('signUpNgForm') signUpNgForm: NgForm;
 
     alert: { type: FuseAlertType; message: string } = {
@@ -30,7 +31,7 @@ export class AuthSignUpComponent implements OnInit {
         message: '',
     };
     isShow: boolean = false
-    idProfRole:boolean = false
+    idProfRole: boolean = false
 
     isChecked: boolean = false
     signUpForm: UntypedFormGroup;
@@ -52,13 +53,6 @@ export class AuthSignUpComponent implements OnInit {
     ) {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void {
         // Create the form
         this.signUpForm = this._formBuilder.group({
@@ -68,7 +62,7 @@ export class AuthSignUpComponent implements OnInit {
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.minLength(7), Validators.required]],
             confirmPassword: ['', [Validators.required]],
-            id_classe:null,
+            id_classe: null,
             id_role: 2
         },
         );
@@ -93,29 +87,29 @@ export class AuthSignUpComponent implements OnInit {
 
 
     }
-    closePoppup(){
+    closePoppup() {
         this.dialog.closeAll()
     }
     submitCodeProf() {
 
         this._authService.VerifyCodeProf(this.codeProf).subscribe((res) => {
             console.log(res)
-            if (res.message==='Le code est incorrect.') {
-                     // Set the alert
-                     this.alert = {
-                        type: 'error',
-                        message: res.message,
-                    };
+            if (res.message === 'Le code est incorrect.') {
+                // Set the alert
+                this.alert = {
+                    type: 'error',
+                    message: res.message,
+                };
 
-                    // Show the alert
-                    this.showAlertCode = true;
-            }else{
+                // Show the alert
+                this.showAlertCode = true;
+            } else {
                 this.alert = {
                     type: 'info',
                     message: res.message,
                 };
                 this.showAlertCode = true;
-                this.idProfRole=true
+                this.idProfRole = true
 
             }
         })
@@ -138,32 +132,35 @@ export class AuthSignUpComponent implements OnInit {
         this.signUpForm.disable();
 
         this.showAlert = false;
-        this.idProfRole?  this.signUpForm.patchValue({ idRole: 1 }):console.log("object")
+        this.idProfRole ? this.signUpForm.patchValue({ idRole: 1 }) : console.log("object")
+
         console.log(this.signUpForm.value)
+
+
         const { confirmPassword, ...formData } = this.signUpForm.value;
 
-         this._authService.signUp(formData).subscribe((res)=>{
-             console.log(res)
-             this.signUpForm.enable();
-             if (res.message==="Inscription réussie") {
-             this.showAlert = true;
+        this._authService.signUp(formData).subscribe((res) => {
 
-                 this.alert = {
-                     type: 'info',
-                     message: res.message,
-                 };
-         this._router.navigateByUrl('/sign-in');
-             }else{
-             this.showAlert = true;
 
-                 this.alert = {
-                     type: 'error',
-                     message: res.message,
-                 };
-             }
-             this.showAlert = true;
+            this.signUpForm.enable();
+            if (res.message === "Inscription réussie") {
+                this.showAlert = true;
+                this.alert = {
+                    type: 'info',
+                    message: res.message,
+                };
+                this._router.navigateByUrl('/sign-in');
+            } else {
+                this.showAlert = true;
 
-         })
+                this.alert = {
+                    type: 'error',
+                    message: res.message,
+                };
+            }
+            this.showAlert = true;
+
+        })
 
     }
 }
