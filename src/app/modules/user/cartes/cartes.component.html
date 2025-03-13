@@ -1,10 +1,10 @@
 <div class="flex flex-col items-center justify-center p-6 mt-5">
 
     <button routerLink="/user/cartes/create"
-    class="relative flex items-center justify-center px-6 py-3 mb-4 text-lg font-semibold text-blue-700 transition-all duration-300 bg-blue-100 border border-blue-400 rounded-full shadow-lg ">
-    <mat-icon>add</mat-icon>
-    Créer une Carte Memoire
-</button>
+        class="relative flex items-center justify-center px-6 py-3 mb-4 text-lg font-semibold text-blue-700 transition-all duration-300 bg-blue-100 border border-blue-400 rounded-full shadow-lg ">
+        <mat-icon>add</mat-icon>
+        Créer une Carte Memoire
+    </button>
     <div class="flex items-center justify-center w-full">
         <h1>{{message}}</h1>
     </div>
@@ -15,8 +15,7 @@
         shadow-2xl cursor-pointer snap-start transition-all duration-300 group hover:scale-105 hover:shadow-2xl shrink-0 py-12 px-6 bg-white flex flex-col gap-4 rounded-2xl">
 
             <!-- Delete Icon in the top-right corner -->
-            <button (click)="deleteCarte(carte._id)"
-                class="absolute top-2 right-2 text-[#5271FF] hover:text-[#5271FF]">
+            <button (click)="deleteCarte(carte._id)" class="absolute top-2 right-2 text-[#5271FF] hover:text-[#5271FF]">
                 <span class="material-icons">delete</span>
             </button>
 
@@ -36,10 +35,12 @@
                 </svg>
 
                 <div class="flex flex-col gap-2">
-                    <h2 class="text-lg font-bold text-black/80">{{ carte.question }}</h2>
-                    <p class="text-sm text-gray-600">
-                        Réponse: {{ carte['réponse'] }}
-                    </p>
+                    <h2 class="text-lg font-bold text-black/80">{{ carte.titre }}</h2>
+                    <!-- Loop through questions_reponses -->
+                    <div *ngFor="let qr of carte.questions_reponses">
+                        <p class="text-sm text-gray-600"><strong>Question:</strong> {{ qr.question }}</p>
+                        <p class="text-sm text-gray-600"><strong>Réponse:</strong> {{ qr['réponse'] }}</p>
+                    </div>
                 </div>
             </div>
         </div>

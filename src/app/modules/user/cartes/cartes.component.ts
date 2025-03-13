@@ -29,7 +29,9 @@ export class CartesComponent {
                 if (res.data.length == 0) {
                     this.message = "Aucune fiche trouvée";
                 } else {
-                    this.cartes = res.data.filter((carte: CarteMemoire) => carte.id_utilisateur == user?.id)
+                    // .filter((carte: CarteMemoire) => carte.id_utilisateur == user?.id)
+                    this.cartes = res.data
+                    console.log(this.cartes)
                 }
             }
             else {

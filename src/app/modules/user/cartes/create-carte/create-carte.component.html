@@ -35,9 +35,10 @@
                         <textarea
                             class="w-full p-3 mt-1 border rounded-md resize-none"
                             placeholder="Votre r&eacute;ponse"
-                            formControlName="reponse">
+                            formControlName="réponse">
                         </textarea>
-                        <div *ngIf="questionReponse.get('reponse').invalid && (questionReponse.get('reponse').dirty || questionReponse.get('reponse').touched)" class="text-red-500">
+                        <div *ngIf="questionReponse.get('réponse').invalid && (questionReponse.get('réponse').dirty || questionReponse.get('réponse').touched)"
+                        class="text-red-500">
                             La r&eacute;ponse est requise.
                         </div>
                     </div>

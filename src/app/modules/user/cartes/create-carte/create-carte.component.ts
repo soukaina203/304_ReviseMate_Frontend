@@ -33,7 +33,7 @@ export class CreateCarteComponent implements OnInit {
   createQuestionReponseGroup(): FormGroup {
     return this.fb.group({
       question: ['', Validators.required],
-      reponse: ['', Validators.required]
+      réponse: ['', Validators.required]
     });
   }
 
