@@ -17,11 +17,14 @@ body {
   .bg-blue-custom {
     background-color: #5271FF;
   }
-  
+
   .text-blue-custom {
     color: #5271FF;
   }
   .mt-4 {
     margin-top: 0.5rem !important;
 }
-  
+.custom-spinner {
+    position: relative;
+    z-index: 999; /* Ensures it's above other elements */
+}

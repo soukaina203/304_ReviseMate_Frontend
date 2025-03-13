@@ -11,7 +11,7 @@ import { MatModule } from 'app/mat.modules';
 @Component({
     selector: 'app-create-fiche',
     standalone: true,
-    imports: [CommonModule, QuillModule, FormsModule,MatModule],
+    imports: [CommonModule, QuillModule, FormsModule, MatModule],
     templateUrl: './create-fiche.component.html',
     styleUrls: ['./create-fiche.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -28,26 +28,36 @@ export class CreateFicheComponent {
 
     PoppupContent: string = 'Fiche sauvegardée avec succès'; // Contenu du message de la popup
 
+
+    ngOnInit(): void {
+        const state = history.state as { iaResponse?: { revisionSheet: string } };;
+
+        if (state && state.iaResponse) {
+            this.fiche.contenu = state.iaResponse.revisionSheet;
+            this.content = state.iaResponse.revisionSheet;
+        }
+    }
+
     // Méthode pour enregistrer la fiche
     saveFiche() {
         let user = JSON.parse(localStorage.getItem("user"));
 
         this.fiche.contenu = this.content
         this.fiche.titre = this.ficheName
-        this.fiche.date_creation= new Date();
-        this.fiche.id_utilisateur=user?.id;
-        this.fiche.id_cours='67bde52bd528fe1ec83f031d';
+        this.fiche.date_creation = new Date();
+        this.fiche.id_utilisateur = user?.id;
+        this.fiche.id_cours = '67bde52bd528fe1ec83f031d';
 
-         this.uow.fiches.post(this.fiche).subscribe((res: any) => {
-             if (res.success) {
-                 this.InfoPoppup();
-             } else {
-                 console.log('Erreur lors de l\'enregistrement de la fiche');
-                 this.PoppupContent = 'Erreur lors de l\'enregistrement de la fiche';
-                 this.InfoPoppup();
+        this.uow.fiches.post(this.fiche).subscribe((res: any) => {
+            if (res.success) {
+                this.InfoPoppup();
+            } else {
+                console.log('Erreur lors de l\'enregistrement de la fiche');
+                this.PoppupContent = 'Erreur lors de l\'enregistrement de la fiche';
+                this.InfoPoppup();
 
-             }
-         });
+            }
+        });
     }
 
     // Méthode pour générer un PDF à partir du contenu de Quill
