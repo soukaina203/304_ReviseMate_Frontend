@@ -1,4 +1,4 @@
-<form class="flex flex-col w-full h-auto mt-10 space-y-6 overflow-hidden form-container p-22">
+<form  [formGroup]="form" #signUpNgForm="ngForm" class="flex flex-col w-full h-auto mt-10 space-y-6 overflow-hidden form-container p-22">
     <!-- Étape 1: Déposer un fichier et Zone de texte côte à côte -->
     <div class="flex items-start w-full px-10 space-x-4">
         <span class="flex items-center justify-center w-10 h-10 text-2xl font-semibold text-white rounded-full bg-blue-custom">1</span>
@@ -24,7 +24,7 @@
         <span class="flex items-center justify-center w-10 h-10 text-2xl font-semibold text-white rounded-full bg-blue-custom">2</span>
         <div class="flex flex-col w-1/2">
             <label class="block text-lg text-gray-700">Prompt IA</label>
-            <textarea class="w-full h-24 p-4 text-lg bg-white border rounded-md custom-placeholder"  placeholder="Décrivez votre requête pour l'IA"></textarea>
+            <textarea [formControlName]="'promt'" class="w-full h-24 p-4 text-lg bg-white border rounded-md custom-placeholder"  placeholder="Décrivez votre requête pour l'IA"></textarea>
         </div>
     </div>
 
@@ -35,15 +35,30 @@
         <p class="text-lg">Sélectionnez le format de sortie souhaité :</p>
         <div class="mt-4 space-y-4 text-lg">
             <label class="flex items-center space-x-2">
-                <input type="radio" value="fiche" name="type" checked class="w-5 h-5 text-blue-600 form-radio" />
+                <input
+                  type="radio"
+                  formControlName="type"
+                  value="fiche"
+                  class="w-5 h-5 text-blue-600 form-radio"
+                />
                 <span>Fiche</span>
             </label>
             <label class="flex items-center space-x-2">
-                <input value="carte" type="radio" name="type" class="w-5 h-5 text-blue-600 form-radio" />
+                <input
+                  type="radio"
+                  formControlName="type"
+                  value="carte"
+                  class="w-5 h-5 text-blue-600 form-radio"
+                />
                 <span>Carte mémoire</span>
             </label>
             <label class="flex items-center space-x-2">
-                <input value="quiz" type="radio" name="type" class="w-5 h-5 text-blue-600 form-radio" />
+                <input
+                  type="radio"
+                  formControlName="type"
+                  value="quiz"
+                  class="w-5 h-5 text-blue-600 form-radio"
+                />
                 <span>Quiz</span>
             </label>
         </div>
@@ -54,6 +69,6 @@
 
     <!-- Bouton de validation -->
     <div class="flex items-center justify-center w-full mt-4">
-        <button type="submit" class="px-10 py-4 text-lg text-white rounded-lg bg-blue-custom">Valider</button>
+        <button type="submit" (click)="submit()" class="px-10 py-4 text-lg text-white rounded-lg bg-blue-custom">Valider</button>
     </div>
 </form>
