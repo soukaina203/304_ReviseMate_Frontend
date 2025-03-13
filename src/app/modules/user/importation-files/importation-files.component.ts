@@ -1,25 +1,29 @@
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, inject, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { IaGenerationService } from './../../../services/ia-generation.service';
 import { Router } from '@angular/router';
 import { MatModule } from 'app/mat.modules';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-importation-files',
     standalone: true,
-    imports: [CommonModule, NgxFileDropModule, ReactiveFormsModule,MatModule,  MatProgressSpinnerModule    ],
+    imports: [CommonModule, NgxFileDropModule, ReactiveFormsModule,MatModule],
     templateUrl: './importation-files.component.html',
     styleUrls: ['./importation-files.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ImportationFilesComponent {
+    PoppupContent:string='Veuillez patienter quelques instants'
     form: UntypedFormGroup;
+    @ViewChild('popupTemplate') popupTemplate!: TemplateRef<any>;
+
     private _formBuilder = inject(UntypedFormBuilder);
     private iaGenerationService = inject(IaGenerationService);
-        private _router= inject(Router);
+    private _router= inject(Router);
+    private dialog = inject(MatDialog)
 
     ngOnInit(): void {
         this.form = this._formBuilder.group({
@@ -42,46 +46,44 @@ export class ImportationFilesComponent {
     }
 
     submit() {
+        // Return if the form is invalid
         if (this.form.invalid) {
             return;
         }
 
         // Disable the form
         this.form.disable();
-
         if (this.form.get('file')?.value) {
             const formData = new FormData();
             formData.append('file', this.form.get('file')?.value);
             formData.append('customPrompt', this.form.get('promt')?.value);
+            this.form.enable();
 
-            this.iaGenerationService.getIAanswerFromPdf(formData).subscribe({
-                next: (r) => {
-                    console.log('PDF response:', r);
-                    this._router.navigateByUrl('/user/fiches/cresate', { state: { iaResponse: r } });
-                },
-                error: (err) => {
-                    console.error('Error during PDF processing:', err);
-                },
-                complete: () => this.form.enable() // Re-enable form on completion
+            this.InfoPoppup()
+            this.iaGenerationService.getIAanswerFromPdf(formData).subscribe(r => {
+                console.log('PDF response:', r);
+                this.dialog.closeAll();
+                this._router.navigateByUrl('/user/fiches/create', { state: { iaResponse: r } });
+
             });
         } else if (this.form.get('text')?.value) {
+            this.form.enable();
             const textData = {
                 text: this.form.get('text')?.value,
                 customPrompt: this.form.get('promt')?.value
             };
-
-            this.iaGenerationService.getIAanswerFromText(textData).subscribe({
-                next: (r) => {
-                    console.log('Text response:', r);
-                },
-                error: (err) => {
-                    console.error('Error during text processing:', err);
-                },
-                complete: () => this.form.enable() // Re-enable form on completion
+            this.iaGenerationService.getIAanswerFromText(textData).subscribe(r => {
+                console.log('Text response:', r);
             });
-        } else {
-            this.form.enable(); // Ensure form is enabled if no conditions match
         }
     }
 
+    InfoPoppup(): void {
+        const dialogRef = this.dialog.open(this.popupTemplate, {
+            height: '200px',
+            width: '500px'
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+        });
+    }
 }

@@ -31,12 +31,45 @@ export class CreateFicheComponent {
 
     ngOnInit(): void {
         const state = history.state as { iaResponse?: { revisionSheet: string } };;
-
+console.log(state.iaResponse.revisionSheet)
         if (state && state.iaResponse) {
             this.fiche.contenu = state.iaResponse.revisionSheet;
-            this.content = state.iaResponse.revisionSheet;
+            this.content = this.formatText(state.iaResponse.revisionSheet)
+
+
         }
     }
+
+     formatText(text: string): string {
+        if (!text) return '';
+
+        text = text.replace(/\n{2,}/g, '\n');
+
+        text = text.replace(/\*\*(.*?)\*\*/g, '<h2 class="text-2xl font-bold mt-4">$1</h2>');
+        text = text.replace(/\+/g, '- ');
+
+        text = text.replace(/\*(.*?)\*/g, '<b class="font-semibold">$1</b>');
+
+        text = text.replace(/(<li class="ml-4 list-disc">.*?<\/li>)/g, '<ul class="list-outside pl-5">$1</ul>');
+        text = text.replace(/(?:\n|^)[-+]\s(.*?)(?:\n|$)/g, '<li class="ml-4 list-disc">$1</li>');
+
+        text = text.replace(/\n/g, '<br>');
+        text = text.replace('--- --- ---', '');
+
+
+        text = text.replace(/\|(.+?)\|/g, match => {
+            const cells = match.split('|').filter(cell => cell.trim() !== '');
+            const row = cells.map(cell => `<td class="border px-2 py-1">${cell.trim()}</td>`).join('');
+            return `<tr>${row}</tr>`;
+        });
+
+        // Encapsuler le tableau dans <table> si des lignes sont détectées
+        text = text.replace(/(<tr>.*?<\/tr>)/g, '<table class="border-collapse border w-full mt-2">$1</table>');
+
+        return text;
+    }
+
+
 
     // Méthode pour enregistrer la fiche
     saveFiche() {
