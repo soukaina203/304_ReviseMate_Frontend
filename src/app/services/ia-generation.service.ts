@@ -7,15 +7,16 @@ import { environment } from 'environments/environment';
   providedIn: 'root'
 })
 export class IaGenerationService {
-    protected http = inject(HttpClient);
-    protected url: string = environment.url;
+  protected http = inject(HttpClient);
+  protected url: string = environment.url;
 
-  constructor() { }
+  constructor() {}
 
-  getIAanswer(formData: FormData) {
-
+  getIAanswerFromPdf(formData: FormData) {
     return this.http.post(`${this.url}/revision/pdf`, formData);
-
   }
 
+  getIAanswerFromText(textData: { text: string, customPrompt?: string }) {
+    return this.http.post(`${this.url}/revision`, textData);
+  }
 }
