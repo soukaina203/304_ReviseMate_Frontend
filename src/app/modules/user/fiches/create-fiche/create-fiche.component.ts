@@ -7,6 +7,7 @@ import { Fiche } from 'app/models/Fiche';
 import { MatDialog } from '@angular/material/dialog';
 import { UowService } from 'app/services/uow.service';
 import { MatModule } from 'app/mat.modules';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-create-fiche',
@@ -19,28 +20,27 @@ import { MatModule } from 'app/mat.modules';
 export class CreateFicheComponent {
 
     @ViewChild('popupTemplate') popupTemplate!: TemplateRef<any>;
-
+    ifError:boolean = false;
     content: string = '';  // Variable pour stocker le contenu de l'éditeur
     ficheName: string = ''; // Variable pour stocker le nom de la fiche
     fiche: Fiche = new Fiche();
     private dialog = inject(MatDialog)
     private uow = inject(UowService)
+    private _router=inject(Router)
 
     PoppupContent: string = 'Fiche sauvegardée avec succès'; // Contenu du message de la popup
 
 
     ngOnInit(): void {
         const state = history.state as { iaResponse?: { revisionSheet: string } };;
-console.log(state.iaResponse.revisionSheet)
         if (state && state.iaResponse) {
             this.fiche.contenu = state.iaResponse.revisionSheet;
             this.content = this.formatText(state.iaResponse.revisionSheet)
 
-
         }
     }
 
-     formatText(text: string): string {
+    formatText(text: string): string {
         if (!text) return '';
 
         text = text.replace(/\n{2,}/g, '\n');
@@ -63,7 +63,6 @@ console.log(state.iaResponse.revisionSheet)
             return `<tr>${row}</tr>`;
         });
 
-        // Encapsuler le tableau dans <table> si des lignes sont détectées
         text = text.replace(/(<tr>.*?<\/tr>)/g, '<table class="border-collapse border w-full mt-2">$1</table>');
 
         return text;
@@ -71,26 +70,38 @@ console.log(state.iaResponse.revisionSheet)
 
 
 
-    // Méthode pour enregistrer la fiche
     saveFiche() {
-        let user = JSON.parse(localStorage.getItem("user"));
+        console.log(this.ficheName)
+        if (this.ficheName === '' || this.ficheName === undefined) {
+            this.ifError = true;
+            this.PoppupContent = 'Veuillez renseigner le titre ';
+            this.InfoPoppup();
 
-        this.fiche.contenu = this.content
-        this.fiche.titre = this.ficheName
-        this.fiche.date_creation = new Date();
-        this.fiche.id_utilisateur = user?.id;
-        this.fiche.id_cours = '67bde52bd528fe1ec83f031d';
+        }else{
+            let user = JSON.parse(localStorage.getItem("user"));
 
-        this.uow.fiches.post(this.fiche).subscribe((res: any) => {
-            if (res.success) {
-                this.InfoPoppup();
-            } else {
-                console.log('Erreur lors de l\'enregistrement de la fiche');
-                this.PoppupContent = 'Erreur lors de l\'enregistrement de la fiche';
-                this.InfoPoppup();
+            this.fiche.contenu = this.content
+            this.fiche.titre = this.ficheName
+            this.fiche.date_creation = new Date();
+            this.fiche.id_utilisateur = user?.id;
+            this.fiche.id_cours = '67bde52bd528fe1ec83f031d';
 
-            }
-        });
+            this.uow.fiches.post(this.fiche).subscribe((res: any) => {
+                if (res.success) {
+                    this.InfoPoppup();
+                    this.PoppupContent = 'Fiche sauvegardée avec succès';
+                    this.ifError = false;
+
+                    this._router.navigateByUrl('/user/fiches');
+
+                } else {
+                    console.log('Erreur lors de l\'enregistrement de la fiche');
+                    this.PoppupContent = 'Erreur lors de l\'enregistrement de la fiche';
+                    this.InfoPoppup();
+                }
+            });
+        }
+
     }
 
     // Méthode pour générer un PDF à partir du contenu de Quill
