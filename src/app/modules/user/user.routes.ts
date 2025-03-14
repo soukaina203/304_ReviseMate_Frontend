@@ -6,6 +6,8 @@ import { TableauBordComponent } from "./tableau-bord/tableau-bord.component";
 import { HomeComponent } from "./home/home.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { ImportationFilesComponent } from "./importation-files/importation-files.component";
+import { PasserQuizComponent } from "./passer-quiz/passer-quiz.component";
+import { ReviserCarteMemoireComponent } from "./reviser-carte-memoire/reviser-carte-memoire.component";
 // import { ProfileComponent } from "./profile/profile.component";
 
 export default [
@@ -21,6 +23,8 @@ export default [
             { path: 'cartes', children: [ { path: '', loadChildren: () => import('app/modules/user/cartes/cartes.routes') } ] },
 
             { path: 'profile', component: ProfileComponent },
+            { path: 'passer-quiz', component: PasserQuizComponent },
+            { path: 'reviser-carte', component: ReviserCarteMemoireComponent },
 
 
 
