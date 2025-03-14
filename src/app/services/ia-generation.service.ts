@@ -11,28 +11,30 @@ export class IaGenerationService {
 
   constructor() {}
 
+  // Fonction pour obtenir la réponse de l'IA à partir d'un fichier PDF
   getIAanswerFromPdf(formData: FormData, type: 'fiche' | 'carte' | 'quiz') {
     const endpoint = type === 'fiche' 
       ? 'revision/pdf' 
       : type === 'carte' 
       ? 'flashcard/pdf' 
-      : 'quizzes/pdf';  // Endpoint pour le quiz à partir d'un PDF
+      : 'quizzes/pdf';  
     return this.http.post(`${this.url}/${endpoint}`, formData);
   }
 
+  // Fonction pour obtenir la réponse de l'IA à partir d'un texte
   getIAanswerFromText(textData: { text: string, customPrompt?: string }, type: 'fiche' | 'carte' | 'quiz') {
     const endpoint = type === 'fiche' 
       ? 'revision' 
       : type === 'carte' 
       ? 'flashcard' 
-      : 'quizzes';  // Endpoint pour le quiz à partir du texte
+      : 'quizzes'; 
     
     // Adaptez le champ selon le type
     const dataToSend = type === 'fiche' 
       ? { text: textData.text, ...(textData.customPrompt && { customPrompt: textData.customPrompt }) }
       : type === 'carte'
       ? { content: textData.text, ...(textData.customPrompt && { customPrompt: textData.customPrompt }) }
-      : { content: textData.text };  // Données envoyées pour le quiz
+      : { content: textData.text };  
 
     return this.http.post(`${this.url}/${endpoint}`, dataToSend);
   }

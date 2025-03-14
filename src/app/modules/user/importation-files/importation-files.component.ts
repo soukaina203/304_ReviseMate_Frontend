@@ -30,7 +30,7 @@ export class ImportationFilesComponent {
             file: [null],
             text: [''],
             promt: [''],
-            type: ['fiche', [Validators.required]], // Default to 'fiche', but 'carte' and 'quiz' are also options
+            type: ['fiche', [Validators.required]], // Ajouter la validation pour le type
         });
     }
 
@@ -65,7 +65,7 @@ export class ImportationFilesComponent {
             const formData = new FormData();
             formData.append('file', this.form.get('file')?.value);
 
-            // Ajouter le prompt si nécessaire (uniquement pour 'fiche')
+            // Ajouter le prompt (uniquement pour 'fiche')
             const customPrompt = formType === 'fiche' ? this.form.get('promt')?.value : undefined;
             if (customPrompt) {
                 formData.append('customPrompt', customPrompt);
@@ -85,7 +85,7 @@ export class ImportationFilesComponent {
         } else if (this.form.get('text')?.value) {
             // Traitement du texte
             const textData = {
-                text: this.form.get('text')?.value,  // Remplacer "content" par "text"
+                text: this.form.get('text')?.value,
                 ...(formType === 'fiche' && this.form.get('promt')?.value && { customPrompt: this.form.get('promt')?.value })
             };
 
