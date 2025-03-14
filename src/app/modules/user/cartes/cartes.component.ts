@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UowService } from 'app/services/uow.service';
 import { User } from 'app/models/User';
@@ -11,7 +11,8 @@ import { RouterLink } from '@angular/router';
     standalone: true,
     imports: [CommonModule,MatModule,RouterLink],
     templateUrl: './cartes.component.html',
-    styleUrl: './cartes.component.scss'
+    styleUrls: ['./cartes.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CartesComponent {
     private uow = inject(UowService)
