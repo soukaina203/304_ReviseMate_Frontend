@@ -18,7 +18,7 @@ export class SuperService <T>  {
 
     getAll = () => this.http.get<T>(`${this.url}/${this.controller}`);
 
-    put = (id: number | string, o: T) => this.http.patch<any>(`${this.url}/${this.controller}/${id}`, o);
+    put = (id: string | string, o: T) => this.http.patch<any>(`${this.url}/${this.controller}/${id}`, o);
 
     get = () => this.http.get<T[]>(`${this.url}/${this.controller}/get`);
 

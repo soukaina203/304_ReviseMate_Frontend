@@ -30,10 +30,10 @@
                 <p class="text-xs text-gray-500">
                     📅 {{ fiche.date_creation | date:'dd/MM/yyyy HH:mm' }}
                 </p>
-                <div   routerLink="/user/fiches/{{ fiche._id }}"
+                <button   routerLink="/user/fiches/{{ fiche._id }}"
                     class="px-6 py-2 text-sm font-semibold text-blue-700 bg-blue-100 border border-blue-400 rounded-full w-fit">
                   Modifier
-                </div>
+                </button>
             </div>
 
 

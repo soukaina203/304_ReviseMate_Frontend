@@ -1,6 +1,6 @@
 <div class="flex flex-col items-center p-6">
     <!-- Titre ajouté -->
-    <h1 class="mb-6 text-3xl font-semibold text-gray-700">Cr&eacute;er une carte-m&eacute;moire</h1>
+    <h1 class="mb-6 text-3xl font-semibold text-gray-700">Modifier la carte-m&eacute;moire  </h1>
 
     <div class="w-full max-w-2xl p-6 bg-white shadow-lg rounded-xl">
         <form [formGroup]="carteMemoireForm" *ngIf="carteMemoireForm" class="space-y-6">
@@ -35,9 +35,9 @@
                         <textarea
                             class="w-full p-3 mt-1 border rounded-md resize-none"
                             placeholder="Votre r&eacute;ponse"
-                            formControlName="reponse">
+                            formControlName="réponse">
                         </textarea>
-                        <div *ngIf="questionReponse.get('reponse').invalid && (questionReponse.get('reponse').dirty || questionReponse.get('reponse').touched)" class="text-red-500">
+                        <div *ngIf="questionReponse.get('réponse').invalid && (questionReponse.get('réponse').dirty || questionReponse.get('reponse').touched)" class="text-red-500">
                             La r&eacute;ponse est requise.
                         </div>
                     </div>
@@ -47,15 +47,15 @@
                 <button
                     type="button"
                     (click)="onSubmit()"
-                    class="px-6 py-3 text-white transition rounded-full shadow-md bg-blue-custom hover:bg-blue-700"
-                    [disabled]="carteMemoireForm.invalid">
+                    class="px-6 py-3 text-white transition bg-blue-700 rounded-full shadow-md bg-blue-custom"
+                  >
                     Valider
                 </button>
             </div>
         </form>
     </div>
     <!--Bouton ajout champ question/réponse-->
-    <button (click)="addQuestionReponse()" class="fixed flex items-center justify-start w-40 h-12 pl-3 transition bg-white rounded-full shadow-md bottom-6 left-6 hover:scale-105">
+    <button (click)="addQuestionReponse()" class="fixed flex items-center justify-start w-40 h-12 pl-3 transition bg-white rounded-full shadow-xl bottom-6 left-6 hover:scale-105">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 mr-3 text-blue-custom">
           <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6"></path>
@@ -63,3 +63,47 @@
         <span class="text-sm text-blue-custom">Ajouter une question</span>
     </button>
 </div>
+
+
+<ng-container>
+    <ng-template #popupTemplate let-dialogRef>
+
+        <!-- Close Button -->
+        <button mat-icon-button class="absolute p-2 transition-all rounded-full top-3 right-3 hover:bg-gray-300"
+            matDialogClose>
+            <mat-icon class="text-gray-600">close</mat-icon>
+        </button>
+
+        <!-- Popup Content -->
+        <mat-dialog-content class="flex flex-col items-center justify-center w-full px-8 py-6 rounded-lg">
+
+            <!-- Success Message -->
+            <div *ngIf="!ifError" class="flex flex-col items-center justify-center w-full gap-4">
+                <!-- Checkmark Icon -->
+                <div class="flex items-center justify-center p-3 bg-green-500 rounded-full">
+                    <mat-icon class="text-3xl text-white">check</mat-icon>
+                </div>
+
+                <!-- Success Text -->
+                <span class="text-[#2E849D] font-semibold text-2xl text-center">
+                    {{ PoppupContent }}
+                </span>
+            </div>
+
+            <!-- Error Message -->
+            <div *ngIf="ifError" class="flex flex-col items-center justify-center w-full gap-4">
+                <!-- Error Icon -->
+                <div class="flex items-center justify-center p-3 bg-red-500 rounded-full">
+                    <mat-icon class="text-3xl text-white">close</mat-icon>
+                </div>
+
+                <!-- Error Text -->
+                <span class="text-2xl font-semibold text-center text-red-600">
+                    {{ PoppupContent }}
+                </span>
+            </div>
+
+        </mat-dialog-content>
+
+    </ng-template>
+</ng-container>

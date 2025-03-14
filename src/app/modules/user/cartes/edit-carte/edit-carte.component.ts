@@ -1,94 +1,123 @@
-import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UowService } from 'app/services/uow.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CarteMemoire } from 'app/models/Carte';
+import { MatModule } from 'app/mat.modules';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-edit-carte',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './edit-carte.component.html',
-  styleUrl: './edit-carte.component.scss'
+    selector: 'app-edit-carte',
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule,
+        MatModule],
+    templateUrl: './edit-carte.component.html',
+    styleUrl: './edit-carte.component.scss'
 })
 export class EditCarteComponent {
- carteMemoireForm: FormGroup;
+    carteMemoireForm: FormGroup;
+    PoppupContent = '';
+    ifError: boolean = false;
+    @ViewChild('popupTemplate') popupTemplate!: TemplateRef<any>;
+
     private uow = inject(UowService)
     private route = inject(ActivatedRoute)
     id!: string; // Stocker l'ID
-   carte:CarteMemoire=new CarteMemoire();
-  constructor(private fb: FormBuilder) {}
+    carte: CarteMemoire = new CarteMemoire();
+    private dialog = inject(MatDialog)
 
-  ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id') || '';
- this.uow.cartes.getOne(this.id).subscribe((e: any) => {
-    console.log(e)
-    if (e.data!=null) {
-        this.carte = e.data
+    constructor(private fb: FormBuilder) { }
+    private router = inject(Router)
+    ngOnInit() {
+        this.id = this.route.snapshot.paramMap.get('id') || '';
+        this.uow.cartes.getOne(this.id).subscribe((res: any) => {
 
-    }else{
-        console.log('Erreur lors de recuperation de carte memoire');
-    //     this.PoppupContent='Erreur lors de l\'enregistrement de la fiche';
-    //    this.InfoPoppup();
+            if (res.success) {
+                this.carte = res.data;
+                this.createForm();
+
+            } else {
+                console.log('Erreur lors de recuperation de carte memoire');
+                //     this.PoppupContent='Erreur lors de l\'enregistrement de la fiche';
+                //    this.InfoPoppup();
+            }
+        });
+
+
     }
- });
+    createForm() {
+        if (!this.carte || !this.carte.questions_reponses) {
+            console.log("Les données ne sont pas encore chargées !");
+            return;
+        }
 
-    this.carteMemoireForm = this.fb.group({
-      titre: ['', Validators.required],
-      id_utilisateur: [''], // Facultatif
-      questions_reponses: this.fb.array([
-        this.createQuestionReponseGroup()
-      ])
-    });
-  }
+        this.carteMemoireForm = this.fb.group({
+            titre: [this.carte.titre, Validators.required],
+            id_utilisateur: [this.carte.id_utilisateur],
+            questions_reponses: this.fb.array(this.createQuestionsReponsesArray())
+        });
 
-  // Fonction pour créer un groupe de formulaire pour une question/réponse
-  createQuestionReponseGroup(): FormGroup {
-    return this.fb.group({
-      question: ['', Validators.required],
-      reponse: ['', Validators.required]
-    });
-  }
+        console.log("Formulaire initialisé avec :", this.carteMemoireForm.value);
+    }
 
-  // Fonction pour ajouter une nouvelle section de question/réponse
-  addQuestionReponse() {
-    const questionsReponses = this.carteMemoireForm.get('questions_reponses') as FormArray;
-    questionsReponses.push(this.createQuestionReponseGroup());
-  }
+    // Fonction pour transformer les questions/réponses en FormGroup
+    createQuestionsReponsesArray(): FormGroup[] {
+        return this.carte.questions_reponses?.map(qr =>
+            this.fb.group({
+                question: [qr.question, Validators.required],
+                réponse: [qr.réponse, Validators.required]
+            })
+        ) || [this.createQuestionReponseGroup()]; // Ajoute un champ vide par défaut si aucune donnée
+    }
 
-  // Fonction pour soumettre le formulaire
-  onSubmit() {
-  let  user = JSON.parse(localStorage.getItem("user"));
+    // Fonction pour créer un groupe vide pour une question/réponse
+    createQuestionReponseGroup(): FormGroup {
+        return this.fb.group({
+            question: ['', Validators.required],
+            réponse: ['', Validators.required]
+        });
+    }
 
-    this.carteMemoireForm.patchValue({ id_utilisateur: user.id });
+    // Fonction pour ajouter une nouvelle section de question/réponse
+    addQuestionReponse() {
+        const questionsReponses = this.carteMemoireForm.get('questions_reponses') as FormArray;
+        questionsReponses.push(this.createQuestionReponseGroup());
+    }
+
+    // Fonction pour soumettre le formulaire
+    onSubmit() {
+
+        console.log(this.carteMemoireForm.value)
+        this.uow.cartes.put(this.id, this.carteMemoireForm.value).subscribe((res: any) => {
+            console.log(res)
+            if (res.success) {
+                this.ifError = false;
+                this.dialog.closeAll();
+                this.router.navigate(['/user/cartes']);
+            } else {
+                this.PoppupContent = 'Erreur lors de l\'enregistrement de modification de la carte';
+                this.ifError = true;
+                this.InfoPoppup();
+
+            }
+        });
 
 
-    // if (this.carteMemoireForm.valid) {
-    //   console.log('Formulaire soumis', this.carteMemoireForm.value);
-    //   // Ajoutez ici la logique pour envoyer les données à votre backend
-    // } else {
-    //   console.log('Formulaire invalide');
-    // }
-    console.log(this.carteMemoireForm.value)
-   this.uow.cartes.post(this.carteMemoireForm.value).subscribe((res: any) => {
-    //  console.log(res)
-    // if (res.success) {
-    //     this.InfoPoppup();
-    // } else {
-    //     console.log('Erreur lors de l\'enregistrement de la fiche');
-    //     this.PoppupContent = 'Erreur lors de l\'enregistrement de la fiche';
-    //     this.InfoPoppup();
 
-    // }
-   });
+    }
 
+    // Accesseur pour obtenir les contrôles de question/réponse
+    get questionsReponses() {
+        return this.carteMemoireForm.get('questions_reponses') as FormArray;
+    }
 
-
-  }
-
-  // Accesseur pour obtenir les contrôles de question/réponse
-  get questionsReponses() {
-    return this.carteMemoireForm.get('questions_reponses') as FormArray;
-  }
+    InfoPoppup(): void {
+        const dialogRef = this.dialog.open(this.popupTemplate, {
+            height: '200px',
+            width: '500px'
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+        });
+    }
 }
