@@ -1,1 +1,65 @@
-<p>edit-carte works!</p>
+<div class="flex flex-col items-center p-6">
+    <!-- Titre ajouté -->
+    <h1 class="mb-6 text-3xl font-semibold text-gray-700">Cr&eacute;er une carte-m&eacute;moire</h1>
+
+    <div class="w-full max-w-2xl p-6 bg-white shadow-lg rounded-xl">
+        <form [formGroup]="carteMemoireForm" *ngIf="carteMemoireForm" class="space-y-6">
+            <!-- Champ Titre -->
+            <div>
+                <label class="block text-lg font-semibold">Titre</label>
+                <input
+                    class="w-full p-3 mt-1 border rounded-md"
+                    placeholder="Titre de la carte"
+                    formControlName="titre">
+                <div *ngIf="carteMemoireForm.get('titre').invalid && (carteMemoireForm.get('titre').dirty || carteMemoireForm.get('titre').touched)" class="text-red-500">
+                    Le titre est requis.
+                </div>
+            </div>
+
+            <!-- Afficher les sections de questions/réponses dynamiquement -->
+            <div formArrayName="questions_reponses">
+                <div *ngFor="let questionReponse of questionsReponses.controls; let i = index" [formGroupName]="i">
+                    <div>
+                        <label class="block text-lg font-semibold">Question {{i + 1}}</label>
+                        <textarea
+                            class="w-full p-3 mt-1 border rounded-md resize-none"
+                            placeholder="Votre question"
+                            formControlName="question">
+                        </textarea>
+                        <div *ngIf="questionReponse.get('question').invalid && (questionReponse.get('question').dirty || questionReponse.get('question').touched)" class="text-red-500">
+                            La question est requise.
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-lg font-semibold">R&eacute;ponse {{i + 1}}</label>
+                        <textarea
+                            class="w-full p-3 mt-1 border rounded-md resize-none"
+                            placeholder="Votre r&eacute;ponse"
+                            formControlName="reponse">
+                        </textarea>
+                        <div *ngIf="questionReponse.get('reponse').invalid && (questionReponse.get('reponse').dirty || questionReponse.get('reponse').touched)" class="text-red-500">
+                            La r&eacute;ponse est requise.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <button
+                    type="button"
+                    (click)="onSubmit()"
+                    class="px-6 py-3 text-white transition rounded-full shadow-md bg-blue-custom hover:bg-blue-700"
+                    [disabled]="carteMemoireForm.invalid">
+                    Valider
+                </button>
+            </div>
+        </form>
+    </div>
+    <!--Bouton ajout champ question/réponse-->
+    <button (click)="addQuestionReponse()" class="fixed flex items-center justify-start w-40 h-12 pl-3 transition bg-white rounded-full shadow-md bottom-6 left-6 hover:scale-105">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 mr-3 text-blue-custom">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6"></path>
+        </svg>
+        <span class="text-sm text-blue-custom">Ajouter une question</span>
+    </button>
+</div>
