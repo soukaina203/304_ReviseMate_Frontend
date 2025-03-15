@@ -1,1 +1,66 @@
-<p>reviser-carte-memoire works!</p>
+<div class="flashcard-container">
+    <div class="flashcard" (click)="flipCard()" [class.flipped]="isFlipped">
+      <div class="front">
+        <p class="question">Lorem ipsum dolor sit amet ?</p>
+      </div>
+      <div class="back">
+        <p class="answer">Réponse à la question ici.</p>
+      </div>
+    </div>
+    <div class="controls">
+        <!-- Bouton pour démarrer, mettre en pause, arrêter ou reprendre la minuterie -->
+        <button class="btn" (click)="toggleTimer()">
+          <!--Icone pour lancer la minuterie -->
+            <svg  *ngIf="!timerRunning" width="16" height="16" viewBox="-0.5 0 7 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#ffffff]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-347.000000, -3766.000000)" fill="#ffffff"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M296.494737,3608.57322 L292.500752,3606.14219 C291.83208,3605.73542 291,3606.25002 291,3607.06891 L291,3611.93095 C291,3612.7509 291.83208,3613.26444 292.500752,3612.85767 L296.494737,3610.42771 C297.168421,3610.01774 297.168421,3608.98319 296.494737,3608.57322" id="play-[#ffffff]"> </path> </g> </g> </g> </g></svg>
+            <!--Icone pour la pause -->
+            <svg  *ngIf="timerRunning && !isPaused" width="16" height="16" viewBox="-1 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>pause [#ffffff]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-227.000000, -3765.000000)" fill="#ffffff"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M172,3605 C171.448,3605 171,3605.448 171,3606 L171,3612 C171,3612.552 171.448,3613 172,3613 C172.552,3613 173,3612.552 173,3612 L173,3606 C173,3605.448 172.552,3605 172,3605 M177,3606 L177,3612 C177,3612.552 176.552,3613 176,3613 C175.448,3613 175,3612.552 175,3612 L175,3606 C175,3605.448 175.448,3605 176,3605 C176.552,3605 177,3605.448 177,3606" id="pause-[#ffffff]"> </path> </g> </g> </g> </g></svg>
+            <!--Icone pour reprendre la minuterie -->
+            <svg  *ngIf="isPaused" width="16" height="16" viewBox="-0.5 0 7 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#ffffff]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-347.000000, -3766.000000)" fill="#ffffff"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M296.494737,3608.57322 L292.500752,3606.14219 C291.83208,3605.73542 291,3606.25002 291,3607.06891 L291,3611.93095 C291,3612.7509 291.83208,3613.26444 292.500752,3612.85767 L296.494737,3610.42771 C297.168421,3610.01774 297.168421,3608.98319 296.494737,3608.57322" id="play-[#ffffff]"> </path> </g> </g> </g> </g></svg>
+            {{ timerRunning ? (isPaused ? 'Reprendre' : 'Pause') : 'Démarrer la minuterie' }}
+        </button> 
+
+        <!-- Bouton pour arrêter la minuterie -->
+        <button class="btn" (click)="stopTimer()" *ngIf="timerRunning || isPaused">
+            <!-- Afficher l'icône stop seulement lorsque la minuterie est en pause -->
+                <svg *ngIf="timerRunning || isPaused" width="16" height="16" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>stop</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-520.000000, -571.000000)" fill="#ffffff"> <path d="M546,571 L522,571 C520.896,571 520,571.896 520,573 L520,597 C520,598.104 520.896,599 522,599 L546,599 C547.104,599 548,598.104 548,597 L548,573 C548,571.896 547.104,571 546,571" id="stop" sketch:type="MSShapeGroup"> </path> </g> </g> </g></svg>
+            Arrêter la minuterie
+          </button>
+ 
+      
+  
+      <!-- Affichage du timer si en cours -->
+      <p class="timer" *ngIf="timerRunning">{{ minutes }}:{{ seconds | number:'2.0' }}</p>
+  
+      <!-- Navigation entre les cartes mémoires-->
+      <button class="btn" (click)="prevCard()" [disabled]="currentCard === 1">
+        <svg fill="#ffffff" width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M1.293,12.707a1,1,0,0,1,0-1.414l6-6A1,1,0,0,1,8.707,6.707L4.414,11H22a1,1,0,0,1,0,2H4.414l4.293,4.293a1,1,0,0,1-1.414,1.414Z"></path></g></svg>
+      </button>
+      
+      <!-- Affichage du compteur de cartes mémoires -->
+      <p class="counter">{{ currentCard }} / {{ totalCards }}</p>
+  
+      <!-- Bouton pour aller à la carte mémoires suivante -->
+      <button class="btn" (click)="nextCard()" [disabled]="currentCard === totalCards">
+        <svg fill="#ffffff" width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M16.707,18.707a1,1,0,0,1-1.414-1.414L19.586,13H2a1,1,0,0,1,0-2H19.586L15.293,6.707a1,1,0,0,1,1.414-1.414l6,6a1,1,0,0,1,0,1.414Z"></path></g></svg>
+      </button>
+  
+      <!-- Auto défilement des cartes mémoires -->
+      <button class="btn" (click)="toggleAutoScroll()">
+        <svg  *ngIf="!autoScrollActive" width="16" height="16" viewBox="-0.5 0 7 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>play [#ffffff]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-347.000000, -3766.000000)" fill="#ffffff"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M296.494737,3608.57322 L292.500752,3606.14219 C291.83208,3605.73542 291,3606.25002 291,3607.06891 L291,3611.93095 C291,3612.7509 291.83208,3613.26444 292.500752,3612.85767 L296.494737,3610.42771 C297.168421,3610.01774 297.168421,3608.98319 296.494737,3608.57322" id="play-[#ffffff]"> </path> </g> </g> </g> </g></svg>
+        <svg *ngIf="autoScrollActive" width="16" height="16" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>stop</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-520.000000, -571.000000)" fill="#ffffff"> <path d="M546,571 L522,571 C520.896,571 520,571.896 520,573 L520,597 C520,598.104 520.896,599 522,599 L546,599 C547.104,599 548,598.104 548,597 L548,573 C548,571.896 547.104,571 546,571" id="stop" sketch:type="MSShapeGroup"> </path> </g> </g> </g></svg>
+        {{ autoScrollActive ? 'Arrêter défilement automatique' : 'Démarrer défilement automatique' }}
+      </button>
+
+      <div class="fixed left-0 right-0 flex items-center justify-between px-4 bottom-4">
+        <!-- Affichage du nom de la carte mémoires -->
+        <input
+          type="text"
+          placeholder="Nom de la carte mémoire"
+          class="h-12 px-3 border border-gray-300 rounded-full shadow-lg"
+        />
+      </div>
+      
+
+    </div>
+  </div>
+  

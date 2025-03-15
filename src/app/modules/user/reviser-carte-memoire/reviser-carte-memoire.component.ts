@@ -1,13 +1,125 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-reviser-carte-memoire',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './reviser-carte-memoire.component.html',
-  styleUrl: './reviser-carte-memoire.component.scss'
+  styleUrls: ['./reviser-carte-memoire.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ReviserCarteMemoireComponent {
+  isFlipped = false;
+  currentCard = 1;
+  totalCards = 20;  // Nombre total de cartes à réviser
 
+  timerRunning = false;
+  isPaused = false;  
+  timeLeft = 5 * 60;
+  minutes = 5;
+  seconds = 0;
+  interval: any;
+
+  autoScrollActive = false;  
+  autoScrollInterval: any;   
+  isShowingAnswer = false;   
+
+  // Méthode pour retourner la carte
+  flipCard() {
+    this.isFlipped = !this.isFlipped;
+  }
+
+  // Méthode pour passer à la carte
+  nextCard() {
+    if (this.currentCard < this.totalCards) {
+      this.currentCard++;
+      this.isFlipped = false;  // Retourne la carte à la question
+      this.isShowingAnswer = false;  // Réinitialise l'affichage de la question
+    }
+  }
+
+  // Méthode pour passer à la carte précédente
+  prevCard() {
+    if (this.currentCard > 1) {
+      this.currentCard--;
+      this.isFlipped = false;
+      this.isShowingAnswer = false;
+    }
+  }
+  // Méthode pour démarrer ou arrêter le minuteur
+  toggleTimer() {
+    if (this.timerRunning) {
+      if (this.isPaused) {
+        this.startTimer();
+      } else {
+        clearInterval(this.interval);
+        this.isPaused = true;
+      }
+    } else {
+      this.startTimer();
+    }
+  }
+  // Méthode pour réinitialiser le minuteur
+  startTimer() {
+    if (this.timerRunning && !this.isPaused) return;
+
+    this.timerRunning = true;
+    this.isPaused = false;
+    this.updateTimerDisplay();
+
+    this.interval = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+        this.updateTimerDisplay();
+      } else {
+        clearInterval(this.interval);
+        this.timerRunning = false;
+      }
+    }, 1000);
+  }
+  // Méthode pour arrêter le minuteur
+  stopTimer() {
+    clearInterval(this.interval);
+    this.timerRunning = false;
+    this.isPaused = false;
+    this.timeLeft = 5 * 60; // Réinitialise à 5 minutes
+    this.updateTimerDisplay();
+  }
+
+
+  // Méthode pour mettre à jour l'affichage du minuteur
+  updateTimerDisplay() {
+    this.minutes = Math.floor(this.timeLeft / 60);
+    this.seconds = this.timeLeft % 60;
+  }
+
+  // Méthode pour démarrer ou arrêter l'auto-défilement
+  toggleAutoScroll() {
+    if (this.autoScrollActive) {
+      clearInterval(this.autoScrollInterval);  // Arrêter l'auto-défilement
+      this.autoScrollActive = false;
+    } else {
+      this.autoScrollActive = true;
+      this.autoScrollInterval = setInterval(() => {
+        if (!this.isShowingAnswer) {
+          this.isFlipped = true;  // Retourne la carte pour montrer la réponse
+          this.isShowingAnswer = true; 
+        } else {
+          this.isFlipped = false;  // Retourne la carte pour montrer la question
+          this.isShowingAnswer = false;  // Réinitialise l'affichage de la question
+          this.nextCard();  // Passe à la carte suivante après avoir montré la réponse
+        }
+        if (this.currentCard === this.totalCards) {
+          this.stopAutoScroll();  // Arrêter automatiquement quand on atteint la dernière carte
+        }
+      }, 5000); // 5 secondes par carte
+    }
+  }
+
+  // Méthode pour arrêter l'auto-défilement
+  stopAutoScroll() {
+    clearInterval(this.autoScrollInterval);
+    this.autoScrollActive = false;
+  }
 }
