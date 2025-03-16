@@ -23,7 +23,7 @@ export default [
             { path: 'cartes', children: [ { path: '', loadChildren: () => import('app/modules/user/cartes/cartes.routes') } ] },
 
             { path: 'profile', component: ProfileComponent },
-            { path: 'passer-quiz', component: PasserQuizComponent },
+            { path: 'passer-quiz/:id', component: PasserQuizComponent },
             { path: 'reviser-carte/:id', component: ReviserCarteMemoireComponent },
 
 
