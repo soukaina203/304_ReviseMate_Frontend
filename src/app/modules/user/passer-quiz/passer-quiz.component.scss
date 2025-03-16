@@ -1,0 +1,41 @@
+/* create-fiche.component.scss */
+body {
+    background-color: #EEEEEE !important;
+}
+.bg-blue-custom {
+    background-color: #5271FF;
+  }
+
+.btn-custom:hover {
+    background-color: rgba(82, 113, 255, 0.7);
+  }
+.quiz-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    height: auto; 
+    min-height: 100%; 
+    padding-top: 13%; 
+  }
+  
+  .options-container {
+    max-height: 50vh; 
+    overflow-y: auto; 
+  }
+  
+  @media (max-width: 768px) {
+    .quiz-container {
+      padding: 10px;
+    }
+  
+    .bg-white {
+      padding: 16px;
+      max-width: 100%;
+    }
+  
+    .options-container {
+      max-height: 40vh; 
+    }
+  }
+  
+  

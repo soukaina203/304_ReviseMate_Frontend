@@ -4,8 +4,9 @@
         <mat-icon>add</mat-icon>
         Créer un Quiz
     </button>
+
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div *ngFor="let quiz of quizs"   routerLink="/user/quiz/{{ quiz._id }}"
+        <div *ngFor="let quiz of quizs"   
             class="relative service-card w-[300px] border-2 border-[#5271FF] shadow-xl
             cursor-pointer snap-start shrink-0 py-6 px-6 bg-white flex flex-col
             gap-4 rounded-2xl transition-all duration-300 group hover:scale-105 hover:shadow-2xl">
@@ -58,6 +59,12 @@
                     {{ quiz.type | titlecase }}
                 </div>
             </div>
+
+            <!-- Bouton Lancer le Quiz -->
+            <button [routerLink]="'/user/passer-quiz/' + quiz._id"
+                class="px-5 py-2 text-sm font-semibold text-blue-700 transition-all bg-blue-100 border border-blue-400 rounded-full ">
+                Lancer le quiz
+            </button>
 
         </div>
     </div>

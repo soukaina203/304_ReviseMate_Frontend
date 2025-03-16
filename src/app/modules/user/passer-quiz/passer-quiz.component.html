@@ -1,1 +1,41 @@
-<p>passer-quiz works!</p>
+<div class="quiz-container">
+    <div class="bg-white shadow-lg rounded-[1rem] p-8 w-3/4 max-w-4xl">
+        <!-- Titre du quiz -->
+      <div class="text-center text-2xl font-bold mb-4">Quiz : {{ quizTitle }}</div>
+      <div class="mb-4 text-gray-600 text-base">
+        <!-- Numéro de la question actuelle -->
+        Question : <span class="font-semibold">{{ currentQuestionIndex + 1 }} / {{ questions.length }}</span>
+      </div>
+        <!-- Question -->
+      <p class="text-2xl font-semibold mb-4">{{ questions[currentQuestionIndex]?.question }}</p>
+
+      <!-- Réponses -->
+      <div class="options-container">
+        <label *ngFor="let option of questions[currentQuestionIndex]?.options" class="flex items-center space-x-2 cursor-pointer">
+          <input type="radio" name="question" [(ngModel)]="selectedAnswer" [value]="option" class="w-5 h-5 text-blue-500">
+          <span class="text-xl">{{ option }}</span>
+        </label>
+      </div>
+      
+      <!-- Passer question suivante -->
+      <div class="flex justify-end mt-6">
+        <button (click)="nextQuestion()" class="bg-blue-custom text-white px-4 py-2 rounded-lg btn-custom transition">
+          Question suivante
+        </button>
+      </div>
+    </div>
+  
+    <!-- Popup pour afficher score de l'utilisateur -->
+    <div *ngIf="quizCompleted" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div class="bg-white p-6 rounded-lg text-center max-w-sm mx-auto">
+        <h2 class="text-2xl font-bold mb-4">Félicitations !</h2>
+        <p class="mb-4">Vous avez terminé le quiz !</p>
+        <p class="mb-4">Votre score : {{ score }} / {{ questions.length }}</p> <!-- Affichage du score -->
+        <button (click)="closePopup()" class="bg-blue-custom text-white px-4 py-2 rounded-lg btn-custom transition">
+          Recommencer le quiz
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  
