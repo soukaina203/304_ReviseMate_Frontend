@@ -10,27 +10,27 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
     selector: 'app-importation-files',
     standalone: true,
-    imports: [CommonModule, NgxFileDropModule, ReactiveFormsModule,MatModule],
+    imports: [CommonModule, NgxFileDropModule, ReactiveFormsModule, MatModule],
     templateUrl: './importation-files.component.html',
     styleUrls: ['./importation-files.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ImportationFilesComponent {
-    PoppupContent:string='Veuillez patienter quelques instants'
+    PoppupContent: string = 'Veuillez patienter quelques instants';
     form: UntypedFormGroup;
     @ViewChild('popupTemplate') popupTemplate!: TemplateRef<any>;
 
     private _formBuilder = inject(UntypedFormBuilder);
     private iaGenerationService = inject(IaGenerationService);
-    private _router= inject(Router);
-    private dialog = inject(MatDialog)
+    private _router = inject(Router);
+    private dialog = inject(MatDialog);
 
     ngOnInit(): void {
         this.form = this._formBuilder.group({
             file: [null],
             text: [''],
-            promt: ['', [Validators.required]],
-            type: ['fiche', [Validators.required]],
+            promt: [''],
+            type: ['fiche', [Validators.required]], // Ajouter la validation pour le type
         });
     }
 
@@ -42,40 +42,70 @@ export class ImportationFilesComponent {
             this.form.get('text')?.setValue('');
             console.log('File selected:', file);
         }
-
     }
 
     submit() {
-        // Return if the form is invalid
         if (this.form.invalid) {
             return;
         }
 
-        // Disable the form
         this.form.disable();
+        const formType = this.form.get('type')?.value;
+
+        // Suppression du prompt si le type est 'carte' ou 'quiz'
+        if (formType === 'carte' || formType === 'quiz') {
+            this.form.get('promt')?.setValue('');
+        }
+
+        // Appel de la popup de chargement avant de commencer la requête (que ce soit pour le fichier ou le texte)
+        this.InfoPoppup();
+
+        // Traitement du fichier PDF
         if (this.form.get('file')?.value) {
             const formData = new FormData();
             formData.append('file', this.form.get('file')?.value);
-            formData.append('customPrompt', this.form.get('promt')?.value);
-            this.form.enable();
 
-            this.InfoPoppup()
-            this.iaGenerationService.getIAanswerFromPdf(formData).subscribe(r => {
+            // Ajouter le prompt (uniquement pour 'fiche')
+            const customPrompt = formType === 'fiche' ? this.form.get('promt')?.value : undefined;
+            if (customPrompt) {
+                formData.append('customPrompt', customPrompt);
+            }
+
+            this.iaGenerationService.getIAanswerFromPdf(formData, formType).subscribe(r => {
                 console.log('PDF response:', r);
                 this.dialog.closeAll();
-                this._router.navigateByUrl('/user/fiches/create', { state: { iaResponse: r } });
-
+                if (formType === 'fiche') {
+                    this._router.navigateByUrl('/user/fiches/create', { state: { iaResponse: r } });
+                } else if (formType === 'carte') {
+                    this._router.navigateByUrl('/user/cartes/create', { state: { iaResponse: r } });
+                } else if (formType === 'quiz') {
+                    this._router.navigateByUrl('/user/quiz/create', { state: { iaResponse: r } });
+                }
             });
         } else if (this.form.get('text')?.value) {
-            this.form.enable();
+            // Traitement du texte
             const textData = {
                 text: this.form.get('text')?.value,
-                customPrompt: this.form.get('promt')?.value
+                ...(formType === 'fiche' && this.form.get('promt')?.value && { customPrompt: this.form.get('promt')?.value })
             };
-            this.iaGenerationService.getIAanswerFromText(textData).subscribe(r => {
+
+            this.iaGenerationService.getIAanswerFromText(textData, formType).subscribe(r => {
                 console.log('Text response:', r);
+                this.dialog.closeAll();
+
+                // Ajout de la redirection pour 'fiche', 'carte', ou 'quiz'
+                if (formType === 'fiche') {
+                    this._router.navigateByUrl('/user/fiches/create', { state: { iaResponse: r } });
+                } else if (formType === 'carte') {
+                    this._router.navigateByUrl('/user/cartes/create', { state: { iaResponse: r } });
+                } else if (formType === 'quiz') {
+                    this._router.navigateByUrl('/user/quiz/create', { state: { iaResponse: r } });
+                }
             });
         }
+
+        // On réactive le formulaire une fois la soumission effectuée
+        this.form.enable();
     }
 
     InfoPoppup(): void {

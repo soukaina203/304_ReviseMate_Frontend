@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UowService } from 'app/services/uow.service';
 import { User } from 'app/models/User';
@@ -12,7 +12,8 @@ import { MatModule } from 'app/mat.modules';
     standalone: true,
     imports: [CommonModule,MatModule, RouterLink],
     templateUrl: './quiz.component.html',
-    styleUrl: './quiz.component.scss'
+    styleUrls: ['./quiz.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class QuizComponent {
 
