@@ -24,7 +24,7 @@ export default [
 
             { path: 'profile', component: ProfileComponent },
             { path: 'passer-quiz', component: PasserQuizComponent },
-            { path: 'reviser-carte', component: ReviserCarteMemoireComponent },
+            { path: 'reviser-carte/:id', component: ReviserCarteMemoireComponent },
 
 
 
