@@ -6,6 +6,7 @@ import { CarteService } from './carte.service';
 import { QuizService } from './quiz.service';
 import { AuthService } from './auth.service';
 import { IaGenerationService } from './ia-generation.service';
+import { QuestionService } from './question.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class UowService {
   constructor() { }
   users= new UserService();
   classes= new ClasseService();
+  questions= new QuestionService();
   fiches= new FicheService();
   cartes= new CarteService();
   quiz= new QuizService();

@@ -95,7 +95,6 @@ export class CreateFicheComponent {
                     this._router.navigateByUrl('/user/fiches');
 
                 } else {
-                    console.log('Erreur lors de l\'enregistrement de la fiche');
                     this.PoppupContent = 'Erreur lors de l\'enregistrement de la fiche';
                     this.InfoPoppup();
                 }

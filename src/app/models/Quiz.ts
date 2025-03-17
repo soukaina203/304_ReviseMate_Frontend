@@ -1,9 +1,7 @@
-export class Quiz{
+export class Quiz {
     id: string
-    date_score: Date;
-    id_carte: string;
-    score: number;
-    type: string;
     titre: string;
-    id_utilisateur:string;
+    id_utilisateur: string;
+    score?: number;
+
 }

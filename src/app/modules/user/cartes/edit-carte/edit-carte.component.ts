@@ -34,8 +34,9 @@ export class EditCarteComponent {
         this.id = this.route.snapshot.paramMap.get('id') || '';
         this.uow.cartes.getOne(this.id).subscribe((res: any) => {
 
-            if (res.success) {
+            if (res.success || res.length > 0 ) {
                 this.carte = res.data;
+                console.log(this.carte)
                 this.createForm();
 
             } else {
