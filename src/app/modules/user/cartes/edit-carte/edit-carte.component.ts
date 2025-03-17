@@ -13,7 +13,8 @@ import { MatDialog } from '@angular/material/dialog';
     imports: [CommonModule, FormsModule, ReactiveFormsModule,
         MatModule],
     templateUrl: './edit-carte.component.html',
-    styleUrl: './edit-carte.component.scss'
+    styleUrls: ['./edit-carte.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class EditCarteComponent {
     carteMemoireForm: FormGroup;
@@ -33,8 +34,9 @@ export class EditCarteComponent {
         this.id = this.route.snapshot.paramMap.get('id') || '';
         this.uow.cartes.getOne(this.id).subscribe((res: any) => {
 
-            if (res.success) {
+            if (res.success || res.length > 0 ) {
                 this.carte = res.data;
+                console.log(this.carte)
                 this.createForm();
 
             } else {

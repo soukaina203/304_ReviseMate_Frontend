@@ -6,14 +6,18 @@
     </button>
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+
         <div *ngFor="let quiz of quizs"   
             class="relative service-card w-[300px] border-2 border-[#5271FF] shadow-xl
+                   
+        <!-- ça vient de main, donc je l'ai gardé au cas où -->
+        <!-- <div *ngFor="let quiz of quizs" class="relative service-card w-[300px] border-2 border-[#5271FF] shadow-xl -->
+          
             cursor-pointer snap-start shrink-0 py-6 px-6 bg-white flex flex-col
             gap-4 rounded-2xl transition-all duration-300 group hover:scale-105 hover:shadow-2xl">
 
             <!-- Delete Icon in the top-right corner -->
-            <button (click)="deleteQuiz(quiz._id)"
-                class="absolute top-2 right-2 text-[#5271FF] hover:text-[#5271FF]">
+            <button (click)="deleteQuiz(quiz._id)" class="absolute top-2 right-2 text-[#5271FF] hover:text-[#5271FF]">
                 <span class="material-icons">delete</span>
             </button>
 
@@ -26,9 +30,13 @@
                         <g>
                             <g>
                                 <path d="M1.176,7.401h7.403V0H1.176V7.401z M2.466,1.29h4.822v4.822H2.466V1.29z"></path>
-                                <path d="M1.176,15.504h7.403V8.101H1.176V15.504z M2.466,9.392h4.822v4.821H2.466V9.392z"></path>
-                                <path d="M1.176,23.573h7.403V16.17H1.176V23.573z M2.466,17.46h4.822v4.822H2.466V17.46z"></path>
-                                <path d="M1.176,31.646h7.403v-7.403H1.176V31.646z M2.466,25.533h4.822v4.822H2.466V25.533z"></path>
+                                <path d="M1.176,15.504h7.403V8.101H1.176V15.504z M2.466,9.392h4.822v4.821H2.466V9.392z">
+                                </path>
+                                <path d="M1.176,23.573h7.403V16.17H1.176V23.573z M2.466,17.46h4.822v4.822H2.466V17.46z">
+                                </path>
+                                <path
+                                    d="M1.176,31.646h7.403v-7.403H1.176V31.646z M2.466,25.533h4.822v4.822H2.466V25.533z">
+                                </path>
                                 <rect x="10.563" y="1.488" width="19.423" height="1.45"></rect>
                                 <rect x="10.563" y="4.067" width="13.943" height="1.451"></rect>
                                 <rect x="10.563" y="9.146" width="19.423" height="1.45"></rect>
@@ -58,7 +66,13 @@
                         'bg-purple-100 text-purple-700 border border-purple-400': quiz.type === 'open-ended'
                     }">
                     {{ quiz.type | titlecase }}
+
                 </div>
+
+                <button routerLink="/user/quiz/{{ quiz._id }}"
+                    class="px-5 py-2 text-sm font-semibold text-blue-700 transition-all bg-blue-100 border border-blue-400 rounded-full ">
+                    Modifier
+                </button>
             </div>
 
             <!-- Bouton Lancer le Quiz -->

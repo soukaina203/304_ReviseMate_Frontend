@@ -7,6 +7,8 @@ import { QuizService } from './quiz.service';
 import { AuthService } from './auth.service';
 import { IaGenerationService } from './ia-generation.service';
 import { QuizDataService } from './quiz-data.service'; // Importez le nouveau service
+// import { QuestionService } from './question.service'; pareil, je l'ai gardé au cas où
+
 
 @Injectable({
   providedIn: 'root'

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UowService } from 'app/services/uow.service';
 import { ScoreService } from 'app/services/score.service'; // Importez ScoreService
@@ -13,6 +13,7 @@ import { MatModule } from 'app/mat.modules';
   imports: [CommonModule, MatModule, RouterLink],
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss']
+  // encapsulation: ViewEncapsulation.None (ça vient de main, je l'ai gardé au cas où)
 })
 export class QuizComponent implements OnInit {
   private uow = inject(UowService);

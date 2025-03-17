@@ -4,8 +4,8 @@ import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } fr
 import { UowService } from 'app/services/uow.service';
 import { User } from 'app/models/User';
 import { CarteMemoire } from 'app/models/Carte';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-create-carte',
@@ -16,75 +16,99 @@ import { Router } from '@angular/router';
     encapsulation: ViewEncapsulation.None
 })
 export class CreateCarteComponent implements OnInit {
-    carteMemoireForm: FormGroup;
-    private uow = inject(UowService)
-    PoppupContent = '';
-    ifError: boolean = false;
     @ViewChild('popupTemplate') popupTemplate!: TemplateRef<any>;
+
+    carteMemoireForm: FormGroup;
+    iaResponse: any; // Variable pour stocker les données de redirection
+    PoppupContent: string = 'Carte memoire sauvegardée avec succès'; // Contenu du message de la popup
+
+    private uow = inject(UowService);
+    private _router = inject(Router)
     private dialog = inject(MatDialog)
-    private router = inject(Router)
 
     constructor(private fb: FormBuilder) { }
 
     ngOnInit() {
+        // Vérification et récupération des données envoyées dans la redirection
+        const navigationState = history.state?.iaResponse;
+
+        if (navigationState) {
+            this.iaResponse = navigationState;
+            console.log('Données reçues de la redirection :', this.iaResponse);
+            this.initializeForm();
+        } else {
+            console.log('Aucune donnée reçue via redirection.');
+            this.initializeForm(); // Si aucune donnée reçue, on initialise quand même le formulaire
+        }
+
+
+    }
+
+    initializeForm() {
         this.carteMemoireForm = this.fb.group({
             titre: ['', Validators.required],
-            id_utilisateur: [''], // Facultatif
-            questions_reponses: this.fb.array([
-                this.createQuestionReponseGroup()
-            ])
+            id_utilisateur: [''],
+            questions_reponses: this.fb.array([])
         });
+
+        // Vérification si iaResponse contient des données valides
+        if (this.iaResponse && this.iaResponse.data && this.iaResponse.data.length > 0) {
+            console.log('Données reçues et ajoutées au formulaire :', this.iaResponse.data);
+
+            this.iaResponse.data.forEach(item => {
+                this.addQuestionReponse(item.question, item.réponse
+                );
+            });
+        } else {
+            console.log('Aucune donnée reçue, ajout d\'une question par défaut.');
+            this.addQuestionReponse('', '');
+        }
     }
 
-    // Fonction pour créer un groupe de formulaire pour une question/réponse
-    createQuestionReponseGroup(): FormGroup {
+    // Créer un groupe de formulaire pour une question/réponse
+    createQuestionReponseGroup(question: string = '', reponse: string = ''): FormGroup {
         return this.fb.group({
-            question: ['', Validators.required],
-            réponse: ['', Validators.required]
+            question: [question, Validators.required],
+            réponse: [reponse, Validators.required]
         });
     }
 
-    // Fonction pour ajouter une nouvelle section de question/réponse
-    addQuestionReponse() {
+    // Ajouter une nouvelle question/réponse au FormArray
+    addQuestionReponse(question: string = '', reponse: string = '') {
         const questionsReponses = this.carteMemoireForm.get('questions_reponses') as FormArray;
-        questionsReponses.push(this.createQuestionReponseGroup());
+        const questionReponseFormGroup = this.createQuestionReponseGroup(question, reponse);
+        questionsReponses.push(questionReponseFormGroup);
     }
 
-    // Fonction pour soumettre le formulaire
+    // Soumettre le formulaire
     onSubmit() {
-        let user = JSON.parse(localStorage.getItem("user"));
+        // Récupérer l'utilisateur depuis le localStorage
+        const user = JSON.parse(localStorage.getItem('user'));
 
-        this.carteMemoireForm.patchValue({ id_utilisateur: user.id });
+        if (user) {
+            // Ajouter l'id_utilisateur au formulaire
+            this.carteMemoireForm.patchValue({ id_utilisateur: user.id });
 
+            // Vérifier si le formulaire est valide
+            if (this.carteMemoireForm.valid) {
+                console.log('Formulaire soumis avec succès:', this.carteMemoireForm.value);
 
-        // if (this.carteMemoireForm.valid) {
-        //   console.log('Formulaire soumis', this.carteMemoireForm.value);
-        //   // Ajoutez ici la logique pour envoyer les données à votre backend
-        // } else {
-        //   console.log('Formulaire invalide');
-        // }
-        console.log(this.carteMemoireForm.value)
-        this.uow.cartes.post(this.carteMemoireForm.value).subscribe((res: any) => {
-            console.log(res)
-            if (res.success) {
-                this.ifError = false;
-                this.dialog.closeAll();
-                this.router.navigate(['/user/cartes']);
+                // Envoyer les données au backend via UowService
+                this.uow.cartes.post(this.carteMemoireForm.value).subscribe((res: any) => {
+                    if (res.success) {
+                        this._router.navigateByUrl('/user/cartes');
+
+                    } else {
+                        this.PoppupContent = 'Erreur lors de l\'enregistrement de la fiche';
+                        this.InfoPoppup();
+                    }
+                });
             } else {
-                this.PoppupContent = 'Erreur lors de l\'enregistrement de modification de la carte';
-                this.ifError = true;
-                this.InfoPoppup();
-
+                console.log('Le formulaire est invalide.');
             }
-        });
-
-
-
-    }
-
-    // Accesseur pour obtenir les contrôles de question/réponse
-    get questionsReponses() {
-        return this.carteMemoireForm.get('questions_reponses') as FormArray;
+        } else {
+            console.log('Aucun utilisateur trouvé dans le localStorage.');
+        }
     }
     InfoPoppup(): void {
         const dialogRef = this.dialog.open(this.popupTemplate, {
@@ -93,5 +117,10 @@ export class CreateCarteComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe((result) => {
         });
+    }
+
+    // Accesseur pour obtenir les contrôles de question/réponse
+    get questionsReponses() {
+        return this.carteMemoireForm.get('questions_reponses') as FormArray;
     }
 }

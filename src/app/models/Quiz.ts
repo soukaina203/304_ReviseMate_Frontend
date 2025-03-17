@@ -12,4 +12,3 @@ export interface Quiz {
     correctAnswers?: number; 
     totalQuestions?: number; 
   }
-  

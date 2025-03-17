@@ -8,7 +8,11 @@ import { Question } from 'app/models/Question';
 export class QuestionService extends SuperService<Question>{
 
   constructor() {
-    super('question');
+    super('super/question');
 
+   }
+
+   getQuizQuestions(idQuiz: string) {
+     return this.http.get(`${this.url}/question/quiz/${idQuiz}`);
    }
 }
