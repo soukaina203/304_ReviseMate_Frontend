@@ -24,6 +24,7 @@ export class ReviserCarteMemoireComponent implements OnInit {
   minutes = 5;
   seconds = 0;
   interval: any;
+  carteTitre: string = ''
 
   autoScrollActive = false;
   autoScrollInterval: any;
@@ -50,13 +51,17 @@ export class ReviserCarteMemoireComponent implements OnInit {
       if (response.success && response.data) {
         this.carte = response.data;
         this.totalCards = this.carte.questions_reponses.length;
+        this.carteTitre = this.carte.titre;  // Assigner le titre à la propriété carteTitre
       } else {
         console.error('Aucune question réponse trouvée pour cette carte');
       }
     });
   }
+
   
-  
+  getTitre(): string {
+    return this.carte.titre || 'Titre non disponible';
+  }
 
   // Méthode pour retourner la carte
   flipCard() {
@@ -65,7 +70,7 @@ export class ReviserCarteMemoireComponent implements OnInit {
 
   // Méthode pour passer à la carte suivante
   nextCard() {
-    if (this.currentCard < this.totalCards) {
+    if (this.currentCard < this.totalCards - 1) {
       this.currentCard++;
       this.isFlipped = false;  // Retourne la carte à la question
       this.isShowingAnswer = false;  // Réinitialise l'affichage de la question
