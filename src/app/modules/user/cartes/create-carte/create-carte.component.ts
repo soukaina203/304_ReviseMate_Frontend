@@ -6,11 +6,12 @@ import { User } from 'app/models/User';
 import { CarteMemoire } from 'app/models/Carte';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { MatModule } from 'app/mat.modules';
 
 @Component({
     selector: 'app-create-carte',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule],
+    imports: [CommonModule, ReactiveFormsModule,MatModule],
     templateUrl: './create-carte.component.html',
     styleUrls: ['./create-carte.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -21,6 +22,7 @@ export class CreateCarteComponent implements OnInit {
     carteMemoireForm: FormGroup;
     iaResponse: any; // Variable pour stocker les données de redirection
     PoppupContent: string = 'Carte memoire sauvegardée avec succès'; // Contenu du message de la popup
+    ifError: boolean = false;
 
     private uow = inject(UowService);
     private _router = inject(Router)
@@ -99,12 +101,16 @@ export class CreateCarteComponent implements OnInit {
                         this._router.navigateByUrl('/user/cartes');
 
                     } else {
+                        this.ifError = true
                         this.PoppupContent = 'Erreur lors de l\'enregistrement de la fiche';
                         this.InfoPoppup();
                     }
                 });
             } else {
                 console.log('Le formulaire est invalide.');
+                this.ifError = true
+                this.PoppupContent = 'Veuillez renseigner le titre de votre carte mémoire.';
+                this.InfoPoppup();
             }
         } else {
             console.log('Aucun utilisateur trouvé dans le localStorage.');
@@ -112,7 +118,7 @@ export class CreateCarteComponent implements OnInit {
     }
     InfoPoppup(): void {
         const dialogRef = this.dialog.open(this.popupTemplate, {
-            height: '200px',
+            height: '230px',
             width: '500px'
         });
         dialogRef.afterClosed().subscribe((result) => {

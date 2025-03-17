@@ -70,10 +70,10 @@
     <ng-template #popupTemplate let-dialogRef>
 
         <!-- Close Button -->
-        <button mat-icon-button class="absolute p-2 transition-all rounded-full top-3 right-3 hover:bg-gray-300"
+        <!-- <button mat-icon-button class="absolute p-2 transition-all rounded-full top-3 right-3 hover:bg-gray-300"
             matDialogClose>
             <mat-icon class="text-gray-600">close</mat-icon>
-        </button>
+        </button> -->
 
         <!-- Popup Content -->
         <mat-dialog-content class="flex flex-col items-center justify-center w-full px-8 py-6 rounded-lg">
@@ -95,7 +95,7 @@
             <div *ngIf="ifError" class="flex flex-col items-center justify-center w-full gap-4">
                 <!-- Error Icon -->
                 <div class="flex items-center justify-center p-3 bg-red-500 rounded-full">
-                    <mat-icon class="text-3xl text-white">close</mat-icon>
+                    <mat-icon class="text-3xl text-white">error</mat-icon>
                 </div>
 
                 <!-- Error Text -->
