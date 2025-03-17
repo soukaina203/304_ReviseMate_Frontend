@@ -1,5 +1,6 @@
 export interface Quiz {
-    _id: string;
+    type?: string;
+    _id?: string;
     titre: string;
     id_fiche?: string;
     id_utilisateur: string;
@@ -8,7 +9,7 @@ export interface Quiz {
       totalQuestions: number;
       date: Date;
     }[];
-    date_score?: Date; 
-    correctAnswers?: number; 
-    totalQuestions?: number; 
+    date_score?: Date;
+    correctAnswers?: number;
+    totalQuestions?: number;
   }

@@ -56,7 +56,7 @@ export class QuizComponent implements OnInit {
   }
 
   //Supprimer le quiz
-  deleteQuiz(id: number) {
+    deleteQuiz(id: string) {
     this.uow.quiz.delete(id).subscribe((res) => {
       console.log(res);
       this.ngOnInit();

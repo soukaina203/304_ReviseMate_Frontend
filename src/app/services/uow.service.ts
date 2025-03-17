@@ -14,6 +14,7 @@ import { QuizDataService } from './quiz-data.service'; // Importez le nouveau se
   providedIn: 'root'
 })
 export class UowService {
+    questions: any;
 
   constructor(private quizDataService: QuizDataService) {
     this.quiz = new QuizService();
