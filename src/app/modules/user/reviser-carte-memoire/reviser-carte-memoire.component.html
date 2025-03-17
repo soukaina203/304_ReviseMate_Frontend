@@ -39,8 +39,8 @@
       </button>
       
       <!-- Affichage du compteur de cartes mémoires -->
-      <p class="counter">{{ currentCard }} / {{ totalCards }}</p>
-  
+      <p class="counter">{{ currentCard + 1 }} / {{ totalCards }}</p>
+
       <!-- Bouton pour aller à la carte mémoires suivante -->
       <button class="btn" (click)="nextCard()" [disabled]="currentCard === totalCards">
         <svg fill="#ffffff" width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M16.707,18.707a1,1,0,0,1-1.414-1.414L19.586,13H2a1,1,0,0,1,0-2H19.586L15.293,6.707a1,1,0,0,1,1.414-1.414l6,6a1,1,0,0,1,0,1.414Z"></path></g></svg>
@@ -54,13 +54,17 @@
       </button>
 
       <div class="fixed left-0 right-0 flex items-center justify-between px-4 bottom-4">
-        <!-- Affichage du nom de la carte mémoires -->
+        <!-- Affichage du nom de la carte mémoire -->
         <input
           type="text"
+          [value]="carteTitre" 
           placeholder="Nom de la carte mémoire"
           class="h-12 px-3 border border-gray-300 rounded-full shadow-lg"
+          readonly
         />
       </div>
+      
+      
       
 
     </div>
