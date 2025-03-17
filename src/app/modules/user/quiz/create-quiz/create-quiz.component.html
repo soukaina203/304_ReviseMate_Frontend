@@ -1,5 +1,5 @@
 <div class="flex flex-col items-center p-6">
-    <h1 class="mb-6 text-3xl font-semibold text-gray-700">Créer un quiz</h1>
+    <h1 class="mb-6 text-3xl font-semibold text-gray-700">Modifier un quiz</h1>
 
     <div class="w-full max-w-2xl p-6 bg-white shadow-lg rounded-xl">
         <label class="block text-lg font-semibold">Titre</label>
@@ -17,8 +17,9 @@
                 <input type="text" class="w-full p-3 mt-1 border rounded-md" placeholder="Votre réponse" [(ngModel)]="answer.text">
 
                 <label class="flex items-center mt-2">
-                    <input type="checkbox" (change)="theCorrectAnswer(question, answer)"
-                   class="w-5 h-5">
+                    <input type="checkbox"
+                    [checked]="answer.text === question.correct_answer "
+                    (change)="theCorrectAnswer(question, answer)">
                     <span class="ml-2">Correcte</span>
                 </label>
             </div>

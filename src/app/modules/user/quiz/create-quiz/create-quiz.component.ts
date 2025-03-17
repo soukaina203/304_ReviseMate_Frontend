@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatModule } from 'app/mat.modules';
+import { forEach } from 'lodash';
 
 @Component({
     selector: 'app-create-quiz',
@@ -22,16 +23,46 @@ export class CreateQuizComponent {
     user: any;
     questions: any[] = [];
     PoppupContent: string = 'quiz sauvegardée avec succès'; // Contenu du message de la popup
-
-
+    quiz;
+    storedAnswers = []
     private uow: UowService = inject(UowService);
     private dialog = inject(MatDialog)
     private _router = inject(Router)
 
 
     ngOnInit() {
+
+
+        const state = history.state as {
+            iaResponse: {
+                data: { correctAnswer: string, wrongAnswers: string[], question: string }[];
+                message: string;
+                success: boolean;
+            }
+        };
+        console.log(state)
+        if (state && state.iaResponse) {
+            console.log('hello')
+
+            state.iaResponse.data.forEach(element => {
+                this.questions.push
+                    ({
+                        id: '',
+                        question: element.question,
+                        allAnswers: [
+                            ...element.wrongAnswers.map(answer => ({ text: answer })),
+                            { text: element.correctAnswer }
+                        ],
+                        correct_answer: element.correctAnswer, // Tableau vide au début
+                        id_quiz: '',
+                        incorrect_answers: element.wrongAnswers
+
+                    })
+
+            });
+        }
         this.user = JSON.parse(localStorage.getItem("user"));
-        this.addQuestion(); // Démarrer avec une question
+        // this.addQuestion(); // Démarrer avec une question
     }
 
     addQuestion() {
@@ -59,63 +90,66 @@ export class CreateQuizComponent {
 
     submitQuiz() {
         event.preventDefault();
+        if (this.quizTitle === '') {
+            this.PoppupContent = "Veuillez renseigner le titre de quiz"
+            this.InfoPoppup();
+        } else {
 
-        // Ensure correct answer is set for each question before processing incorrect answers
-        this.questions = this.questions.map(({ allAnswers, correct_answer, ...question }) => {
-            if (!correct_answer || correct_answer.trim() === "") {
-                console.warn(`Warning: No correct answer set for question: ${question.question}`);
-            }
 
-            // Ensure correct filtering
-            const incorrect_answers = allAnswers
-                .filter(answer => answer.text.trim() !== correct_answer.trim())
-                .map(answer => answer.text);
+            // Ensure correct answer is set for each question before processing incorrect answers
+            this.questions = this.questions.map(({ allAnswers, correct_answer, ...question }) => {
+                if (!correct_answer || correct_answer.trim() === "") {
+                    console.warn(`Warning: No correct answer set for question: ${question.question}`);
+                }
+                // Ensure correct filtering
+                const incorrect_answers = allAnswers
+                    .filter(answer => answer?.text.trim() !== correct_answer.trim())
+                    .map(answer => answer.text);
 
-            console.log("Processed Question:", question.question);
-            console.log("Correct Answer:", correct_answer);
-            console.log("Incorrect Answers:", incorrect_answers);
 
-            return {
-                ...question,
-                correct_answer, // Ensure correct_answer is included in the final object
-                incorrect_answers
+                return {
+                    ...question,
+                    correct_answer, // Ensure correct_answer is included in the final object
+                    incorrect_answers
+                };
+            });
+
+            const quiz = {
+                id: '',
+                titre: this.quizTitle,
+                id_utilisateur: this.user.id,
             };
-        });
 
-        const quiz = {
-            id: '',
-            titre: this.quizTitle,
-            id_utilisateur: this.user.id,
-        };
+            this.uow.quiz.post(quiz).subscribe((res: any) => {
+                if (res.success) {
+                    this.questions.forEach(q => q.id_quiz = res.data._id);
 
-        this.uow.quiz.post(quiz).subscribe((res: any) => {
-            if (res.success) {
-                this.questions.forEach(q => q.id_quiz = res.data._id);
+                    let requestsCompleted = 0;
 
-                let requestsCompleted = 0;
-
-                this.questions.forEach(question => {
-                    this.uow.questions.post(question).subscribe({
-                        next: (response) => {
-                            console.log('Question créée:', response);
-                            requestsCompleted++;
-                            if (requestsCompleted === this.questions.length) {
-                                this._router.navigateByUrl('/user/quiz'); // Navigate only after all requests complete
+                    this.questions.forEach(question => {
+                        this.uow.questions.post(question).subscribe({
+                            next: (response) => {
+                                console.log('Question créée:', response);
+                                requestsCompleted++;
+                                if (requestsCompleted === this.questions.length) {
+                                    this._router.navigateByUrl('/user/quiz'); // Navigate only after all requests complete
+                                }
+                            },
+                            error: (err) => {
+                                console.error('Erreur lors de la création de la question:', err);
+                                this.PoppupContent = "Erreur lors de l'enregistrement du quiz";
+                                this.InfoPoppup();
                             }
-                        },
-                        error: (err) => {
-                            console.error('Erreur lors de la création de la question:', err);
-                            this.PoppupContent = "Erreur lors de l'enregistrement du quiz";
-                            this.InfoPoppup();
-                        }
+                        });
                     });
-                });
 
-            } else {
-                this.PoppupContent = "Erreur lors de l'enregistrement du quiz";
-                this.InfoPoppup();
-            }
-        });
+                } else {
+                    this.PoppupContent = "Erreur lors de l'enregistrement du quiz";
+                    this.InfoPoppup();
+                }
+            });
+        }
+
     }
 
 

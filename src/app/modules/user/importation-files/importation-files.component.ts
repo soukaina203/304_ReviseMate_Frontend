@@ -1,3 +1,4 @@
+import { messages } from './../../../mock-api/common/messages/data';
 import { Component, inject, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxFileDropModule } from 'ngx-file-drop';
@@ -71,15 +72,21 @@ export class ImportationFilesComponent {
                 formData.append('customPrompt', customPrompt);
             }
 
-            this.iaGenerationService.getIAanswerFromPdf(formData, formType).subscribe(r => {
+            this.iaGenerationService.getIAanswerFromPdf(formData, formType).subscribe((r:any) => {
                 console.log('PDF response:', r);
                 this.dialog.closeAll();
-                if (formType === 'fiche') {
-                    this._router.navigateByUrl('/user/fiches/create', { state: { iaResponse: r } });
-                } else if (formType === 'carte') {
-                    this._router.navigateByUrl('/user/cartes/create', { state: { iaResponse: r } });
-                } else if (formType === 'quiz') {
-                    this._router.navigateByUrl('/user/quiz/create', { state: { iaResponse: r } });
+                if (r.success) {
+                    if (formType === 'fiche') {
+                        this._router.navigateByUrl('/user/fiches/create', { state: { iaResponse: r } });
+                    } else if (formType === 'carte') {
+                        this._router.navigateByUrl('/user/cartes/create', { state: { iaResponse: r } });
+                    } else if (formType === 'quiz') {
+                        this._router.navigateByUrl('/user/quiz/create', { state: { iaResponse: r } });
+                    }
+
+                }else{
+                    this.PoppupContent=r.message
+                    this.InfoPoppup()
                 }
             });
         } else if (this.form.get('text')?.value) {

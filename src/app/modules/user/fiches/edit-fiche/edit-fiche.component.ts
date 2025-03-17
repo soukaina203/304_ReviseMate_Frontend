@@ -44,7 +44,7 @@ export class EditFicheComponent {
 
     // Méthode pour enregistrer la fiche
     saveFiche() {
-        console.log('Fiche sauvegardée avec le contenu : ', this.content);
+    console.log('Fiche sauvegardée avec le contenu : ', this.content);
         this.fiche.contenu = this.content
         this.fiche.titre = this.ficheName
         this.uow.fiches.put(this.id, this.fiche).subscribe((res: any) => {
