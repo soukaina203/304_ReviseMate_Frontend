@@ -46,7 +46,7 @@ export class CreateQuizComponent {
                     question: element.question,
                     allAnswers: [
                         ...element.wrongAnswers.map(answer => ({ text: answer, isChecked: false })),
-                        { text: element.correctAnswer, isChecked: false }
+                        { text: element.correctAnswer, isChecked: true }
                     ],
                     correct_answer: element.correctAnswer,
                     id_quiz: '',

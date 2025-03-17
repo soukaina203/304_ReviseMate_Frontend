@@ -16,12 +16,22 @@
                 <input type="text" class="w-full p-3 mt-1 border rounded-md"
                     placeholder="Votre réponse" [(ngModel)]="answer.text">
 
-                <label class="flex items-center mt-2">
+                <label class="flex items-center mt-2"  *ngIf="!isFromIa">
                     <input type="checkbox"
                         [(ngModel)]="answer.isChecked"
                         (change)="theCorrectAnswer(question, answer)">
                     <span class="ml-2">Correcte</span>
                 </label>
+
+                <label class="flex items-center mt-2"  *ngIf="isFromIa">
+                    <input type="checkbox"
+                        [(ngModel)]="answer.isChecked"
+                        [checked]="answer.isChecked"
+                        (change)="theCorrectAnswer(question, answer)">
+                    <span class="ml-2">Correcte</span>
+                </label>
+
+
             </div>
 
             <button type="button" (click)="removeQuestion(i)" class="text-red-500">Supprimer cette question</button>
@@ -39,3 +49,35 @@
         <span class="text-sm text-blue-500">Ajouter une question</span>
     </button>
 </div>
+
+
+
+<ng-container>
+    <ng-template #popupTemplate let-dialogRef>
+
+
+
+
+        <!-- Popup Content -->
+        <mat-dialog-content class="flex flex-col items-center justify-center w-full px-8 py-6 rounded-lg">
+
+            <!-- Success Message -->
+
+
+            <!-- Error Message -->
+            <div class="flex flex-col items-center justify-center w-full gap-4">
+                <!-- Error Icon -->
+                <div class="flex items-center justify-center p-3 bg-red-500 rounded-full">
+                    <mat-icon class="text-3xl text-white">error</mat-icon>
+                </div>
+
+                <!-- Error Text -->
+                <span class="text-2xl font-semibold text-center text-red-600">
+                    {{ PoppupContent }}
+                </span>
+            </div>
+
+        </mat-dialog-content>
+
+    </ng-template>
+</ng-container>
