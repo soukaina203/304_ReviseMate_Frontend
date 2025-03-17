@@ -79,7 +79,7 @@ export class ImportationFilesComponent {
                 console.log('Custom prompt added:', customPrompt);
             }
 
-            
+            //Génération avec pdf
             this.iaGenerationService.getIAanswerFromPdf(formData, formType).subscribe((r: any) => {
                 // Vérifier si 'revisionSheet' est présent et non vide
                 if (r && r.revisionSheet) {

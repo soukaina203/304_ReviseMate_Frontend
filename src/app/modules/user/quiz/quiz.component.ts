@@ -12,8 +12,8 @@ import { MatModule } from 'app/mat.modules';
   standalone: true,
   imports: [CommonModule, MatModule, RouterLink],
   templateUrl: './quiz.component.html',
-  styleUrls: ['./quiz.component.scss']
-  // encapsulation: ViewEncapsulation.None (ça vient de main, je l'ai gardé au cas où)
+  styleUrls: ['./quiz.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class QuizComponent implements OnInit {
   private uow = inject(UowService);
