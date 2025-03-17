@@ -6,21 +6,35 @@ import { CarteService } from './carte.service';
 import { QuizService } from './quiz.service';
 import { AuthService } from './auth.service';
 import { IaGenerationService } from './ia-generation.service';
-import { QuestionService } from './question.service';
+import { QuizDataService } from './quiz-data.service'; // Importez le nouveau service
+// import { QuestionService } from './question.service'; pareil, je l'ai gardé au cas où
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UowService {
+    questions: any;
 
-  constructor() { }
-  users= new UserService();
-  classes= new ClasseService();
-  questions= new QuestionService();
-  fiches= new FicheService();
-  cartes= new CarteService();
-  quiz= new QuizService();
-  auth= new AuthService();
-  ia= new IaGenerationService();
+  constructor(private quizDataService: QuizDataService) {
+    this.quiz = new QuizService();
+    this.users = new UserService();
+    this.classes = new ClasseService();
+    this.fiches = new FicheService();
+    this.cartes = new CarteService();
+    this.auth = new AuthService();
+    this.ia = new IaGenerationService();
+  }
 
+  users: UserService;
+  classes: ClasseService;
+  fiches: FicheService;
+  cartes: CarteService;
+  quiz: QuizService;
+  auth: AuthService;
+  ia: IaGenerationService;
+
+  getQuizQuestions(quizId: string) {
+    return this.quizDataService.getQuizQuestions(quizId);
+  }
 }

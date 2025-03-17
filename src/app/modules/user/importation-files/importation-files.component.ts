@@ -33,6 +33,7 @@ export class ImportationFilesComponent {
             promt: [''],
             type: ['fiche', [Validators.required]], // Ajouter la validation pour le type
         });
+        console.log('Form initialized:', this.form);
     }
 
     onFileChange(event: Event): void {
@@ -46,16 +47,20 @@ export class ImportationFilesComponent {
     }
 
     submit() {
+        console.log('Form submitted');
         if (this.form.invalid) {
+            console.log('Form is invalid');
             return;
         }
 
         this.form.disable();
         const formType = this.form.get('type')?.value;
+        console.log('Form type:', formType);
 
         // Suppression du prompt si le type est 'carte' ou 'quiz'
         if (formType === 'carte' || formType === 'quiz') {
             this.form.get('promt')?.setValue('');
+            console.log('Prompt cleared for type:', formType);
         }
 
         // Appel de la popup de chargement avant de commencer la requête (que ce soit pour le fichier ou le texte)
@@ -65,17 +70,23 @@ export class ImportationFilesComponent {
         if (this.form.get('file')?.value) {
             const formData = new FormData();
             formData.append('file', this.form.get('file')?.value);
+            console.log('File uploaded:', this.form.get('file')?.value);
 
             // Ajouter le prompt (uniquement pour 'fiche')
             const customPrompt = formType === 'fiche' ? this.form.get('promt')?.value : undefined;
             if (customPrompt) {
                 formData.append('customPrompt', customPrompt);
+                console.log('Custom prompt added:', customPrompt);
             }
 
-            this.iaGenerationService.getIAanswerFromPdf(formData, formType).subscribe((r:any) => {
-                console.log('PDF response:', r);
-                this.dialog.closeAll();
-                if (r.success) {
+            //Génération avec pdf
+            this.iaGenerationService.getIAanswerFromPdf(formData, formType).subscribe((r: any) => {
+                // Vérifier si 'revisionSheet' est présent et non vide
+                if (r && r.revisionSheet) {
+                    // Fermer la popup avant la redirection
+                    this.dialog.closeAll();
+            
+                    // Effectuer la redirection selon le type
                     if (formType === 'fiche') {
                         this._router.navigateByUrl('/user/fiches/create', { state: { iaResponse: r } });
                     } else if (formType === 'carte') {
@@ -83,18 +94,24 @@ export class ImportationFilesComponent {
                     } else if (formType === 'quiz') {
                         this._router.navigateByUrl('/user/quiz/create', { state: { iaResponse: r } });
                     }
-
-                }else{
-                    this.PoppupContent=r.message
-                    this.InfoPoppup()
+                } else {
+                    // Si la réponse n'est pas valide ou ne contient pas de 'revisionSheet'
+                    this.PoppupContent = r.message || 'An error occurred';
+                    this.InfoPoppup();  // Afficher la popup d'erreur
                 }
             });
+            
+            
+
+// Vérifier que le type est bien 'fiche' et que la redirection est effectuée
+
         } else if (this.form.get('text')?.value) {
             // Traitement du texte
             const textData = {
                 text: this.form.get('text')?.value,
                 ...(formType === 'fiche' && this.form.get('promt')?.value && { customPrompt: this.form.get('promt')?.value })
             };
+            console.log('Text data:', textData);
 
             this.iaGenerationService.getIAanswerFromText(textData, formType).subscribe(r => {
                 console.log('Text response:', r);
@@ -113,6 +130,7 @@ export class ImportationFilesComponent {
 
         // On réactive le formulaire une fois la soumission effectuée
         this.form.enable();
+        console.log('Form re-enabled');
     }
 
     InfoPoppup(): void {
@@ -121,6 +139,7 @@ export class ImportationFilesComponent {
             width: '500px'
         });
         dialogRef.afterClosed().subscribe((result) => {
+            console.log('Popup closed', result);
         });
     }
 }
