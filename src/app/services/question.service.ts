@@ -8,7 +8,7 @@ import { Question } from 'app/models/Question';
 export class QuestionService extends SuperService<Question>{
 
   constructor() {
-    super('question');
+    super('super/question');
 
    }
 }
