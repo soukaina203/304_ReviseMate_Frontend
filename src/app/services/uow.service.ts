@@ -8,6 +8,7 @@ import { AuthService } from './auth.service';
 import { IaGenerationService } from './ia-generation.service';
 import { QuizDataService } from './quiz-data.service'; // Importez le nouveau service
 import { QuestionService } from './question.service';
+import { RolesService } from './roles.service';
 // import { QuestionService } from './question.service'; pareil, je l'ai gardé au cas où
 
 
@@ -26,6 +27,7 @@ export class UowService {
     this.auth = new AuthService();
     this.ia = new IaGenerationService();
     this.question = new QuestionService();
+    this.roles = new RolesService();
   }
 
   users: UserService;
@@ -36,6 +38,7 @@ export class UowService {
   auth: AuthService;
   ia: IaGenerationService;
   question: QuestionService;
+  roles: RolesService;
 
   getQuizQuestions(quizId: string) {
     return this.quizDataService.getQuizQuestions(quizId);
