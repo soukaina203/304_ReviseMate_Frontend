@@ -38,7 +38,7 @@ export class EditQuizComponent {
         this.uow.quiz.getOne(this.id).subscribe((res: any) => {
             if (res.data) {
                 this.quizTitle = res.data.titre
-                this.uow.questions.getQuizQuestions(this.id).subscribe((questionRes: any) => {
+                this.uow.question.getQuizQuestions(this.id).subscribe((questionRes: any) => {
                     console.log(questionRes)
                     questionRes.questions.forEach(element => {
                         this.questions.push
@@ -130,12 +130,12 @@ export class EditQuizComponent {
                 console.log("================")
                 console.log(questions)
                 questions.forEach(question => {
-                    this.uow.questions.put(question._id,question).subscribe({
+                    this.uow.question.put(question._id,question).subscribe({
                         next: (response) => {
                             console.log('Question créée:', response);
                             requestsCompleted++;
                             if (requestsCompleted === this.questions.length) {
-                                this._router.navigateByUrl('/user/quiz'); // Navigate only after all requests complete
+                               this._router.navigateByUrl('/user/quiz'); // Navigate only after all requests complete
                             }
                         },
                         error: (err) => {

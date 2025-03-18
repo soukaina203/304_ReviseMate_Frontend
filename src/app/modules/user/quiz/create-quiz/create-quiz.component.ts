@@ -122,8 +122,9 @@ export class CreateQuizComponent {
                 this.questions.forEach(q => q.id_quiz = res.data._id);
 
                 let requestsCompleted = 0;
+
                 this.questions.forEach(question => {
-                    this.uow.questions.post(question).subscribe({
+                    this.uow.question.post(question).subscribe({
                         next: (response) => {
                             console.log('Question créée:', response);
                             requestsCompleted++;
