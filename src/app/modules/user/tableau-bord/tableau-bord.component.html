@@ -1,32 +1,15 @@
 <!-- Conteneur principal -->
-<div class="flex flex-col items-center gap-8 mt-8 px-4">
+<div class="flex items-center justify-center gap-6 mt-6">
+  <!-- Barre de recherche -->
+  <input type="text" placeholder="Rechercher..." class="p-3 bg-white border border-gray-300 rounded-lg w-80 focus:outline-none focus:ring-2 focus:ring-blue-500">
 
-  <!-- Section centrée dans un cadre -->
-  <div class="w-full max-w-4xl p-8 bg-white rounded-2xl shadow-xl border border-gray-100">
+  <!-- Boutons à côté de la barre de recherche -->
+  <div class="flex gap-4">
+    <button routerLink="/user/import" class="px-6 py-3 text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Importer un cours</button>
+    <button  routerLink="/user/fiches/create" class="px-6 py-3 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">Créer une fiche</button>
+    <button routerLink="/user/quiz/create" class="px-6 py-3 text-white bg-yellow-500 rounded-lg hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500">Créer un quiz</button>
+    <button  routerLink="/user/cartes/create" class="px-6 py-3 text-white bg-purple-500 rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500">Créer une carte mémoire</button>
+<br>
+<button routerLink="/user/prof-page" class="px-6 py-3 text-white bg-teal-500 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500">Suivi des étudiants</button>
 
-    <!-- Section "Générer par IA" -->
-    <div class="flex flex-col gap-8 mb-8">
-      <h3 class="text-2xl font-semibold text-gray-800 text-center">Générer par IA :</h3>
-      <button routerLink="/user/import" class="px-8 py-4 text-white bg-blue-500 rounded-full hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 w-72 mx-auto transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl">Importer un cours</button>
-    </div>
-
-    <!-- Section "Générer manuellement" -->
-    <div class="flex flex-col gap-8 mb-8">
-      <h3 class="text-2xl font-semibold text-gray-800 text-center">Générer manuellement :</h3>
-      <button routerLink="/user/fiches/create" class="px-8 py-4 text-white bg-green-500 rounded-full hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-300 w-72 mx-auto transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl">Créer une fiche</button>
-      <button routerLink="/user/quiz/create" class="px-8 py-4 text-white bg-yellow-500 rounded-full hover:bg-yellow-600 focus:outline-none focus:ring-4 focus:ring-yellow-300 w-72 mx-auto transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl">Créer un quiz</button>
-      <button routerLink="/user/cartes/create" class="px-8 py-4 text-white bg-purple-500 rounded-full hover:bg-purple-600 focus:outline-none focus:ring-4 focus:ring-purple-300 w-72 mx-auto transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl">Créer une carte mémoire</button>
-    </div>
-
-    <!-- Section "Suivi prof" -->
-    <div class="flex flex-col gap-8 mb-8">
-      <h3 class="text-2xl font-semibold text-gray-800 text-center">Suivi prof :</h3>
-      <button routerLink="/user/prof-page" class="px-8 py-4 text-white bg-teal-500 rounded-full hover:bg-teal-600 focus:outline-none focus:ring-4 focus:ring-teal-300 w-72 mx-auto transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl">Suivi des étudiants</button>
-    </div>
-
-    <div class="flex flex-col gap-8">
-      <h3 class="text-2xl font-semibold text-gray-800 text-center">Tableau de bord admin :</h3>
-      <button routerLink="/user/prof-page" class="px-8 py-4 text-white bg-teal-500 rounded-full hover:bg-teal-600 focus:outline-none focus:ring-4 focus:ring-teal-300 w-72 mx-auto transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl">Tableau de bord admin</button>
-    </div>
-  </div>
 </div>
