@@ -55,13 +55,13 @@ export class CreateQuizComponent {
             });
         } else {
             this.isFromIa = false;
-            this.addQuestion(); // Démarrer avec une question
+            this.addQuestionReponse(); // Démarrer avec une question
         }
 
         this.user = JSON.parse(localStorage.getItem("user"));
     }
 
-    addQuestion() {
+    addQuestionReponse() {
         this.questions.push({
             id: '',
             question: '',
