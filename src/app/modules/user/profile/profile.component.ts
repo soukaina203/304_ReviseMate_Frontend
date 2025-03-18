@@ -26,13 +26,13 @@ export class ProfileComponent {
     id: any = 0;
     myForm: FormGroup;
     user: User = new User();
-    roles: Role[] = []
     isProf: boolean = false;
     commingPwd = '';
     poppupMessage: string = ''
     isSuccess: boolean = false
-
+    id_role:string
     classes: Classe[] = [];
+
     @ViewChild('popupTemplate') popupTemplate!: TemplateRef<any>;
     @ViewChild('DeletePoppup') DeletePoppup!: TemplateRef<any>;
 
@@ -59,7 +59,8 @@ export class ProfileComponent {
             if (res.success) {
                 this.user = res.data;
                 this.commingPwd = res.data;
-                this.user.id_role === 3 ? this.isProf = true : this.isProf = false;
+                // this.user.id_role === 3 ? this.isProf = true : this.isProf = false;
+                this.id_role=this.user.id_role
                 this.createForm();
 
             } else {

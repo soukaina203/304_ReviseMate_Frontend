@@ -6,21 +6,21 @@ export const defaultNavigation: FuseNavigationItem[] = [
 		title: 'Profile',
 		type: 'basic',
 		icon: 'heroicons_outline:chart-pie',
-		link: 'admin/profile'
+		link: 'profile'
 	},
 	{
 		id: 'Users',
 		title: 'Utilisateurs',
 		type: 'basic',
 		icon: 'heroicons_outline:chart-pie',
-		link: 'admin/users'
+		link: 'users'
 	},
 	{
-		id: 'Contenu',
-		title: 'contenu',
+		id: 'classes',
+		title: 'classes',
 		type: 'basic',
 		icon: 'heroicons_outline:chart-pie',
-		link: 'admin/contenu'
+		link: 'classes'
 	}
 ];
 export const compactNavigation: FuseNavigationItem[] = [

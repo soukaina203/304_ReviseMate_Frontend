@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
@@ -27,9 +27,13 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class DenseLayoutComponent implements OnInit, OnDestroy
 {
+    isShowen: boolean = false;
+
     isScreenSmall: boolean;
     navigation: Navigation;
     navigationAppearance: 'default' | 'dense' = 'dense';
+    router=inject(Router);
+
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -86,6 +90,25 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
                 this.navigationAppearance = this.isScreenSmall ? 'default' : 'dense';
             });
     }
+
+     profileOptions(event: Event) {
+            event.stopPropagation(); // Prevents the event from propagating to the document
+            this.isShowen = !this.isShowen;
+        }
+
+        @HostListener('document:click', ['$event'])
+        onClickOutside(event: Event) {
+            // Close the dropdown if the click is outside of it
+            if (this.isShowen) {
+                this.isShowen = false;
+            }
+        }
+        logout() {
+            // localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            this.router.navigate(['/']);
+
+        }
 
     /**
      * On destroy
