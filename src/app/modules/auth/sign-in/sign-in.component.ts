@@ -89,7 +89,7 @@ export class AuthSignInComponent implements OnInit {
                             this._router.navigateByUrl('/user');
                         }
                         if (role==="67bde3d6d528fe1ec83f0316") {  // prof
-                            this._router.navigateByUrl('/user');
+                            this._router.navigateByUrl('/user/prof-page');
                         }
                         if (role==="67c8621008049ddd39d069f2") {  // admin
                             this._router.navigateByUrl('/admin');
