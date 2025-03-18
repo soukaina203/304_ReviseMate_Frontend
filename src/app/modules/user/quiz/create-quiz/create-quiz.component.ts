@@ -46,7 +46,7 @@ export class CreateQuizComponent {
                     question: element.question,
                     allAnswers: [
                         ...element.wrongAnswers.map(answer => ({ text: answer, isChecked: false })),
-                        { text: element.correctAnswer, isChecked: false }
+                        { text: element.correctAnswer, isChecked: true }
                     ],
                     correct_answer: element.correctAnswer,
                     id_quiz: '',
@@ -55,13 +55,13 @@ export class CreateQuizComponent {
             });
         } else {
             this.isFromIa = false;
-            this.addQuestion(); // Démarrer avec une question
+            this.addQuestionReponse(); // Démarrer avec une question
         }
 
         this.user = JSON.parse(localStorage.getItem("user"));
     }
 
-    addQuestion() {
+    addQuestionReponse() {
         this.questions.push({
             id: '',
             question: '',
@@ -122,8 +122,9 @@ export class CreateQuizComponent {
                 this.questions.forEach(q => q.id_quiz = res.data._id);
 
                 let requestsCompleted = 0;
+
                 this.questions.forEach(question => {
-                    this.uow.questions.post(question).subscribe({
+                    this.uow.question.post(question).subscribe({
                         next: (response) => {
                             console.log('Question créée:', response);
                             requestsCompleted++;

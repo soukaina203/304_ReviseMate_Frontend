@@ -35,6 +35,7 @@ export class ImportationFilesComponent {
         });
         console.log('Form initialized:', this.form);
     }
+    
 
     onFileChange(event: Event): void {
         const input = event.target as HTMLInputElement;
@@ -82,10 +83,10 @@ export class ImportationFilesComponent {
             //Génération avec pdf
             this.iaGenerationService.getIAanswerFromPdf(formData, formType).subscribe((r: any) => {
                 // Vérifier si 'revisionSheet' est présent et non vide
-                if (r && r.revisionSheet) {
+                if (r && r.revisionSheet || r.success) {
                     // Fermer la popup avant la redirection
                     this.dialog.closeAll();
-            
+
                     // Effectuer la redirection selon le type
                     if (formType === 'fiche') {
                         this._router.navigateByUrl('/user/fiches/create', { state: { iaResponse: r } });
@@ -100,8 +101,8 @@ export class ImportationFilesComponent {
                     this.InfoPoppup();  // Afficher la popup d'erreur
                 }
             });
-            
-            
+
+
 
 // Vérifier que le type est bien 'fiche' et que la redirection est effectuée
 
@@ -142,4 +143,6 @@ export class ImportationFilesComponent {
             console.log('Popup closed', result);
         });
     }
+
+    
 }

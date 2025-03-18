@@ -8,3 +8,49 @@ ul.items-center li a {
     color: #3e57b1; 
   }
   
+  ul.items-center {
+    display: flex;
+    flex-wrap: nowrap; // Empêche l'enroulement des éléments
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    padding: 0 1rem; // Réduit le padding autour de la liste
+  
+    li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1; // Permet aux éléments de s'adapter à l'espace disponible
+      max-width: calc(33% - 1rem); // Réduit la largeur maximale pour éviter le chevauchement
+      margin: 0 0.5rem; // Réduit l'espace entre les éléments par défaut
+  
+      &:first-child {
+        margin-left: 0; // Supprime la marge gauche du premier élément
+      }
+  
+      &:last-child {
+        margin-right: 0; // Supprime la marge droite du dernier élément
+      }
+    }
+  
+    @media (max-width: 1280px) {
+      li {
+        max-width: calc(33% - 0.5rem); // Réduit encore l'espace entre les éléments
+        margin: 0 0.25rem; // Réduit les marges
+      }
+    }
+  
+    @media (max-width: 900px) {
+      flex-direction: column;
+      align-items: stretch;
+  
+      li {
+        margin: 0.5rem 0; // Ajoute un espace vertical entre les éléments empilés
+        max-width: 100%; // Permet aux éléments de prendre toute la largeur disponible
+      }
+    }
+  }
+
+  
+  
+  

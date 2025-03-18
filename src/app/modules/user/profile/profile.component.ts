@@ -2,7 +2,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Role } from 'app/models/Role';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import {  Router, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 import { UowService } from 'app/services/uow.service';
@@ -13,12 +13,12 @@ import { MatSelectModule } from '@angular/material/select';
 @Component({
     selector: 'app-profile',
     standalone: true,
-    imports: [RouterLink,CommonModule,MatSelectModule,
+    imports: [RouterLink, CommonModule, MatSelectModule,
         FormsModule, ReactiveFormsModule,
-         MatModule,
+        MatModule,
 
 
-        ],
+    ],
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
 })
@@ -56,9 +56,9 @@ export class ProfileComponent {
 
         this.uow.users.getOne(this.id).subscribe((res: any) => {
             console.log(res)
-            if (res?.code !== 404) {
-                this.user = res;
-                this.commingPwd = res.password
+            if (res.success) {
+                this.user = res.data;
+                this.commingPwd = res.data;
                 this.user.id_role === 3 ? this.isProf = true : this.isProf = false;
                 this.createForm();
 
@@ -67,8 +67,8 @@ export class ProfileComponent {
             }
             this.uow.classes.getAll().subscribe((res: any) => {
                 if (res !== null) {
-                    this.classes = res
-                }else{
+                    this.classes = res.data
+                } else {
                     console.log("a problem occur while fetching data")
                 }
             })
@@ -84,8 +84,8 @@ export class ProfileComponent {
     createForm() {
         this.myForm = this.fb.group({
             id: [this.id],
-            lastName: [this.user.lastName, [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z ]+$')]],
-            firstName: [this.user.firstName, [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z ]+$')]],
+            lastName: [this.user.lastName, [Validators.required, Validators.minLength(3)]],
+            firstName: [this.user.firstName, [Validators.required, Validators.minLength(3)]],
             email: [this.user.email, [Validators.required, Validators.email]],
             password: ['', [Validators.minLength(7)]],
             id_role: [this.user.id_role],
@@ -107,20 +107,19 @@ export class ProfileComponent {
         if (user.password === '') {
             user.password = this.commingPwd
         }
-
         this.uow.users.put(this.id, user).subscribe((res) => {
             console.log(res)
-            // if (res.m === "success") {
-            //     this.ProfilePoppup()
-            //     this.poppupMessage = 'Profil mis à jour'
-            //     this.isSuccess = true
-            // } else {
+            if (res.success) {
+                this.poppupMessage = 'Profil mis à jour'
+                this.ProfilePoppup()
+                this.isSuccess = true
+            } else {
+                this.poppupMessage = "Erreur lors de la modification du profil"
 
-            //     this.ProfilePoppup()
-            //     this.poppupMessage = "L'email existe déjà"
-            //     this.isSuccess = false
+                this.ProfilePoppup()
+                this.isSuccess = false
 
-            // }
+            }
         })
     }
 

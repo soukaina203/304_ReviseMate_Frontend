@@ -16,12 +16,22 @@
                 <input type="text" class="w-full p-3 mt-1 border rounded-md"
                     placeholder="Votre réponse" [(ngModel)]="answer.text">
 
-                <label class="flex items-center mt-2">
+                <label class="flex items-center mt-2"  *ngIf="!isFromIa">
                     <input type="checkbox"
                         [(ngModel)]="answer.isChecked"
                         (change)="theCorrectAnswer(question, answer)">
                     <span class="ml-2">Correcte</span>
                 </label>
+
+                <label class="flex items-center mt-2"  *ngIf="isFromIa">
+                    <input type="checkbox"
+                        [(ngModel)]="answer.isChecked"
+                        [checked]="answer.isChecked"
+                        (change)="theCorrectAnswer(question, answer)">
+                    <span class="ml-2">Correcte</span>
+                </label>
+
+
             </div>
 
             <button type="button" (click)="removeQuestion(i)" class="text-red-500">Supprimer cette question</button>
@@ -35,7 +45,44 @@
         </div>
     </div>
 
-    <button (click)="addQuestion()" class="fixed flex items-center w-40 h-12 pl-3 bg-white rounded-full shadow-md bottom-6 left-6 hover:scale-105">
-        <span class="text-sm text-blue-500">Ajouter une question</span>
+    <button (click)="addQuestionReponse()" class="fixed flex items-center justify-start w-40 h-12 pl-3 transition bg-white rounded-full shadow-md bottom-6 left-6 hover:scale-105">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 mr-3 text-blue-custom">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6"></path>
+        </svg>
+        <span class="text-sm text-blue-custom">Ajouter une question</span>
     </button>
 </div>
+
+
+
+
+<ng-container>
+    <ng-template #popupTemplate let-dialogRef>
+
+
+
+
+        <!-- Popup Content -->
+        <mat-dialog-content class="flex flex-col items-center justify-center w-full px-8 py-6 rounded-lg">
+
+            <!-- Success Message -->
+
+
+            <!-- Error Message -->
+            <div class="flex flex-col items-center justify-center w-full gap-4">
+                <!-- Error Icon -->
+                <div class="flex items-center justify-center p-3 bg-red-500 rounded-full">
+                    <mat-icon class="text-3xl text-white">error</mat-icon>
+                </div>
+
+                <!-- Error Text -->
+                <span class="text-2xl font-semibold text-center text-red-600">
+                    {{ PoppupContent }}
+                </span>
+            </div>
+
+        </mat-dialog-content>
+
+    </ng-template>
+</ng-container>

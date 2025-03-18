@@ -7,6 +7,7 @@ import { QuizService } from './quiz.service';
 import { AuthService } from './auth.service';
 import { IaGenerationService } from './ia-generation.service';
 import { QuizDataService } from './quiz-data.service'; // Importez le nouveau service
+import { QuestionService } from './question.service';
 // import { QuestionService } from './question.service'; pareil, je l'ai gardé au cas où
 
 
@@ -24,6 +25,7 @@ export class UowService {
     this.cartes = new CarteService();
     this.auth = new AuthService();
     this.ia = new IaGenerationService();
+    this.question = new QuestionService();
   }
 
   users: UserService;
@@ -33,6 +35,7 @@ export class UowService {
   quiz: QuizService;
   auth: AuthService;
   ia: IaGenerationService;
+  question: QuestionService;
 
   getQuizQuestions(quizId: string) {
     return this.quizDataService.getQuizQuestions(quizId);
