@@ -1,9 +1,9 @@
 export class User{
-    id: number = 0
+    id: string = ''
     lastName: string;
     firstName: string;
     email: string;
-    id_role:number;
+    id_role:string;
     id_classe:null | number;
     password: string;
     createdAt?: Date;  // Optionnel car généré par le backend
