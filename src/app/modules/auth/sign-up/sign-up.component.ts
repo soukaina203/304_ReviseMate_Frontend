@@ -50,7 +50,7 @@ export class AuthSignUpComponent implements OnInit {
     showAlert: boolean = false;
     showAlertCode: boolean = false;
     passwordHidden: any;
-    codeProf: number;
+    codeProf: number
     id_role: string;
     roles: any[] = [];
 
@@ -101,8 +101,8 @@ export class AuthSignUpComponent implements OnInit {
             email: ['last@hdsbh', [Validators.required, Validators.email]],
             password: ['', [Validators.minLength(7), Validators.required]],
             confirmPassword: ['', [Validators.required]],
-            id_classe: null,
-            id_role: null
+            role: "Étudiant",
+            code_prof: null,
         });
     }
 
@@ -136,28 +136,16 @@ export class AuthSignUpComponent implements OnInit {
     /**
      * Soumission du code de vérification pour le rôle "Professeur"
      */
+
+
     submitCodeProf() {
-        this._authService.VerifyCodeProf(this.codeProf).subscribe((res) => {
-            console.log(res);
-            if (res.message === 'Le code est incorrect.') {
-                // Affichage d'une alerte d'erreur
-                this.alert = {
-                    type: 'error',
-                    message: res.message,
-                };
-                this.showAlertCode = true;
-            } else {
-                // Si le code est valide, mise à jour du rôle
-                this.id_role = this.roles.find((e) => e.nom === "Professeur")?._id;
-                this.signUpForm.patchValue({ id_role: this.id_role });
-                this.alert = {
-                    type: 'info',
-                    message: res.message,
-                };
-                this.showAlertCode = true;
-                this.idProfRole = true;
-            }
-        });
+
+        this.dialog.closeAll();
+            this.signUpForm.patchValue({
+                role: "professeur",
+            });
+
+
     }
 
     /**
@@ -188,9 +176,11 @@ export class AuthSignUpComponent implements OnInit {
 
         console.log(this.signUpForm.value);
 
+            this.signUpForm.patchValue({
+                code_prof: this.codeProf,
+            });
         // Suppression de la confirmation du mot de passe avant l'envoi
         const { confirmPassword, ...formData } = this.signUpForm.value;
-
         // Appel du service d'inscription
         this._authService.signUp(formData).subscribe((res) => {
             this.signUpForm.enable();
