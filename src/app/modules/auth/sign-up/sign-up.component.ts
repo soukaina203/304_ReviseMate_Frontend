@@ -63,7 +63,7 @@ export class AuthSignUpComponent implements OnInit {
             password: ['', [Validators.minLength(7), Validators.required]],
             confirmPassword: ['', [Validators.required]],
             id_classe: null,
-            id_role: 2
+            role: "Étudiant"
         },
         );
     }

@@ -30,7 +30,7 @@ export class ProfileComponent {
     commingPwd = '';
     poppupMessage: string = ''
     isSuccess: boolean = false
-    id_role:string
+    role:string
     classes: Classe[] = [];
 
     @ViewChild('popupTemplate') popupTemplate!: TemplateRef<any>;
@@ -60,7 +60,7 @@ export class ProfileComponent {
                 this.user = res.data;
                 this.commingPwd = res.data;
                 // this.user.id_role === 3 ? this.isProf = true : this.isProf = false;
-                this.id_role=this.user.id_role
+                this.role=this.user.role
                 this.createForm();
 
             } else {
@@ -89,7 +89,7 @@ export class ProfileComponent {
             firstName: [this.user.firstName, [Validators.required, Validators.minLength(3)]],
             email: [this.user.email, [Validators.required, Validators.email]],
             password: ['', [Validators.minLength(7)]],
-            id_role: [this.user.id_role],
+            role: [this.user.role],
             id_classe: [this.user.id_classe],
         });
     }

@@ -1,4 +1,3 @@
-import { AuthService } from './../../../../core/auth/auth.service';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from 'app/services/user.service';
@@ -28,7 +27,6 @@ export class CreateUserComponent {
         private route: ActivatedRoute,
         private fb: FormBuilder
         , private router: Router,
-        private authService: AuthService,
 
        private uow:UowService
 
@@ -46,11 +44,11 @@ export class CreateUserComponent {
     createForm() {
         this.myForm = this.fb.group({
             id: [this.user.id],
-            nom: [this.user.firstName,[Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z ']+$")]],
-            prenom: [this.user.lastName,[Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z ']+$")]],
+            firstName: [this.user.firstName,[Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z ']+$")]],
+            lastName: [this.user.lastName,[Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z ']+$")]],
             email: [this.user.email,[Validators.required, Validators.email]],
             password: [this.user.password,[ Validators.minLength(8),Validators.required]],
-            idRole: [this.user.id_role,Validators.required],
+            role: [this.user.role,Validators.required],
         });
     }
 
@@ -68,11 +66,13 @@ export class CreateUserComponent {
     }
 
     submit(user: User) {
-
-        this.uow.users.put(this.user.id, user).subscribe((res:any) => {
-              if(res.code===1){
+         console.log(user)
+        this.uow.auth.signUp(user).subscribe((res:any) => {
+              if(res.message==="Inscription réussie"){
                   this.router.navigate(['/admin/users']);
 
+              }else{
+                console.log("error while creating user")
               }
         })
     }

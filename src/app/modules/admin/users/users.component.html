@@ -109,7 +109,7 @@
                                     <button mat-icon-button color="accent" [routerLink]="['/admin/user', user.id]">
                                         <mat-icon>create</mat-icon>
                                     </button>
-                                    <button mat-icon-button matTooltip="supprimer" color="warn" (click)="delete(user.id)">
+                                    <button mat-icon-button matTooltip="supprimer" color="warn" (click)="delete(user._id)">
                                         <mat-icon>delete_sweep</mat-icon>
                                     </button>
                                 </span>

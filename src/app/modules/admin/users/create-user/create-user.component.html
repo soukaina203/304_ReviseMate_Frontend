@@ -19,12 +19,12 @@
 
                         <mat-form-field class="w-full">
                             <mat-label>Roles</mat-label>
-                            <mat-select matNativeControl formControlName='idRole'
-                                (selectionChange)="choosenRole($event.value)">
-                                <mat-option [value]="1">Etudiant</mat-option>
-                                <mat-option [value]="2">Prof</mat-option>
+                            <mat-select matNativeControl formControlName='role'
+                               >
+                                <mat-option value="Étudiant">Étudiant</mat-option>
+                                <mat-option value="Professeur">Professeur</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="myForm.controls['idRole'].errors?.['required']" class="text-red-500">Ce
+                            <mat-error *ngIf="myForm.controls['role'].errors?.['required']" class="text-red-500">Ce
                                 champ est obligatoire</mat-error>
                         </mat-form-field>
 
@@ -40,13 +40,13 @@
                                     <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                         [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
 
-                                    <input matInput formControlName="nom">
-                                    <mat-error *ngIf="myForm.controls['nom'].errors?.['required']"
+                                    <input matInput formControlName="lastName">
+                                    <mat-error *ngIf="myForm.controls['lastName'].errors?.['required']"
                                         class="text-red-500">Ce champ est obligatoire</mat-error>
-                                    <mat-error *ngIf="myForm.controls['nom'].errors?.['minlength']"
+                                    <mat-error *ngIf="myForm.controls['lastName'].errors?.['minlength']"
                                         class="text-red-500">Le nom doit contenir plus de 3 lettres</mat-error>
 
-                                    <mat-error *ngIf="myForm.controls['nom'].errors?.['pattern']" class="text-red-500">
+                                    <mat-error *ngIf="myForm.controls['lastName'].errors?.['pattern']" class="text-red-500">
                                         Le nom doit contenir uniquement des caractères alphabétiques</mat-error>
 
                                 </mat-form-field>
@@ -55,12 +55,12 @@
                                     <mat-label>Prenom</mat-label>
                                     <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                         [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
-                                    <input matInput [formControlName]="'prenom'" [spellcheck]="false">
-                                    <mat-error *ngIf="myForm.controls['prenom'].errors?.['required']"
+                                    <input matInput [formControlName]="'firstName'" [spellcheck]="false">
+                                    <mat-error *ngIf="myForm.controls['firstName'].errors?.['required']"
                                         class="text-red-500">Ce champ est obligatoire</mat-error>
-                                    <mat-error *ngIf="myForm.controls['prenom'].errors?.['minlength']"
+                                    <mat-error *ngIf="myForm.controls['firstName'].errors?.['minlength']"
                                         class="text-red-500">Le prénom doit contenir plus de 3 lettres</mat-error>
-                                    <mat-error *ngIf="myForm.controls['prenom'].errors?.['pattern']"
+                                    <mat-error *ngIf="myForm.controls['firstName'].errors?.['pattern']"
                                         class="text-red-500">
                                         Le prénom doit contenir uniquement des caractères alphabétiques</mat-error>
 
@@ -128,8 +128,8 @@
                             Annuler
                         </button>
                         <!-- Save -->
-                        <button class="ml-2 bg-[#2E849D] text-white" mat-flat-button [matTooltip]="'Save'"
-                            [disabled]="myForm.invalid" (click)="submit(myForm.value)">
+                        <button class="ml-2 bg-[#5271FF] text-white" mat-flat-button [matTooltip]="'Save'"
+                             (click)="submit(myForm.value)">
                             Enregistrer
                         </button>
                     </div>

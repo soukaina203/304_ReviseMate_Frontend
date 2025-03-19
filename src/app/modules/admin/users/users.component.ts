@@ -65,7 +65,7 @@ export class UsersComponent {
         if (!this.isSearchBarOpened) this.ngOnInit();
     }
 
-    delete(id: number) {
+    delete(id: string) {
         this.uow.users.delete(id).subscribe((response) => {
             response ? this.ngOnInit() : console.error("Error while deleting");
         });
@@ -110,5 +110,6 @@ export class UsersComponent {
 
 
     }
+
 
 }

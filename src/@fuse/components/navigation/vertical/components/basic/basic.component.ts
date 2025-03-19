@@ -73,7 +73,6 @@ export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestr
             this._changeDetectorRef.markForCheck();
         });
 
-        console.warn(this.item)
     }
 
     /**
