@@ -84,16 +84,8 @@ export class AuthSignInComponent implements OnInit {
                     if (res.message == "Connexion réussie") {
                         const userData = JSON.stringify(res.user);
                         localStorage.setItem('user', userData);
-                        let  role = res.user.id_role;
-                        if (role==="67c8621008049ddd39d069f1") {  // etudiant
                             this._router.navigateByUrl('/user');
-                        }
-                        if (role==="67bde3d6d528fe1ec83f0316") {  // prof
-                            this._router.navigateByUrl('/user');
-                        }
-                        if (role==="67c8621008049ddd39d069f2") {  // admin
-                            this._router.navigateByUrl('/admin');
-                        }
+
 
                     } else {
                         // Re-enable the form
