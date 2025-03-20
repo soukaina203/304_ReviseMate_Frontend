@@ -1,0 +1,40 @@
+body {
+    background-color: #EEEEEE !important;
+  }
+.bg-blue-custom {
+    background-color: #5271FF;
+  }
+  
+  .text-blue-custom {
+    color: #5271FF;
+  }
+
+  .btn:hover {
+    background-color: rgba(144, 164, 255, 0.4);
+  }
+  
+// Personnalisation du header
+header {
+    border-radius: 10px;
+  }
+  
+
+.student-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  // Sidebar icônes
+  .material-icons {
+    font-size: 24px;
+  }
+  .bg-blue-custom {
+    background-color: #5271FF;
+  }
+  
+  .text-blue-custom {
+    color: #5271FF;
+  }  
