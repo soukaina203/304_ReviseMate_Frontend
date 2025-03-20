@@ -59,7 +59,7 @@ export class ProfileComponent {
             if (res.success) {
                 this.user = res.data;
                 this.commingPwd = res.data;
-                this.user.id_role === 3 ? this.isProf = true : this.isProf = false;
+                // this.user.id_role === 3 ? this.isProf = true : this.isProf = false;
                 this.createForm();
 
             } else {
