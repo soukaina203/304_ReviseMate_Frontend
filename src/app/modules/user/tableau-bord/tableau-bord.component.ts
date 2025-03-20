@@ -16,4 +16,8 @@ import { MatModule } from 'app/mat.modules';
   encapsulation: ViewEncapsulation.None
 })
 export class TableauBordComponent {
-}
+     user = JSON.parse(localStorage.getItem("user"));
+ngOnInit(): void {
+    console.log(this.user)
+
+}}
