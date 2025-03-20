@@ -1,21 +1,16 @@
 import { inject } from '@angular/core';
-import { CanActivateChildFn, CanActivateFn, Router } from '@angular/router';
-import { AuthService } from 'app/core/auth/auth.service';
+import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 import { of, switchMap } from 'rxjs';
 
-export const AuthGuard: CanActivateFn | CanActivateChildFn = (route, state) => {
-
-
-
-
-
-    const router: Router = inject(Router);
-    const user = localStorage.getItem('user');
+export const adminGuard: CanActivateFn = (route, state) => {
+ const router: Router = inject(Router);
+    const role = localStorage.getItem('role');
     // Check the authentication status
 
     return inject(AuthService).check().pipe(
         switchMap((authenticated) => {
-            if (user == null) {
+            if (role != "Admin" ) {
                 const redirectURL = state.url === '/sign-out' ? '' : `redirectURL=${state.url}`;
                 const urlTree = router.parseUrl(`sign-in?${redirectURL}`);
 
@@ -25,7 +20,3 @@ export const AuthGuard: CanActivateFn | CanActivateChildFn = (route, state) => {
         })
     );
 };
-
-// Check the authentication status
-
-
