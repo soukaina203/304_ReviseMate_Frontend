@@ -87,20 +87,7 @@ export class AuthSignUpComponent implements OnInit {
         // Création du formulaire d'inscription
         this.createForm();
 
-        // Récupération des rôles depuis le service
-        this.uow.roles.getAll().subscribe((res: any) => {
-            console.log(res);
-            if (res.success) {
-                this.roles = res.data;
-                // Récupération de l'ID du rôle "Étudiant"
-                this.id_role = this.roles.find((e) => e.nom === "Étudiant")?._id;
-                console.log(this.roles);
-                // Mise à jour du champ id_role du formulaire
-                this.signUpForm.patchValue({ id_role: this.id_role });
-            } else {
-                console.log("Un problème est survenu lors de la récupération des rôles");
-            }
-        });
+
     }
 
     /**
