@@ -100,3 +100,64 @@
         </div>
     </div>
 </div>
+
+
+<ng-container *ngIf="!isChecked">
+    <ng-template #securityPoppup let-dialogRef>
+        <button (click)="closePoppup()" mat-icon-button style="float:right; margin: 5px;" matdialogclose>
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-dialog-content>
+            <div class="flex flex-col items-center justify-center h-full p-5 ">
+                <fuse-alert class="w-full mb-2 " *ngIf="showAlertCode" [appearance]="'outline'" [showIcon]="false"
+                    [type]="alert.type" [@shake]="alert.type === 'error'">
+                    {{alert.message}}
+                </fuse-alert>
+
+                <h1 class="text-xl font-semibold text-center ">
+
+                    Veuillez entrer le code de sécurité fourni par l'université ?
+                </h1>
+
+                <!-- Alert -->
+
+                <div class="w-full mb-5">
+                    <mat-form-field class="w-full">
+                        <mat-label> code de sécurité</mat-label>
+                        <input id="password" matInput type="password" #passwordField [(ngModel)]="codeProf">
+
+                        <button mat-icon-button type="button"
+                            (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+                            matSuffix>
+                            <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"
+                                [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                            <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
+                                [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+                        </button>
+
+
+                        <mat-error *ngIf="signUpForm.controls['password'].errors?.['required']" class="text-red-500">Ce
+                            champ
+                            est obligatoire</mat-error>
+
+                        <mat-error *ngIf="signUpForm.controls['password'].errors?.['minlength']" class="text-red-500">Le
+                            mot
+                            de passe doit contenir au moins 8
+                            caractères</mat-error>
+                    </mat-form-field>
+
+
+                </div>
+
+
+                <div class="flex justify-end">
+                    <!-- <button mat-button matTooltip="Cancel" (click)="toggleEditMode()">Annuler</button> -->
+                    <button class="px-6 py-2 bg-[#5271FF] text-white" (click)="submitCodeProf()">Enregistrer</button>
+
+
+                </div>
+            </div>
+        </mat-dialog-content>
+    </ng-template>
+</ng-container>
