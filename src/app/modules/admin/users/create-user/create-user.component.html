@@ -1,1 +1,140 @@
-<p>create-user works!</p>
+<div class="flex flex-col w-full">
+
+    <!-- Edit mode -->
+
+    <ng-container>
+
+        <!-- Contact form -->
+        <div class="relative flex flex-col items-center flex-auto px-6 sm:px-12">
+            <div class="w-full max-w-3xl">
+                <form [formGroup]="myForm" *ngIf="myForm">
+
+                    <!-- Avatar -->
+                    <!-- Avatar -->
+
+                    <div class="mt-2">
+                        <!-- <div class="space-y-4"> -->
+                        <h1 class="mt-6 mb-10 ml-1 text-3xl font-semibold text-[#8B7F87]"> Creation d'un utilisateur
+                        </h1>
+
+                        <mat-form-field class="w-full">
+                            <mat-label>Roles</mat-label>
+                            <mat-select matNativeControl formControlName='role'
+                               >
+                                <mat-option value="Étudiant">Étudiant</mat-option>
+                                <mat-option value="professeur">Professeur</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="myForm.controls['role'].errors?.['required']" class="text-red-500">Ce
+                                champ est obligatoire</mat-error>
+                        </mat-form-field>
+
+
+
+
+
+
+                        <ng-container>
+                            <div class="flex flex-col mt-4 md:flex-row md:gap-2">
+                                <mat-form-field class="flex-auto ">
+                                    <mat-label>Nom</mat-label>
+                                    <mat-icon matPrefix class="hidden sm:flex icon-size-5"
+                                        [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+
+                                    <input matInput formControlName="lastName">
+                                    <mat-error *ngIf="myForm.controls['lastName'].errors?.['required']"
+                                        class="text-red-500">Ce champ est obligatoire</mat-error>
+                                    <mat-error *ngIf="myForm.controls['lastName'].errors?.['minlength']"
+                                        class="text-red-500">Le nom doit contenir plus de 3 lettres</mat-error>
+
+                                    <mat-error *ngIf="myForm.controls['lastName'].errors?.['pattern']" class="text-red-500">
+                                        Le nom doit contenir uniquement des caractères alphabétiques</mat-error>
+
+                                </mat-form-field>
+
+                                <mat-form-field class="flex-auto">
+                                    <mat-label>Prenom</mat-label>
+                                    <mat-icon matPrefix class="hidden sm:flex icon-size-5"
+                                        [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                                    <input matInput [formControlName]="'firstName'" [spellcheck]="false">
+                                    <mat-error *ngIf="myForm.controls['firstName'].errors?.['required']"
+                                        class="text-red-500">Ce champ est obligatoire</mat-error>
+                                    <mat-error *ngIf="myForm.controls['firstName'].errors?.['minlength']"
+                                        class="text-red-500">Le prénom doit contenir plus de 3 lettres</mat-error>
+                                    <mat-error *ngIf="myForm.controls['firstName'].errors?.['pattern']"
+                                        class="text-red-500">
+                                        Le prénom doit contenir uniquement des caractères alphabétiques</mat-error>
+
+                                </mat-form-field>
+
+                            </div>
+                        </ng-container>
+                        <!-- </div> -->
+                    </div>
+
+                    <!-- prenom -->
+                    <div class="mt-2">
+                        <mat-form-field class="w-full">
+                            <mat-label>Email</mat-label>
+                            <mat-icon matPrefix class="hidden sm:flex icon-size-5"
+                                [svgIcon]="'heroicons_solid:envelope'"></mat-icon>
+                            <input matInput [formControlName]="'email'" [spellcheck]="false">
+                            <mat-error *ngIf="myForm.controls['email'].errors?.['required']" class="text-red-500">Ce
+                                champ est obligatoire</mat-error>
+                            <mat-error *ngIf="myForm.controls['email'].errors?.['email']" class="text-red-500">Veuillez
+                                saisir une adresse électronique valide</mat-error>
+
+                        </mat-form-field>
+                    </div>
+
+
+
+
+
+                    <div class="mt-6">
+                        <div class="space-y-4">
+                            <div class="relative flex">
+                                <mat-form-field class="flex-auto" [subscriptSizing]="'dynamic'">
+                                    <mat-label>Mot de passe</mat-label>
+
+                                    <input id="password" type="password" matInput [formControlName]="'password'"
+                                        #passwordField />
+                                    <button mat-icon-button type="button"
+                                        (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+                                        matSuffix>
+                                        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"
+                                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                                        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
+                                            [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+                                    </button>
+
+                                    <mat-error *ngIf="myForm.controls['password'].errors?.['minlength']"
+                                        class="text-red-500">Le mot de passe doit contenir au moins 8
+                                        caractères</mat-error>
+                                    <mat-error *ngIf="myForm.controls['password'].errors?.['required']"
+                                        class="text-red-500">Ce champ est obligatoire</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div
+                        class="flex items-center py-4 pl-1 pr-4 mt-10 -mx-6 border-t sm:-mx-12 sm:pr-12 sm:pl-7 bg-gray-50 dark:bg-transparent">
+                        <!-- Delete -->
+
+                        <!-- Cancel -->
+                        <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="toggleEditMode()">
+                            Annuler
+                        </button>
+                        <!-- Save -->
+                        <button class="ml-2 bg-[#5271FF] text-white" mat-flat-button [matTooltip]="'Save'"
+                             (click)="submit(myForm.value)">
+                            Enregistrer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ng-container>
+</div>

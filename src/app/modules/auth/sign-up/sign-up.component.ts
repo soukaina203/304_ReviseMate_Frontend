@@ -117,9 +117,16 @@ export class AuthSignUpComponent implements OnInit {
                 Validators.pattern(this.passwordPattern)
             ]],
             confirmPassword: ['', [Validators.required]],
+<<<<<<< HEAD
             role: "Étudiant",
             code_prof: null,
         }, { validators: passwordMatchValidator });
+=======
+            id_classe: null,
+            role: "Étudiant"
+        },
+        );
+>>>>>>> admin_interfaces
     }
     
 
