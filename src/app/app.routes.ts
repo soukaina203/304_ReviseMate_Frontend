@@ -6,6 +6,8 @@ import { LayoutComponent } from 'app/layout/layout.component';
 import { AppComponent } from './app.component';
 import { LandingHomeComponent } from './modules/landing/home/home.component';
 import { LandingComponent } from './modules/landing/landing.component';
+import { RoleGuard } from './core/auth/guards/role.guard.spec';
+import { UnauthorizedComponent } from './modules/unauthorized/unauthorized.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -15,6 +17,7 @@ export const appRoutes: Route[] = [
 	{ path: '', component: LandingComponent },
 
 	{ path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'example' },
+	{ path: 'unauthorized', component:UnauthorizedComponent},
 
 	// Auth routes for guests
 	{
@@ -73,6 +76,8 @@ export const appRoutes: Route[] = [
 
 	// users routes
 	{
+          canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
 		path: '',
 
 		children: [ { path: 'user', loadChildren: () => import('app/modules/user/user.routes') } ]
@@ -83,8 +88,8 @@ export const appRoutes: Route[] = [
 
     {
         path: 'admin',
-        // canActivate: [AuthGuard],
-        // canActivateChild: [AuthGuard],
+        canActivate: [AuthGuard,RoleGuard],
+        data: { roles: ['admin'] },
         canActivateChild: [AuthGuard],
         component: LayoutComponent,
         resolve: {
@@ -100,3 +105,5 @@ export const appRoutes: Route[] = [
 
 
 ];
+
+

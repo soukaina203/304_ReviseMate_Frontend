@@ -31,7 +31,7 @@ export class CartesComponent {
                     this.message = "Aucune carte mémoire trouvée";
                 } else {
                     // .filter((carte: CarteMemoire) => carte.id_utilisateur == user?.id)
-                    this.cartes = res.data
+                    this.cartes = res.data.filter((carte: CarteMemoire) => carte.id_utilisateur == user?.id)
                     console.log(this.cartes)
                 }
             }

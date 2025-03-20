@@ -10,6 +10,7 @@ export class QuizDataService {
   constructor(private http: HttpClient) {}
 
   getQuizQuestions(quizId: string): Observable<any> {
-    return this.http.get(`http://localhost:3000/question/quiz/${quizId}`);
+    return this.http.get(`http://localhost:3000/question/quiz/${quizId}`, { withCredentials: true });
   }
+
 }
