@@ -33,9 +33,9 @@ export class CreateUserComponent {
     ) { }
 
     ngOnInit(): void {
-        this.uow.roles.getAll().subscribe((res:any) => {
-            this.roles = res;
-        })
+        // this.uow.roles.getAll().subscribe((res:any) => {
+        //     this.roles = res;
+        // })
         this.createForm(); // Create the form after the user data is available
 
     }
@@ -67,7 +67,7 @@ export class CreateUserComponent {
 
     submit(user: User) {
          console.log(user)
-        this.uow.auth.signUp(user).subscribe((res:any) => {
+        this.uow.users.post(user).subscribe((res:any) => {
               if(res.message==="Inscription réussie"){
                   this.router.navigate(['/admin/users']);
 

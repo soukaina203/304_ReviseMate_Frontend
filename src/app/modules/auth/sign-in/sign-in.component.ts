@@ -84,6 +84,10 @@ export class AuthSignInComponent implements OnInit {
                     if (res.message == "Connexion réussie") {
                         const userData = JSON.stringify(res.user);
                         localStorage.setItem('user', userData);
+                        // quand le backend sera prêt et envoie le role
+                        // localStorage.setItem('role', userData.role);
+
+
                         this._router.navigateByUrl('/user');
                     } else {
                         // Re-enable the form
