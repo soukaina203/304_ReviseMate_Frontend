@@ -146,7 +146,7 @@ export class EditQuizComponent {
                     });
 
 
-                    // this._router.navigate(['/quizzes']); // Rediriger après mise à jour
+                   this._router.navigate(['/quizzes']); // Rediriger après mise à jour
                 },
                     (err: any) => {
                         console.error("Error updating quiz:", err);

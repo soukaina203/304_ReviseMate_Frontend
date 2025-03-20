@@ -77,7 +77,7 @@ export class AuthSignUpComponent implements OnInit {
         private _router: Router, // Service de navigation
         private dialog: MatDialog, // Service de gestion des dialogues modaux
         private uow: UowService // Service pour récupérer les rôles
-        
+
     ) {}
 
     /**
@@ -117,18 +117,11 @@ export class AuthSignUpComponent implements OnInit {
                 Validators.pattern(this.passwordPattern)
             ]],
             confirmPassword: ['', [Validators.required]],
-<<<<<<< HEAD
             role: "Étudiant",
             code_prof: null,
         }, { validators: passwordMatchValidator });
-=======
-            id_classe: null,
-            role: "Étudiant"
-        },
-        );
->>>>>>> admin_interfaces
     }
-    
+
 
 
     /**
@@ -202,24 +195,24 @@ export class AuthSignUpComponent implements OnInit {
             }
             return;
         }
-    
+
         // Désactivation du formulaire pour éviter une double soumission
         this.signUpForm.disable();
         this.showAlert = false;
-    
+
         console.log(this.signUpForm.value);
-    
+
         this.signUpForm.patchValue({
             code_prof: this.codeProf,
         });
-    
+
         // Suppression de la confirmation du mot de passe avant l'envoi
         const { confirmPassword, ...formData } = this.signUpForm.value;
-    
+
         // Appel du service d'inscription
         this._authService.signUp(formData).subscribe((res) => {
             this.signUpForm.enable();
-    
+
             // Gestion de la réponse du serveur
             if (res.message === "Inscription réussie") {
                 this.showAlert = true;
@@ -238,5 +231,5 @@ export class AuthSignUpComponent implements OnInit {
             }
         });
     }
-    
+
 }
