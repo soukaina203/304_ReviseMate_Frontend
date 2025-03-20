@@ -13,24 +13,20 @@ export class AuthService {
   protected http = inject(HttpClient);
   protected url: string = environment.url;
 
-
-  signUp(user:User): Observable<any> {
-    return this.http.post(`${this.url}/auth/register`, user);
-
+  signUp(user: User): Observable<any> {
+    return this.http.post<any>(`${this.url}/auth/register`, user, { withCredentials: true });
   }
 
   login(user: User): Observable<any> {
-    return this.http.post<any>(`${this.url}/auth/login`, user);
-
+    return this.http.post<any>(`${this.url}/auth/login`, user, { withCredentials: true });
   }
 
   logout(): Observable<any> {
-    return this.http.post<any>(`${this.url}/auth/logout`, {});
-
+    return this.http.post<any>(`${this.url}/auth/logout`, {}, { withCredentials: true });
   }
-  VerifyCodeProf(code:number){
 
-    return this.http.post<any>(`${this.url}/auth/verifyCode`, {code});
-
+  VerifyCodeProf(code: number) {
+    return this.http.post<any>(`${this.url}/auth/verifyCode`, { code }, { withCredentials: true });
   }
 }
+
