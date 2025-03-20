@@ -77,7 +77,7 @@ export class AuthSignUpComponent implements OnInit {
         private _router: Router, // Service de navigation
         private dialog: MatDialog, // Service de gestion des dialogues modaux
         private uow: UowService // Service pour récupérer les rôles
-        
+
     ) {}
 
     /**
@@ -87,20 +87,7 @@ export class AuthSignUpComponent implements OnInit {
         // Création du formulaire d'inscription
         this.createForm();
 
-        // Récupération des rôles depuis le service
-        this.uow.roles.getAll().subscribe((res: any) => {
-            console.log(res);
-            if (res.success) {
-                this.roles = res.data;
-                // Récupération de l'ID du rôle "Étudiant"
-                this.id_role = this.roles.find((e) => e.nom === "Étudiant")?._id;
-                console.log(this.roles);
-                // Mise à jour du champ id_role du formulaire
-                this.signUpForm.patchValue({ id_role: this.id_role });
-            } else {
-                console.log("Un problème est survenu lors de la récupération des rôles");
-            }
-        });
+
     }
 
     /**
@@ -121,7 +108,7 @@ export class AuthSignUpComponent implements OnInit {
             code_prof: null,
         }, { validators: passwordMatchValidator });
     }
-    
+
 
 
     /**
@@ -195,24 +182,24 @@ export class AuthSignUpComponent implements OnInit {
             }
             return;
         }
-    
+
         // Désactivation du formulaire pour éviter une double soumission
         this.signUpForm.disable();
         this.showAlert = false;
-    
+
         console.log(this.signUpForm.value);
-    
+
         this.signUpForm.patchValue({
             code_prof: this.codeProf,
         });
-    
+
         // Suppression de la confirmation du mot de passe avant l'envoi
         const { confirmPassword, ...formData } = this.signUpForm.value;
-    
+
         // Appel du service d'inscription
         this._authService.signUp(formData).subscribe((res) => {
             this.signUpForm.enable();
-    
+
             // Gestion de la réponse du serveur
             if (res.message === "Inscription réussie") {
                 this.showAlert = true;
@@ -231,5 +218,5 @@ export class AuthSignUpComponent implements OnInit {
             }
         });
     }
-    
+
 }
