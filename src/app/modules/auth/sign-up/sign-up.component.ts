@@ -23,6 +23,15 @@ import { Role } from 'app/models/Role';
 import { AuthService } from 'app/services/auth.service';
 import { UowService } from 'app/services/uow.service';
 
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+
+// Définition du validateur pour la correspondance des mots de passe
+export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const password = control.get('password').value;
+    const confirmPassword = control.get('confirmPassword').value;
+    return password === confirmPassword ? null : { mismatch: true };
+};
+
 @Component({
     selector: 'auth-sign-up', // Sélecteur du composant
     templateUrl: './sign-up.component.html', // Fichier HTML associé
@@ -32,6 +41,8 @@ import { UowService } from 'app/services/uow.service';
     imports: [RouterLink, NgIf, FuseAlertComponent, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule],
 })
 export class AuthSignUpComponent implements OnInit {
+
+    passwordPattern = /^(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
 
     // Récupération du formulaire via ViewChild
     @ViewChild('signUpNgForm') signUpNgForm: NgForm;
@@ -66,6 +77,7 @@ export class AuthSignUpComponent implements OnInit {
         private _router: Router, // Service de navigation
         private dialog: MatDialog, // Service de gestion des dialogues modaux
         private uow: UowService // Service pour récupérer les rôles
+        
     ) {}
 
     /**
@@ -96,15 +108,21 @@ export class AuthSignUpComponent implements OnInit {
      */
     createForm() {
         this.signUpForm = this._formBuilder.group({
-            lastName: ['last', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
-            firstName: ['last', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
-            email: ['last@hdsbh', [Validators.required, Validators.email]],
-            password: ['', [Validators.minLength(7), Validators.required]],
+            lastName: ['', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
+            firstName: ['', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z]+$')]],
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', [
+                Validators.required,
+                Validators.minLength(8),
+                Validators.pattern(this.passwordPattern)
+            ]],
             confirmPassword: ['', [Validators.required]],
             role: "Étudiant",
             code_prof: null,
-        });
+        }, { validators: passwordMatchValidator });
     }
+    
+
 
     /**
      * Vérification de la correspondance entre le mot de passe et la confirmation
@@ -167,24 +185,34 @@ export class AuthSignUpComponent implements OnInit {
     signUp(): void {
         // Vérification de la validité du formulaire
         if (this.signUpForm.invalid) {
+            // Vérification spécifique pour la correspondance des mots de passe
+            if (this.signUpForm.hasError('mismatch')) {
+                this.showAlert = true;
+                this.alert = {
+                    type: 'error',
+                    message: 'Les mots de passe ne correspondent pas.',
+                };
+            }
             return;
         }
-
+    
         // Désactivation du formulaire pour éviter une double soumission
         this.signUpForm.disable();
         this.showAlert = false;
-
+    
         console.log(this.signUpForm.value);
-
-            this.signUpForm.patchValue({
-                code_prof: this.codeProf,
-            });
+    
+        this.signUpForm.patchValue({
+            code_prof: this.codeProf,
+        });
+    
         // Suppression de la confirmation du mot de passe avant l'envoi
         const { confirmPassword, ...formData } = this.signUpForm.value;
+    
         // Appel du service d'inscription
         this._authService.signUp(formData).subscribe((res) => {
             this.signUpForm.enable();
-
+    
             // Gestion de la réponse du serveur
             if (res.message === "Inscription réussie") {
                 this.showAlert = true;
@@ -192,8 +220,8 @@ export class AuthSignUpComponent implements OnInit {
                     type: 'info',
                     message: res.message,
                 };
-                // Redirection  vers la page de connexion
-              this._router.navigateByUrl('/sign-in');
+                // Redirection vers la page de connexion
+                this._router.navigateByUrl('/sign-in');
             } else {
                 this.showAlert = true;
                 this.alert = {
@@ -203,4 +231,5 @@ export class AuthSignUpComponent implements OnInit {
             }
         });
     }
+    
 }
