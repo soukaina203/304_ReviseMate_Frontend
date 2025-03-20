@@ -32,7 +32,9 @@ export class FichesComponent {
                 if (res.data.length == 0) {
                     this.message = "Aucune fiche trouvée";
                 } else {
-                    this.fiches = res.data.map((fiche: Fiche) => {
+                    let userFiches=res.data.filter(fiche=>fiche.id_utilisateur==user.id);
+
+                    this.fiches = userFiches.map((fiche: Fiche) => {
                         fiche.contenu = this.sanitizeHtml(fiche.contenu).toString(); // Convert SafeHtml to string
                         return fiche;
                     });

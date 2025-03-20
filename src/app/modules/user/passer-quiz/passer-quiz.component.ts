@@ -21,7 +21,7 @@ export class PasserQuizComponent implements OnInit {
   score = 0;
   selectedAnswer: string = '';
   quizTitle: string = '';
-  userId: string = '67d0a3f524e75c54528c2c82'; // ID utilisateur en dur pour les tests
+  userId: string // ID utilisateur en dur pour les tests
 
   @ViewChild('popupTemplate') popupTemplate!: TemplateRef<any>;
 
@@ -36,6 +36,8 @@ export class PasserQuizComponent implements OnInit {
   private scoreService = inject(ScoreService);
 
   ngOnInit(): void {
+    let user = JSON.parse(localStorage.getItem("user"));
+    this.userId = user.id;
     this.id = this.route.snapshot.paramMap.get('id') || '';
     console.log('ID du quiz : ', this.id);
 
@@ -96,7 +98,7 @@ export class PasserQuizComponent implements OnInit {
       }
     );
   }
-  
+
 
   // Fonction pour fermer la popup
   closePopup() {
