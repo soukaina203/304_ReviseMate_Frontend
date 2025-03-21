@@ -25,7 +25,7 @@
                 <h2 class="text-lg font-bold text-black/80">{{ fiche.titre }}</h2>
             </div>
 
-            <p class="text-sm text-gray-600" > {{ fiche.contenu }}</p>
+            <p class="text-sm text-gray-600">{{ fiche.contenu | slice:0:100 }}...</p>
             <div class="flex items-center justify-between gap-4">
                 <p class="text-xs text-gray-500">
                     📅 {{ fiche.date_creation | date:'dd/MM/yyyy HH:mm' }}
