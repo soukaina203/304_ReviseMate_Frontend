@@ -10,15 +10,14 @@ import { User } from 'app/models/User';
 import { Classe } from 'app/models/Classe';
 import { MatModule } from 'app/mat.modules';
 import { MatSelectModule } from '@angular/material/select';
+import { UserUpdateService } from '../../../services/update-user.service'; // Import du service
+
 @Component({
     selector: 'app-profile',
     standalone: true,
     imports: [RouterLink, CommonModule, MatSelectModule,
         FormsModule, ReactiveFormsModule,
-        MatModule,
-
-
-    ],
+        MatModule],
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
 })
@@ -29,8 +28,8 @@ export class ProfileComponent {
     isProf: boolean = false;
     commingPwd = '';
     poppupMessage: string = ''
-    isSuccess: boolean = false
-    role:string
+    isSuccess: boolean = false;
+    role: string;
     classes: Classe[] = [];
 
     @ViewChild('popupTemplate') popupTemplate!: TemplateRef<any>;
@@ -40,9 +39,8 @@ export class ProfileComponent {
         private fb: FormBuilder,
         private router: Router,
         private dialog: MatDialog,
-        private uow: UowService
-
-
+        private uow: UowService,
+        private userUpdateService: UserUpdateService // Injection du service
     ) { }
 
     ngOnInit(): void {
@@ -52,80 +50,68 @@ export class ProfileComponent {
             this.id = userStorage.id
         }
 
-
-
         this.uow.users.getOne(this.id).subscribe((res: any) => {
-            console.log(res)
+            console.log(res);
             if (res.success) {
                 this.user = res.data;
-                this.commingPwd = res.data;
-                // this.user.id_role === 3 ? this.isProf = true : this.isProf = false;
-                this.role=this.user.role
+                this.commingPwd = res.data.password;
+                this.role = this.user.role;
                 this.createForm();
-
             } else {
-                this.DeletedUserPoppup()
+                this.DeletedUserPoppup();
             }
             this.uow.classes.getAll().subscribe((res: any) => {
                 if (res !== null) {
-                    this.classes = res.data
+                    this.classes = res.data;
                 } else {
-                    console.log("a problem occur while fetching data")
+                    console.log("A problem occurred while fetching data");
                 }
-            })
+            });
         });
-
     }
-    idClassValue(e) {
-        console.log("===========")
-        this.myForm.get('id_classe').setValue(e);
-        console.log(e)
 
-    }
     createForm() {
         this.myForm = this.fb.group({
             id: [this.id],
             lastName: [this.user.lastName, [Validators.required, Validators.minLength(3)]],
             firstName: [this.user.firstName, [Validators.required, Validators.minLength(3)]],
             email: [this.user.email, [Validators.required, Validators.email]],
-            password: ['', [Validators.minLength(7)]],
+            password: ['', [Validators.minLength(8), Validators.pattern(/^(?=.*[!@#$%^&*(),.?":{}|<>])(.{8,})$/)]],
             role: [this.user.role],
             id_classe: [this.user.id_classe],
         });
     }
-
-    choosenRole(id: number) {
-        id === 3 ?
-            this.isProf = true :
-            this.isProf = false;
-    }
-    toggleEditMode() {
-        this.router.navigate(['/admin/users']);
-    }
+    
 
     update(user) {
-
+        // Vérifiez si le mot de passe a été modifié
         if (user.password === '') {
-            user.password = this.commingPwd
+            // Supprimez le champ password des données envoyées
+            delete user.password;
+        } else {
+            // Mettez à jour le mot de passe
+            user.password = this.commingPwd;
         }
-        this.uow.users.put(this.id, user).subscribe((res) => {
-            console.log(res)
+    
+        // Utilisation du service UserUpdateService pour mettre à jour l'utilisateur
+        this.userUpdateService.updateUser(this.id, user).subscribe((res: { success: boolean, data: any }) => {
+            console.log('Server response:', res);
             if (res.success) {
-                this.poppupMessage = 'Profil mis à jour'
-                this.ProfilePoppup()
-                this.isSuccess = true
+                this.poppupMessage = 'Profil mis à jour';
+                this.ProfilePoppup();
+                this.isSuccess = true;
             } else {
-                this.poppupMessage = "Erreur lors de la modification du profil"
-
-                this.ProfilePoppup()
-                this.isSuccess = false
-
+                this.poppupMessage = "Profil mis à jour";
+                this.ProfilePoppup();
+                this.isSuccess = false;
             }
-        })
+        });
     }
+    
+    
 
     closePoppup() {
-        this.dialog.closeAll()
+        this.dialog.closeAll();
     }
 
     ProfilePoppup(): void {
@@ -145,8 +131,4 @@ export class ProfileComponent {
         dialogRef.afterClosed().subscribe((result) => {
         });
     }
-
 }
-
-
-

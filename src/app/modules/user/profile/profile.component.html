@@ -1,9 +1,9 @@
-<div class="flex flex-col w-full h-[100vh]  bg-[#EEEEEE]">
+<div class="flex flex-col w-full h-[100vh] bg-[#EEEEEE]">
     <ng-container>
         <!-- Contact form -->
         <div class="relative flex flex-col items-center mt-[3rem] flex-auto px-6 sm:px-12">
             <div class="w-full max-w-3xl">
-                <form [formGroup]="myForm" *ngIf="myForm">
+                <form [formGroup]="myForm" *ngIf="myForm" (ngSubmit)="myForm.valid && update(myForm.value)">
 
                     <h1 class="mt-6 mb-10 ml-1 text-[#5271FF] text-3xl font-semibold">
                         Bonjour {{user.lastName}} {{user.firstName}}
@@ -12,61 +12,52 @@
                     <div class="flex items-center justify-center ">
                         <app-upload [folder]="'users'" [image]="user.photo"
                             (dataEvent)="receiveData($event)"></app-upload>
-
                     </div>
+
                     <div class="flex flex-col gap-2 mt-4 md:flex-row">
                         <mat-form-field class="w-full ">
                             <mat-label>Nom</mat-label>
                             <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                 [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
                             <input matInput formControlName="lastName">
-                            <mat-error *ngIf="myForm.controls['lastName'].errors?.['required']" class="text-red-500">Ce
-                                champ est obligatoire</mat-error>
-                            <mat-error *ngIf="myForm.controls['lastName'].errors?.['minlength']"
-                                class="text-red-500">Nom
-                                doit contenir plus que 2 lettre</mat-error>
+                            <mat-error *ngIf="myForm.controls['lastName'].errors?.['required']" class="text-red-500">
+                                Ce champ est obligatoire
+                            </mat-error>
+                            <mat-error *ngIf="myForm.controls['lastName'].errors?.['minlength']" class="text-red-500">
+                                Nom doit contenir plus que 2 lettres
+                            </mat-error>
                         </mat-form-field>
-
 
                         <mat-form-field class="w-full">
                             <mat-label>Prénom</mat-label>
                             <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                 [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
                             <input matInput formControlName="firstName" spellcheck="false">
-                            <mat-error *ngIf="myForm.controls['firstName'].errors?.['required'] "
-                                class="text-red-500">Ce
-                                champ est obligatoire</mat-error>
-                            <mat-error *ngIf="myForm.controls['firstName'].errors?.['minlength']"
-                                class="text-red-500">Prénom
-                                doit contenir plus que 2 lettre</mat-error>
+                            <mat-error *ngIf="myForm.controls['firstName'].errors?.['required']" class="text-red-500">
+                                Ce champ est obligatoire
+                            </mat-error>
+                            <mat-error *ngIf="myForm.controls['firstName'].errors?.['minlength']" class="text-red-500">
+                                Prénom doit contenir plus que 2 lettres
+                            </mat-error>
                         </mat-form-field>
                     </div>
-
-
 
                     <div class="flex flex-col gap-2 mt-2 md:flex-row">
                         <mat-form-field class="w-full">
-                            <mat-label>Email address</mat-label>
-                            <input id="email" matInput [formControlName]="'email'">
-                            <mat-error *ngIf="myForm.controls['email'].errors?.['required']" class="text-red-500">Ce
-                                champ
-                                est
-                                obligatoire</mat-error>
-                            <mat-error *ngIf="myForm.controls['email'].errors?.['email']" class="text-red-500">Veuillez
-                                saisir
-                                une adresse électronique valide</mat-error>
+                            <mat-label>Adresse-mail</mat-label>
+                            <input id="email" matInput formControlName="email">
+                            <mat-error *ngIf="myForm.controls['email'].errors?.['required']" class="text-red-500">
+                                Ce champ est obligatoire
+                            </mat-error>
+                            <mat-error *ngIf="myForm.controls['email'].errors?.['email']" class="text-red-500">
+                                Veuillez saisir une adresse électronique valide
+                            </mat-error>
                         </mat-form-field>
-
-
-
                     </div>
 
-
-
-
                     <mat-form-field class="w-full">
-                        <mat-label>Mot de passe</mat-label>
-                        <input id="password" matInput type="password" [formControlName]="'password'" #passwordField>
+                        <mat-label>Modifier le mot de passe : </mat-label>
+                        <input id="password" matInput [type]="passwordField.type" formControlName="password" #passwordField>
                         <button mat-icon-button type="button"
                             (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
                             matSuffix>
@@ -75,61 +66,45 @@
                             <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
                                 [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
                         </button>
-                        <mat-error *ngIf="myForm.controls['password'].errors?.['required']" class="text-red-500">Ce
-                            champ
-                            est obligatoire </mat-error>
-
-
-                        <mat-error *ngIf="myForm.controls['password'].errors?.['minlength']" class="text-red-500">Ce
-                            champ doit contenir plus que 6 caracteres </mat-error>
+                        <mat-error *ngIf="myForm.controls['password'].errors?.['required']" class="text-red-500">
+                            Ce champ est obligatoire.
+                        </mat-error>
+                        <mat-error *ngIf="myForm.controls['password'].errors?.['minlength']" class="text-red-500">
+                            Le mot de passe doit contenir au moins 8 caractères.
+                        </mat-error>
+                        <mat-error *ngIf="myForm.controls['password'].errors?.['pattern']" class="text-red-500">
+                            Le mot de passe doit contenir au moins un caractère spécial.
+                        </mat-error>
                     </mat-form-field>
 
+                    <label for="id_classe" class="block font-semibold text-gray-700 text-[0.9rem] mt-4">Classes</label>
+                    <select id="id_classe" formControlName="id_classe" (change)="idClassValue($event.target.value)"
+                        class="block w-full p-4 mt-1 mb-5 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <option class="p-4" *ngFor="let class of classes" [value]="class._id">Class {{ class.nom }}</option>
+                    </select>
+                    <p *ngIf="myForm.controls['id_classe'].hasError('required')" class="mt-1 text-sm text-red-500">
+                        Ce champ est obligatoire
+                    </p>
 
-                    <!-- afficher les classes juste pour les etudiants et profs -->
-                    <!-- <ng-container *ngIf="id_role!==3"> -->
-
-
-
-                        <label for="id_classe" class="block  font-semibold text-gray-700 text-[0.9rem]">Classes</label>
-                        <select id="id_classe" formControlName="id_classe" (change)="idClassValue($event.target.value)"
-                            class="block w-full p-4 mt-1 mb-5 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-
-                            <option class="p-4 " *ngFor="let class of classes" [value]="class._id">Class {{ class.nom }}
-                            </option>
-                        </select>
-
-                        <p *ngIf="myForm.controls['id_classe'].hasError('required')" class="mt-1 text-sm text-red-500">
-                            Ce champ est obligatoire
-                        </p>
-
-                    <!-- </ng-container> -->
-
-                    <button (click)="update(myForm.value)" [disabled]="myForm.disabled"
-                        class=" font-medium hover:before:bg-[#5271FF]
-                        relative h-[45px] w-[7rem] overflow-hidden border-black px-3 border-2
-                         text-black shadow-2xl transition-all before:absolute before:bottom-0
-                          before:left-0 before:top-0 before:z-0 before:h-full before:w-0
-                           before:bg-black before:transition-all before:duration-500
-                            hover:text-white  hover:shadow-black hover:before:left-0 hover:before:w-full hover:border-[#5271FF]">
+                    <button type="submit" [disabled]="!myForm.valid"
+                        class="font-medium bg-[#5271FF] hover:bg-[#4261d9] relative h-[45px] w-[7rem] overflow-hidden border-[#5271FF] px-3 border-2 text-white shadow-2xl transition-all duration-300 before:absolute before:bottom-0 before:left-0 before:top-0 before:z-[-1] before:h-full before:w-0 before:bg-[#4261d9] before:transition-all before:duration-300 hover:shadow-black hover:before:left-0 hover:before:w-full hover:border-[#4261d9]">
                         <span class="relative z-10">Enregistrer</span>
                     </button>
+
+                
 
                 </form>
             </div>
         </div>
     </ng-container>
 </div>
+
 <ng-container>
     <ng-template #popupTemplate let-dialogRef>
-
-
-
-        <mat-dialog-content class="bg-[#FEF2F flex flex-col items-center justify-center w-full ">
-            <div class="flex flex-col items-center justify-center w-full gap-5 ">
-                <span class="text-[#2E849D] font-semibold text-2xl">{{poppupMessage}} </span>
-
+        <mat-dialog-content class="bg-[#FEF2F flex flex-col items-center justify-center w-full">
+            <div class="flex flex-col items-center justify-center w-full gap-5">
+                <span class="text-[#5271FF]  font-semibold text-2xl">{{poppupMessage}}</span>
             </div>
         </mat-dialog-content>
-
     </ng-template>
 </ng-container>
