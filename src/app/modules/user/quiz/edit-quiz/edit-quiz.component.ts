@@ -1,5 +1,5 @@
 import { map } from 'rxjs';
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { UowService } from 'app/services/uow.service';
@@ -11,7 +11,8 @@ import { FormsModule } from '@angular/forms';
     standalone: true,
     imports: [CommonModule, FormsModule],
     templateUrl: './edit-quiz.component.html',
-    styleUrl: './edit-quiz.component.scss'
+    styleUrls: ['./edit-quiz.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class EditQuizComponent {
 
