@@ -35,9 +35,10 @@ export class FichesComponent {
                     let userFiches=res.data.filter(fiche=>fiche.id_utilisateur==user.id);
 
                     this.fiches = userFiches.map((fiche: Fiche) => {
-                        fiche.contenu = this.sanitizeHtml(fiche.contenu).toString(); // Convert SafeHtml to string
+                        fiche.contenu = this.removeHtmlTags(fiche.contenu.toString()); // Supprime les balises HTML
                         return fiche;
                     });
+
 
                 }
             } else {
@@ -46,23 +47,17 @@ export class FichesComponent {
         });
     }
 
-    sanitizeHtml(content: any): SafeHtml {
-        return this.sanitizer.bypassSecurityTrustHtml(content.toString());
-    }
 
-    truncateText(text: string, limit: number): SafeHtml {
-
-
-        // Suppression de la partie "SafeValue must use [property]=binding:"
-        text = text.replace(/^SafeValue must use \[property\]=binding:/, '').trim();
+    removeHtmlTags(html: string): string {
+        if (!html) return ''; // Vérifie si html est null ou undefined
 
         const div = document.createElement("div");
-        div.innerHTML = text;
-        const plainText = div.innerText;  // Extraction du texte brut
-        const truncatedText = plainText.length > limit ? plainText.substring(0, limit) + "..." : plainText;
-
-        return this.sanitizer.bypassSecurityTrustHtml(truncatedText);
+        div.innerHTML = html;
+        return div.innerText; // Récupère uniquement le texte sans les balises
     }
+
+
+
 
     deleteFiche(id: number) {
         this.uow.fiches.delete(id).subscribe((res) => {
