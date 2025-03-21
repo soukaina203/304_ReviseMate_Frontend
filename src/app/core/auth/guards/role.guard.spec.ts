@@ -8,7 +8,7 @@ export const RoleGuard: CanActivateFn | CanActivateChildFn = (route, state) => {
     const userRole = localStorage.getItem('role'); // Get role from localStorage
 
     // Allowed roles from route data
-    const allowedRoles: string[] = route.data?.['role'] || [];
+    const allowedRoles: string[] = route.data?.['roles'] || [];
 
     // If the user role exists and is in the allowedRoles, grant access
     if (userRole && allowedRoles.includes(userRole)) {
