@@ -18,7 +18,8 @@ export class IaGenerationService {
       : type === 'carte'
       ? 'flashcard/pdf'
       : 'quizzes/pdf';
-    return this.http.post(`${this.url}/${endpoint}`, formData);
+    
+    return this.http.post(`${this.url}/${endpoint}`, formData, { withCredentials: true });
   }
 
   // Fonction pour obtenir la réponse de l'IA à partir d'un texte
@@ -29,13 +30,12 @@ export class IaGenerationService {
       ? 'flashcard'
       : 'quizzes';
 
-    // Adaptez le champ selon le type
     const dataToSend = type === 'fiche'
       ? { text: textData.text, ...(textData.customPrompt && { customPrompt: textData.customPrompt }) }
       : type === 'carte'
       ? { content: textData.text, ...(textData.customPrompt && { customPrompt: textData.customPrompt }) }
       : { content: textData.text };
 
-    return this.http.post(`${this.url}/${endpoint}`, dataToSend);
+    return this.http.post(`${this.url}/${endpoint}`, dataToSend, { withCredentials: true });
   }
 }

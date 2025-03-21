@@ -13,6 +13,7 @@ export class QuestionService extends SuperService<Question>{
    }
 
    getQuizQuestions(idQuiz: string) {
-     return this.http.get(`${this.url}/question/quiz/${idQuiz}`);
-   }
+    return this.http.get(`${this.url}/question/quiz/${idQuiz}`, { withCredentials: true });
+  }
+  
 }
