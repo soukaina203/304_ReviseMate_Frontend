@@ -76,7 +76,7 @@ export const appRoutes: Route[] = [
 
 	// users routes
 	{
-          canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         canActivateChild: [AuthGuard],
 		path: '',
 
@@ -89,8 +89,8 @@ export const appRoutes: Route[] = [
     {
         path: 'admin',
         canActivate: [AuthGuard,RoleGuard],
+        canActivateChild: [AuthGuard,RoleGuard],
         data: { roles: ['admin'] },
-        canActivateChild: [AuthGuard],
         component: LayoutComponent,
         resolve: {
             initialData: initialDataResolver
