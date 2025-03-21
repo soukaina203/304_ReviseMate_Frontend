@@ -9,6 +9,7 @@ import { ImportationFilesComponent } from "./importation-files/importation-files
 import { PasserQuizComponent } from "./passer-quiz/passer-quiz.component";
 import { ReviserCarteMemoireComponent } from "./reviser-carte-memoire/reviser-carte-memoire.component";
 import {ProfPageComponent } from "../prof/prof-page/prof-page.component";
+import { DashboardComponent } from "../admin/dashboard/dashboard.component";
 
 export default [
     {
@@ -25,7 +26,8 @@ export default [
             { path: 'profile', component: ProfileComponent },
             { path: 'passer-quiz/:id', component: PasserQuizComponent },
             { path: 'reviser-carte/:id', component: ReviserCarteMemoireComponent },
-            {path : 'prof-page', component: ProfPageComponent}
+            {path : 'prof-page', component: ProfPageComponent},
+            {path : 'admin', component: DashboardComponent}
 
 
 
