@@ -9,8 +9,8 @@
     <button  routerLink="/user/fiches/create" class="px-6 py-3 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">Créer une fiche</button>
     <button routerLink="/user/quiz/create" class="px-6 py-3 text-white bg-yellow-500 rounded-lg hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500">Créer un quiz</button>
     <button  routerLink="/user/cartes/create" class="px-6 py-3 text-white bg-purple-500 rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500">Créer une carte mémoire</button>
-<br>
 <button routerLink="/user/prof-page" *ngIf="user.role==='professeur' || user.role==='admin' " class="px-6 py-3 text-white bg-teal-500 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500">Suivi des étudiants</button>
-<button *ngIf="user.role==='admin'" routerLink="/admin" class="px-6 py-3 text-white bg-teal-500 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500">Espace admin</button>
+<button *ngIf="user.role==='admin'" routerLink="/admin" class="px-6 py-3 text-white bg-amber-500 rounded-lg hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-400">Espace administrateur</button>
+
 
 </div>
