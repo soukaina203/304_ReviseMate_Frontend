@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { StudentService } from '../../../services/student.service'; 
+import { Student } from '../../../models/Student'; 
 
 @Component({
   selector: 'app-prof-page',
@@ -10,25 +12,22 @@ import { CommonModule } from '@angular/common';
   encapsulation: ViewEncapsulation.None
 })
 export class ProfPageComponent {
-  students = [
-    {
-      nom: 'Prénom Nom',
-      isOnline: true,
-      score: { current: 17, max: 20 }, // Score actuel et maximum
-      fiches: ['Fiche 1', 'Fiche 2'],
-      cartesMemoire: ['Carte 1', 'Carte 2'],
-      quizzes: ['Quiz 1']
-    },
-    {
-      nom: 'Prénom Nom',
-      isOnline: false,
-      score: { current: 18, max: 20 }, // Score actuel et maximum
-      fiches: ['Fiche 3'],
-      cartesMemoire: ['Carte 3'],
-      quizzes: ['Quiz 2', 'Quiz 3']
-    },
-    // Ajoute d'autres étudiants ici
-  ];
+  students: Student[] = [];
+ 
+   constructor(private studentService: StudentService) {}
+ 
+   // Récupère les étudiants
+   ngOnInit(): void {
+     this.studentService.getStudents().subscribe(
+       (data) => {
+         console.log('Étudiants récupérés:', data); // Vérifie ce qui est récupéré
+         this.students = data;
+       },
+       (error) => {
+         console.error('Erreur de récupération des étudiants:', error);
+       }
+     );
+   }
   
 
   isModalOpen = false; // Variable pour contrôler l'ouverture de la modal
