@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center p-6">
+<div class="flex flex-col items-center p-6 bg-white">
     <!-- Titre ajouté -->
     <h1 class="mb-6 text-3xl font-semibold text-gray-700">Cr&eacute;er une carte-m&eacute;moire</h1>
 
@@ -8,7 +8,7 @@
             <div>
                 <label class="block text-lg font-semibold">Titre</label>
                 <input
-                    class="w-full p-3 mt-1 border rounded-md"
+                    class="w-full p-3 mt-1 border border-gray-400 rounded-md placeholder:text-gray-500"
                     placeholder="Titre de la carte"
                     formControlName="titre">
                 <div *ngIf="carteMemoireForm.get('titre').invalid && (carteMemoireForm.get('titre').dirty || carteMemoireForm.get('titre').touched)" class="text-red-500">
@@ -20,9 +20,11 @@
             <div formArrayName="questions_reponses">
                 <div *ngFor="let questionReponse of questionsReponses.controls; let i = index" [formGroupName]="i">
                     <div>
+                        <hr class="bg-[#5271FF] text-center" style="border: none; height: 1px; background-color: #ccc; width: 100%;">
+
                         <label class="block text-lg font-semibold">Question {{i + 1}}</label>
                         <textarea
-                            class="w-full p-3 mt-1 border rounded-md resize-none"
+                            class="w-full p-3 mt-1 border border-gray-400 rounded-md resize-none"
                             placeholder="Votre question"
                             formControlName="question">
                         </textarea>
@@ -33,7 +35,7 @@
                     <div>
                         <label class="block text-lg font-semibold">R&eacute;ponse {{i + 1}}</label>
                         <textarea
-                            class="w-full p-3 mt-1 border rounded-md resize-none"
+                            class="w-full p-3 mt-1 border border-gray-400 rounded-md resize-none"
                             placeholder="Votre r&eacute;ponse"
                             formControlName="réponse">
                         </textarea>

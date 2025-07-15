@@ -1,13 +1,13 @@
 <header>
-	<nav class="z-50 w-full relative bg-white shadow-[#EEEEEE]">
+	<nav class="z-50 w-full relative bg-white shadow-md shadow-[#EEEEEE]">
 	  <div class="container flex items-center justify-between m-auto">
 		<!-- Logo left -->
 		<div class="flex-shrink-0">
 		  <img routerLink="/user" class="w-[6.4rem] h-[4rem] max-w-full" src="assets/logos/logo.png" alt="Dish Logo" />
 		</div>
-		<ul class="items-center justify-between gap-6 pr-10 text-base text-black cursor-pointer flex flex-wrap lg:flex-nowrap">
+		<ul class="flex flex-wrap items-center justify-between gap-6 pr-10 text-base text-black cursor-pointer lg:flex-nowrap">
 		  <!-- Add the SVG logo above "Fiches" -->
-		  <li routerLink="/user/fiches" routerLinkActive="router-link-active" class="flex flex-col items-center px-6 py-4 lg:mr-8 duration-500 underlineHover hover:pointer-auto">
+		  <li routerLink="/user/fiches" routerLinkActive="router-link-active" class="flex flex-col items-center px-6 py-4 duration-500 lg:mr-8 underlineHover hover:pointer-auto">
 			<!-- Le logo SVG -->
 			<svg height="20px" width="20px" viewBox="0 0 512.001 512.001" fill="#5271FF" xmlns="http://www.w3.org/2000/svg">
 			  <g id="SVGRepo_iconCarrier">
@@ -29,7 +29,7 @@
 			<a>Fiches</a>
 		  </li>
 		  <!-- Add the SVG logo above "Cartes mémoire" -->
-		  <li routerLink="/user/cartes" class="flex flex-col items-center px-6 py-4 lg:mr-8 duration-500 underlineHover hover:pointer-auto">
+		  <li routerLink="/user/cartes" class="flex flex-col items-center px-6 py-4 duration-500 lg:mr-8 underlineHover hover:pointer-auto">
 			<!-- Nouveau logo SVG -->
 			<svg height="20px" width="20px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
 			  <g id="SVGRepo_iconCarrier">
@@ -86,4 +86,3 @@
 	  </div>
 	</nav>
   </header>
-  

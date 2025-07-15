@@ -1,25 +1,32 @@
 import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
+    	{
+		id: 'Dashboard',
+		title: 'Dashboard',
+		type: 'basic',
+		icon: 'heroicons_outline:rocket-launch',
+		link: '/user'
+	},
 	{
 		id: 'Profile',
 		title: 'Profile',
 		type: 'basic',
-		icon: 'heroicons_outline:chart-pie',
+		icon: 'heroicons_outline:user',
 		link: 'profile'
 	},
 	{
 		id: 'Users',
 		title: 'Utilisateurs',
 		type: 'basic',
-		icon: 'heroicons_outline:chart-pie',
+		icon: 'heroicons_outline:users',
 		link: 'users'
 	},
 	{
 		id: 'classes',
 		title: 'classes',
 		type: 'basic',
-		icon: 'heroicons_outline:chart-pie',
+		icon: 'heroicons_outline:academic-cap',
 		link: 'classes'
 	}
 ];

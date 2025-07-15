@@ -1,16 +1,91 @@
-<!-- Conteneur principal -->
-<div class="flex items-center justify-center gap-6 mt-6">
-  <!-- Barre de recherche -->
-  <input type="text" placeholder="Rechercher..." class="p-3 bg-white border border-gray-300 rounded-lg w-80 focus:outline-none focus:ring-2 focus:ring-blue-500">
+<!-- Dashboard moderne agrandi -->
+<div class="px-6 py-12 mx-auto max-w-7xl">
+  <h1 class="mb-12 text-3xl font-bold text-center text-[#5271FF]">Bienvenue sur votre espace</h1>
 
-  <!-- Boutons à côté de la barre de recherche -->
-  <div class="flex gap-4">
-    <button routerLink="/user/import" class="px-6 py-3 text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Importer un cours</button>
-    <button  routerLink="/user/fiches/create" class="px-6 py-3 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">Créer une fiche</button>
-    <button routerLink="/user/quiz/create" class="px-6 py-3 text-white bg-yellow-500 rounded-lg hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500">Créer un quiz</button>
-    <button  routerLink="/user/cartes/create" class="px-6 py-3 text-white bg-purple-500 rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500">Créer une carte mémoire</button>
-<button routerLink="/user/prof-page" *ngIf="user.role==='professeur' || user.role==='admin' " class="px-6 py-3 text-white bg-teal-500 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500">Suivi des étudiants</button>
-<button *ngIf="user.role==='admin'" routerLink="/admin" class="px-6 py-3 text-white bg-amber-500 rounded-lg hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-400">Espace administrateur</button>
+  <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
 
+    <!-- Carte générique (réutilisée) -->
+    <a routerLink="/user/import" class="p-8 transition-all shadow-lg group bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl hover:shadow-2xl hover:-translate-y-1">
+      <div class="flex items-center gap-6">
+        <div class="p-4 text-white bg-blue-500 rounded-full">
+          <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M4 12l4-4m0 0l4 4m-4-4v12" />
+          </svg> -->
 
+          <mat-icon svgIcon="heroicons_outline:arrow-down-tray"></mat-icon>
+
+        </div>
+        <div>
+          <h2 class="text-2xl font-semibold text-gray-800 group-">Importer un cours</h2>
+          <p class="mt-1 text-base text-gray-600">Ajoutez un nouveau document à votre espace</p>
+        </div>
+      </div>
+    </a>
+
+    <a routerLink="/user/fiches/create" class="p-8 transition-all shadow-lg group bg-gradient-to-br from-green-100 to-green-200 rounded-2xl hover:shadow-2xl hover:-translate-y-1">
+      <div class="flex items-center gap-6">
+        <div class="p-4 text-white bg-green-500 rounded-full">
+     <mat-icon svgIcon="heroicons_outline:document-text"></mat-icon>
+
+        </div>
+        <div>
+          <h2 class="text-2xl font-semibold text-gray-800 group-">Créer une fiche</h2>
+          <p class="mt-1 text-base text-gray-600">Générez vos fiches personnalisées</p>
+        </div>
+      </div>
+    </a>
+
+    <a routerLink="/user/quiz/create" class="p-8 transition-all shadow-lg group bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl hover:shadow-2xl hover:-translate-y-1">
+      <div class="flex items-center gap-6">
+        <div class="p-4 text-white bg-yellow-500 rounded-full">
+       <mat-icon svgIcon="heroicons_outline:document-check"></mat-icon>
+
+        </div>
+        <div>
+          <h2 class="text-2xl font-semibold text-gray-800 group-">Créer un quiz</h2>
+          <p class="mt-1 text-base text-gray-600">Évaluez vos connaissances</p>
+        </div>
+      </div>
+    </a>
+
+    <a routerLink="/user/cartes/create" class="p-8 transition-all shadow-lg group bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl hover:shadow-2xl hover:-translate-y-1">
+      <div class="flex items-center gap-6">
+        <div class="p-4 text-white bg-purple-500 rounded-full">
+       <mat-icon svgIcon="heroicons_outline:clipboard-document-check"></mat-icon>
+
+        </div>
+        <div>
+          <h2 class="text-2xl font-semibold text-gray-800 group-">Créer une carte mémoire</h2>
+          <p class="mt-1 text-base text-gray-600">Apprenez plus efficacement</p>
+        </div>
+      </div>
+    </a>
+
+    <a *ngIf="user.role==='professeur' || user.role==='admin'" routerLink="/user/prof-page" class="p-8 transition-all shadow-lg group bg-gradient-to-br from-teal-100 to-teal-200 rounded-2xl hover:shadow-2xl hover:-translate-y-1">
+      <div class="flex items-center gap-6">
+        <div class="p-4 text-white bg-teal-500 rounded-full">
+       <mat-icon svgIcon="heroicons_outline:clipboard-document-list"></mat-icon>
+
+        </div>
+        <div>
+          <h2 class="text-2xl font-semibold text-gray-800 group-">Suivi des étudiants</h2>
+          <p class="mt-1 text-base text-gray-600">Suivez les progrès de vos élèves</p>
+        </div>
+      </div>
+    </a>
+
+    <a *ngIf="user.role==='admin'" routerLink="/admin" class="p-8 transition-all shadow-lg group bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl hover:shadow-2xl hover:-translate-y-1">
+      <div class="flex items-center gap-6">
+        <div class="p-4 text-white bg-orange-500 rounded-full">
+     <mat-icon svgIcon="heroicons_outline:user"></mat-icon>
+
+        </div>
+        <div>
+          <h2 class="text-2xl font-semibold text-gray-800 group-">Espace administrateur</h2>
+          <p class="mt-1 text-base text-gray-600">Gérez la plateforme</p>
+        </div>
+      </div>
+    </a>
+
+  </div>
 </div>

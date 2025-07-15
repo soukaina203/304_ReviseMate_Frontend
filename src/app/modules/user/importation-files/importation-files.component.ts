@@ -35,7 +35,7 @@ export class ImportationFilesComponent {
         });
         console.log('Form initialized:', this.form);
     }
-    
+
 
     onFileChange(event: Event): void {
         const input = event.target as HTMLInputElement;
@@ -136,7 +136,7 @@ export class ImportationFilesComponent {
 
     InfoPoppup(): void {
         const dialogRef = this.dialog.open(this.popupTemplate, {
-            height: '200px',
+            height: '250px',
             width: '500px'
         });
         dialogRef.afterClosed().subscribe((result) => {
@@ -144,5 +144,5 @@ export class ImportationFilesComponent {
         });
     }
 
-    
+
 }
