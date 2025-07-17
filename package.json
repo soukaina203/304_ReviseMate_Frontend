@@ -32,6 +32,7 @@
         "html2pdf.js": "^0.10.3",
         "jspdf": "^3.0.0",
         "lodash-es": "4.17.21",
+        "lucide-angular": "^0.525.0",
         "luxon": "3.4.4",
         "ng-apexcharts": "1.8.0",
         "ngx-file-drop": "^16.0.0",

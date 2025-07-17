@@ -1,2 +1,330 @@
-<app-header></app-header>
-<landing-home></landing-home>
+<div class="min-h-screen overflow-x-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 shadow-md bg-white/80 backdrop-blur-sm">
+        <div class="flex items-center justify-between w-full max-w-screen-xl px-4 py-4 mx-auto">
+            <div class="flex items-center">
+                <div class="flex items-center justify-center rounded-lg bg-slate-400 bg-gradient-to-br">
+                    <img src="assets/logos/logo.png" alt="" class="h-12 w-[5rem]">
+                </div>
+            </div>
+            <nav class="items-center hidden space-x-6 md:flex">
+                <a href="#features" class="text-gray-600 hover:text-[#5271FF]">Fonctionnalités</a>
+                <a href="#teachers" class="text-gray-600 hover:text-[#5271FF]">Enseignants</a>
+                <a href="#pricing" class="text-gray-600 hover:text-[#5271FF]">Prix</a>
+                <button routerLink="sign-in"
+                    class="border border-[#5271FF] text-[#5271FF] hover:bg-[#5271FF] hover:text-white px-5 py-2 rounded-lg">
+                    Connexion
+                </button>
+                <button class="bg-[#5271FF] hover:bg-blue-600 text-white px-5 py-2 rounded-lg">
+                    Commencer gratuitement
+                </button>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- Hero Section -->
+  <section class="px-4 pt-24 pb-20 text-center">
+  <div class="w-full max-w-screen-xl mx-auto">
+    <!-- Badge -->
+    <div class="mb-6 inline-flex items-center px-4 py-2 rounded-full text-[#5271FF] bg-[#5271FF]/10 border border-[#5271FF]/20">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      </svg>
+      Révolutionnez votre apprentissage
+    </div>
+
+    <!-- Titre principal -->
+    <h1 class="mb-6 text-6xl font-extrabold leading-tight text-gray-900 md:text-7xl lg:text-8xl drop-shadow-md">
+      Transformez <span class="text-[#5271FF]">vos cours</span>
+      <span class="text-[#5271FF]"> à une révision complète et interactive</span>
+    </h1>
+
+    <!-- Description -->
+    <p class="max-w-3xl mx-auto mb-8 text-lg text-gray-600">
+      ReviseMate utilise l'intelligence artificielle pour générer automatiquement des fiches de révision,
+      cartes mémoire et quiz personnalisés à partir de vos cours. Optimisez votre apprentissage à distance.
+    </p>
+
+    <!-- Boutons -->
+    <div class="flex flex-col justify-center gap-4 sm:flex-row">
+      <button class="bg-[#5271FF] hover:bg-blue-600 text-white text-base font-medium px-8 py-3 rounded-lg shadow-md">
+        Commencer gratuitement
+      </button>
+      <button class="border border-[#5271FF] text-[#5271FF] hover:bg-[#5271FF] hover:text-white text-base font-medium px-8 py-3 rounded-lg">
+        Voir la démo
+      </button>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Dashboard Cards Section -->
+    <section class="px-4 py-20 bg-[#f1f5f9]">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <h2 class="mb-2 text-4xl font-bold text-center text-gray-900">Bienvenue sur votre espace</h2>
+            <p class="mb-12 text-center text-gray-600">Accédez rapidement à toutes les fonctionnalités de ReviseMate</p>
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Carte générique avec hauteur fixe et layout équilibré -->
+                <div
+                    class="flex flex-col justify-between p-6 text-white bg-gradient-to-br from-blue-400 to-blue-500 rounded-xl min-h-[220px]">
+                    <div>
+                        <div class="flex items-center justify-center w-10 h-10 mb-4 rounded-lg bg-white/20">
+                            <mat-icon svgIcon="heroicons_outline:arrow-down-on-square" class="w-6 h-6"></mat-icon>
+                        </div>
+                        <h3 class="mb-1 text-3xl font-semibold">Importer un cours</h3>
+                        <p class="text-sm text-white/90">Ajoutez un nouveau document à votre espace</p>
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-col justify-between p-6 text-white bg-gradient-to-br from-green-400 to-green-500 rounded-xl min-h-[220px]">
+                    <div>
+                        <div class="flex items-center justify-center w-10 h-10 mb-4 rounded-lg bg-white/20">
+                            <mat-icon svgIcon="heroicons_outline:clipboard-document-list" class="w-6 h-6"></mat-icon>
+                        </div>
+                        <h3 class="mb-1 text-3xl font-semibold">Créer une fiche</h3>
+                        <p class="text-sm text-white/90">Générez vos fiches personnalisées</p>
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-col justify-between p-6 text-white bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl min-h-[220px]">
+                    <div>
+                        <div class="flex items-center justify-center w-10 h-10 mb-4 rounded-lg bg-white/20">
+                            <mat-icon svgIcon="heroicons_outline:question-mark-circle" class="w-6 h-6"></mat-icon>
+                        </div>
+                        <h3 class="mb-1 text-3xl font-semibold">Créer un quiz</h3>
+                        <p class="text-sm text-white/90">Évaluez vos connaissances</p>
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-col justify-between p-6 text-white bg-gradient-to-br from-purple-400 to-purple-500 rounded-xl min-h-[220px]">
+                    <div>
+                        <div class="flex items-center justify-center w-10 h-10 mb-4 rounded-lg bg-white/20">
+                            <mat-icon svgIcon="heroicons_outline:document-check" class="w-6 h-6"></mat-icon>
+                        </div>
+                        <h3 class="mb-1 text-3xl font-semibold">Créer une carte mémoire</h3>
+                        <p class="text-sm text-white/90">Apprenez plus efficacement</p>
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-col justify-between p-6 text-white bg-gradient-to-br from-teal-400 to-teal-500 rounded-xl min-h-[220px]">
+                    <div>
+                        <div class="flex items-center justify-center w-6 h-6 mb-4 rounded-lg bg-white/20">
+                            <mat-icon svgIcon="heroicons_outline:chart-bar-square" class="w-6 h-6"></mat-icon>
+                        </div>
+                        <h3 class="mb-1 text-3xl font-semibold">Suivi des étudiants</h3>
+                        <p class="text-sm text-white/90">Suivez les progrès de vos élèves</p>
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-col justify-between p-6 text-white bg-gradient-to-br from-orange-400 to-orange-500 rounded-xl min-h-[220px]">
+                    <div>
+                        <div class="flex items-center justify-center w-10 h-10 mb-4 rounded-lg bg-white/20">
+                            <mat-icon svgIcon="heroicons_outline:user" class="w-6 h-6"></mat-icon>
+                        </div>
+                        <h3 class="mb-1 text-3xl font-semibold">Espace administrateur</h3>
+                        <p class="text-sm text-white/90">Gérez la plateforme</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- Features Section -->
+    <section id="features" class="px-4 py-20 bg-white">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <h2 class="mb-4 text-3xl font-bold text-center text-gray-900">Fonctionnalités principales</h2>
+            <p class="max-w-2xl mx-auto mb-12 text-center text-gray-600">
+                Des outils puissants pour transformer votre façon d'étudier et de réviser
+            </p>
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Feature card -->
+                <div
+                    class="p-6 transition duration-200 bg-white border border-gray-100 shadow-sm rounded-xl hover:shadow-md hover:-translate-y-1">
+                    <div class="flex items-center justify-center w-12 h-12 mb-4 text-blue-600 bg-blue-100 rounded-lg">
+                        <mat-icon svgIcon="heroicons_outline:document-check" class="w-6 h-6"></mat-icon>
+                    </div>
+                    <h3 class="mb-2 text-xl font-semibold text-gray-800">Dépôt de cours</h3>
+                    <p class="text-sm text-gray-600">Importez vos PDF ou saisissez directement votre texte</p>
+                </div>
+
+                <div
+                    class="p-6 transition duration-200 bg-white border border-gray-100 shadow-sm rounded-xl hover:shadow-md hover:-translate-y-1">
+                    <div class="flex items-center justify-center w-12 h-12 mb-4 text-green-600 bg-green-100 rounded-lg">
+                        <mat-icon svgIcon="heroicons_outline:document-check" class="w-6 h-6"></mat-icon>
+                    </div>
+                    <h3 class="mb-2 text-xl font-semibold text-gray-800">Fiches de révision</h3>
+                    <p class="text-sm text-gray-600">Génération automatique des points essentiels</p>
+                </div>
+
+                <div
+                    class="p-6 transition duration-200 bg-white border border-gray-100 shadow-sm rounded-xl hover:shadow-md hover:-translate-y-1">
+                    <div
+                        class="flex items-center justify-center w-12 h-12 mb-4 text-purple-600 bg-purple-100 rounded-lg">
+                        <mat-icon svgIcon="heroicons_outline:document-check" class="w-6 h-6"></mat-icon>
+                    </div>
+                    <h3 class="mb-2 text-xl font-semibold text-gray-800">Cartes mémoire</h3>
+                    <p class="text-sm text-gray-600">Cartes interactives pour optimiser la mémorisation</p>
+                </div>
+
+                <div
+                    class="p-6 transition duration-200 bg-white border border-gray-100 shadow-sm rounded-xl hover:shadow-md hover:-translate-y-1">
+                    <div
+                        class="flex items-center justify-center w-12 h-12 mb-4 text-yellow-600 bg-yellow-100 rounded-lg">
+                        <mat-icon svgIcon="heroicons_outline:document-check" class="w-6 h-6"></mat-icon>
+                    </div>
+                    <h3 class="mb-2 text-xl font-semibold text-gray-800">Quiz personnalisés</h3>
+                    <p class="text-sm text-gray-600">Tests automatiques basés sur votre contenu</p>
+                </div>
+
+                <div
+                    class="p-6 transition duration-200 bg-white border border-gray-100 shadow-sm rounded-xl hover:shadow-md hover:-translate-y-1">
+                    <div class="flex items-center justify-center w-12 h-12 mb-4 text-teal-600 bg-teal-100 rounded-lg">
+                        <mat-icon svgIcon="heroicons_outline:document-check" class="w-6 h-6"></mat-icon>
+                    </div>
+                    <h3 class="mb-2 text-xl font-semibold text-gray-800">Personnalisation</h3>
+                    <p class="text-sm text-gray-600">Modifiez et adaptez tout selon vos besoins</p>
+                </div>
+
+                <div
+                    class="p-6 transition duration-200 bg-white border border-gray-100 shadow-sm rounded-xl hover:shadow-md hover:-translate-y-1">
+                    <div class="flex items-center justify-center w-12 h-12 mb-4 text-pink-600 bg-pink-100 rounded-lg">
+                        <mat-icon svgIcon="heroicons_outline:document-check" class="w-6 h-6"></mat-icon>
+                    </div>
+                    <h3 class="mb-2 text-xl font-semibold text-gray-800">Partage collaboratif</h3>
+                    <p class="text-sm text-gray-600">Partagez vos fiches avec d'autres étudiants</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Teachers Section -->
+    <section id="teachers" class="py-20 px-4 bg-gradient-to-br from-[#5271FF]/5 to-blue-100/30">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div class="mb-16 text-center">
+                <div
+                    class="inline-flex items-center px-4 py-2 rounded-full text-[#5271FF] bg-[#5271FF]/10 border border-[#5271FF]/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 20h5v-2a4 4 0 0 0-4-4h-1M9 20H4v-2a4 4 0 0 1 4-4h1m0-4a4 4 0 1 1 8 0 4 4 0 0 1-8 0z" />
+                    </svg>
+                    Pour les enseignants
+                </div>
+                <h2 class="mt-4 text-3xl font-bold text-gray-900">Suivez et optimisez l'apprentissage</h2>
+                <p class="max-w-2xl mx-auto mt-4 text-gray-600">Des outils d’analyse avancés pour comprendre les besoins
+                    de vos
+                    étudiants</p>
+            </div>
+
+            <div class="grid max-w-4xl gap-6 mx-auto sm:grid-cols-2">
+                <!-- Card 1 -->
+                <div class="p-6 bg-white shadow-md rounded-xl">
+                    <div class="flex items-center justify-center w-10 h-10 mb-4 rounded-lg bg-[#5271FF]/10">
+                        <mat-icon svgIcon="heroicons_outline:chart-bar" class="w-6 h-6 text-[#5271FF]"></mat-icon>
+                    </div>
+                    <h3 class="mb-2 text-xl font-semibold text-gray-800">Suivi des progrès</h3>
+                    <p class="text-sm text-gray-600">Statistiques détaillées sur la compréhension des concepts</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="p-6 bg-white shadow-md rounded-xl">
+                    <div class="flex items-center justify-center w-10 h-10 mb-4 rounded-lg bg-[#5271FF]/10">
+                        <mat-icon svgIcon="heroicons_outline:eye" class="w-6 h-6 text-[#5271FF]"></mat-icon>
+                    </div>
+                    <h3 class="mb-2 text-xl font-semibold text-gray-800">Analyse comportementale</h3>
+                    <p class="text-sm text-gray-600">Identification des points faibles pour un soutien ciblé</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA Section -->
+    <section class="py-24 px-4 bg-gradient-to-r from-[#5271FF] to-blue-600 text-center relative overflow-hidden">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <h2 class="mb-4 text-4xl font-extrabold tracking-tight text-white md:text-5xl drop-shadow-sm">
+                Prêt à révolutionner vos révisions ?
+            </h2>
+            <p class="max-w-2xl mx-auto mb-10 text-lg leading-relaxed text-blue-100 md:text-xl">
+                Rejoignez des milliers d'étudiants qui ont déjà transformé leur façon d'apprendre grâce à ReviseMate.
+            </p>
+            <button
+                class="inline-flex items-center justify-center bg-white text-[#5271FF] hover:bg-blue-50 hover:text-blue-700 px-8 py-4 text-lg font-semibold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white/40 group">
+                Commencer maintenant
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="ml-2 w-5 h-5 text-[#5271FF] group-hover:translate-x-1 transition-transform duration-300"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+            </button>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="px-4 py-12 text-gray-300 bg-gray-900">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div class="grid gap-8 md:grid-cols-4">
+                <div>
+                    <div class="flex items-center mb-4 space-x-2">
+                        <div class="flex items-center justify-center w-8 h-8 bg-white rounded-lg">
+                            <img src="assets/logos/logo.png" alt="" class="w-7 h-7">
+
+                            <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                                <path d="M4 4.5A2.5 2.5 0 0 1 6.5 7H20" />
+                                <path d="M6.5 17V7" />
+                            </svg> -->
+                        </div>
+                        <span class="text-xl font-bold text-white">ReviseMate</span>
+                    </div>
+                    <p class="text-gray-400">
+                        L'assistant IA qui transforme vos cours en outils de révision efficaces.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="mb-4 font-semibold text-white">Produit</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-[#5271FF] transition-colors">Fonctionnalités</a></li>
+                        <li><a href="#" class="hover:text-[#5271FF] transition-colors">Prix</a></li>
+                        <li><a href="#" class="hover:text-[#5271FF] transition-colors">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="mb-4 font-semibold text-white">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-[#5271FF] transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-[#5271FF] transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-[#5271FF] transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="mb-4 font-semibold text-white">Légal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-[#5271FF] transition-colors">Confidentialité</a></li>
+                        <li><a href="#" class="hover:text-[#5271FF] transition-colors">Conditions</a></li>
+                        <li><a href="#" class="hover:text-[#5271FF] transition-colors">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 mt-8 text-center border-t border-gray-800">
+                <p class="text-gray-400">
+                    © 2024 ReviseMate. Tous droits réservés.
+                </p>
+            </div>
+        </div>
+    </footer>
+</div>
