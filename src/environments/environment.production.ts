@@ -1,4 +1,4 @@
-const URL_PROD = `reviseMate-api.cloud.dev-solus.com`;
+const URL_PROD = `revisemate-api.cloud.dev-solus.com`;
 
 
 export const environment = {
