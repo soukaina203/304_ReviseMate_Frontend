@@ -29,7 +29,7 @@ node {
                 println("***********************> ${changes}")
 
                 echo "Building Docker image for ${e.name}..."
-                app = docker.build("${e.name}", "-t ${e.name} -f ./Dockerfile ./${e.path}")
+                app = docker.build("${e.name}", "-t ${e.name} -f ./dockerfile ./${e.path}")
 
                 try {
                     sh "docker rm --force ${e.name}"
