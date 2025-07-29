@@ -2,7 +2,7 @@
 
 node {
     def apps = [
-        [name: "revise-mate", port: '4200', exposed_port: '', path: '', domaine: "revisemate.cloud.dev-solus.ma"],
+        [name: "revise-mate", port: '4200', exposed_port: '', path: '', domaine: "revisemate.cloud.dev-solus.com"],
     ]
 
     def app
